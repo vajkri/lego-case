@@ -11,9 +11,9 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 ### Foundation
 
-- [ ] **FOUND-01**: Project initializes as a Next.js 16 App Router app with `output: 'export'` (fully static, no server required)
-- [ ] **FOUND-02**: Motion 12 (`motion/react`), Tailwind v4, and Zustand are installed and configured with correct Next.js integration
-- [ ] **FOUND-03**: All animation components are isolated behind `'use client'` boundaries — no hydration errors on `next build`
+- [x] **FOUND-01**: Project initializes as a Next.js 16 App Router app with `output: 'export'` (fully static, no server required)
+- [x] **FOUND-02**: Motion 12 (`motion/react`), Tailwind v4, and Zustand are installed and configured with correct Next.js integration
+- [x] **FOUND-03**: All animation components are isolated behind `'use client'` boundaries — no hydration errors on `next build`
 - [ ] **FOUND-04**: `MotionConfig reducedMotion="user"` wraps the entire presentation root so all animations respect `prefers-reduced-motion` globally
 - [ ] **FOUND-05**: TypeScript type definitions exist for all 14 topics: title, map position coordinates, array of sub-slides (each with heading and content)
 - [ ] **FOUND-06**: All 14 topic data files are authored and content-complete, sourced from `.planning/assets/proposal-content.md`
