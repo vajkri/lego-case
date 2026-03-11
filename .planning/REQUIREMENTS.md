@@ -107,41 +107,41 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-05 | Phase 1 | Pending |
 | FOUND-06 | Phase 1 | Pending |
 | FOUND-07 | Phase 1 | Pending |
-| MAP-01 | Phase 2 | Pending |
-| MAP-02 | Phase 2 | Pending |
-| MAP-03 | Phase 2 | Pending |
-| MAP-04 | Phase 2 | Pending |
-| CAR-01 | Phase 2 | Pending |
-| CAR-02 | Phase 2 | Pending |
-| CAR-03 | Phase 2 | Pending |
-| CAR-04 | Phase 2 | Pending |
+| QUAL-01 | Phase 1 | Pending |
+| QUAL-02 | Phase 1 | Pending |
+| QUAL-03 | Phase 1 | Pending |
 | NAV-01 | Phase 2 | Pending |
 | NAV-02 | Phase 2 | Pending |
 | NAV-03 | Phase 2 | Pending |
 | NAV-04 | Phase 2 | Pending |
 | NAV-05 | Phase 2 | Pending |
-| SLIDE-01 | Phase 3 | Pending |
-| SLIDE-02 | Phase 3 | Pending |
-| SLIDE-03 | Phase 3 | Pending |
-| SLIDE-04 | Phase 3 | Pending |
-| SLIDE-05 | Phase 3 | Pending |
-| A11Y-01 | Phase 3 | Pending |
-| A11Y-02 | Phase 3 | Pending |
-| A11Y-03 | Phase 3 | Pending |
-| A11Y-04 | Phase 3 | Pending |
-| A11Y-05 | Phase 3 | Pending |
+| SLIDE-01 | Phase 2 | Pending |
+| SLIDE-02 | Phase 2 | Pending |
+| SLIDE-03 | Phase 2 | Pending |
+| SLIDE-04 | Phase 2 | Pending |
+| SLIDE-05 | Phase 2 | Pending |
+| A11Y-01 | Phase 2 | Pending |
+| A11Y-02 | Phase 2 | Pending |
+| A11Y-03 | Phase 2 | Pending |
+| A11Y-04 | Phase 2 | Pending |
+| A11Y-05 | Phase 2 | Pending |
+| MAP-01 | Phase 3 | Pending |
+| MAP-02 | Phase 3 | Pending |
+| MAP-03 | Phase 3 | Pending |
+| MAP-04 | Phase 3 | Pending |
+| CAR-01 | Phase 3 | Pending |
+| CAR-02 | Phase 3 | Pending |
+| CAR-03 | Phase 3 | Pending |
+| CAR-04 | Phase 3 | Pending |
 | PERF-01 | Phase 4 | Pending |
 | PERF-02 | Phase 4 | Pending |
 | PERF-03 | Phase 4 | Pending |
-| QUAL-01 | Phase 1 | Pending |
-| QUAL-02 | Phase 1 | Pending |
-| QUAL-03 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 36 total
 - Mapped to phases: 36
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 after initial definition*
+*Last updated: 2026-03-11 — traceability updated to match roadmap phases*
