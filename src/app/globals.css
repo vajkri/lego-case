@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  /* LEGO design tokens deferred to Phase 4 — placeholders only */
+  --color-brand: oklch(0.7 0.2 85);
+  --font-display: 'Inter', sans-serif;
+}
