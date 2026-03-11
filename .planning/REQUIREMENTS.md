@@ -15,7 +15,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 - [x] **FOUND-02**: Motion 12 (`motion/react`), Tailwind v4, and Zustand are installed and configured with correct Next.js integration
 - [x] **FOUND-03**: All animation components are isolated behind `'use client'` boundaries — no hydration errors on `next build`
 - [ ] **FOUND-04**: `MotionConfig reducedMotion="user"` wraps the entire presentation root so all animations respect `prefers-reduced-motion` globally
-- [ ] **FOUND-05**: TypeScript type definitions exist for all 14 topics: title, map position coordinates, array of sub-slides (each with heading and content)
+- [x] **FOUND-05**: TypeScript type definitions exist for all 14 topics: title, map position coordinates, array of sub-slides (each with heading and content)
 - [ ] **FOUND-06**: All 14 topic data files are authored and content-complete, sourced from `.planning/assets/proposal-content.md`
 - [ ] **FOUND-07**: Codebase follows industry best practices: no unused code, consistent naming, clean component boundaries, and obvious DX (any dev can understand the structure in < 5 minutes)
 
@@ -63,8 +63,8 @@ Requirements for initial release. Each maps to a roadmap phase.
 - [ ] **PERF-02**: The app loads and is interactive in < 3 seconds on a standard laptop over Wi-Fi
 - [ ] **PERF-03**: No console errors or warnings in production build
 - [ ] **QUAL-01**: Component structure matches the conventions in `CLAUDE.md` (ui/, layout/, features/ folders; barrel exports; PascalCase naming)
-- [ ] **QUAL-02**: All content is rendered from data files — zero hardcoded presentation content in component JSX
-- [ ] **QUAL-03**: The codebase is simple and elegant: prefer obvious solutions over clever ones, minimal abstractions, readable over terse
+- [x] **QUAL-02**: All content is rendered from data files — zero hardcoded presentation content in component JSX
+- [x] **QUAL-03**: The codebase is simple and elegant: prefer obvious solutions over clever ones, minimal abstractions, readable over terse
 
 ---
 
@@ -104,12 +104,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-02 | Phase 1 | Pending |
 | FOUND-03 | Phase 1 | Pending |
 | FOUND-04 | Phase 1 | Pending |
-| FOUND-05 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Pending |
 | FOUND-07 | Phase 1 | Pending |
 | QUAL-01 | Phase 1 | Pending |
-| QUAL-02 | Phase 1 | Pending |
-| QUAL-03 | Phase 1 | Pending |
+| QUAL-02 | Phase 1 | Complete |
+| QUAL-03 | Phase 1 | Complete |
 | NAV-01 | Phase 2 | Pending |
 | NAV-02 | Phase 2 | Pending |
 | NAV-03 | Phase 2 | Pending |
