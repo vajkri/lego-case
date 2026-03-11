@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PresentationProvider, KeyboardController } from '@/components/features/presentation'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -13,7 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PresentationProvider>
+          {/* KeyboardController: no visual output, only attaches window keydown listener */}
+          <KeyboardController />
+          {children}
+        </PresentationProvider>
+      </body>
     </html>
   )
 }
