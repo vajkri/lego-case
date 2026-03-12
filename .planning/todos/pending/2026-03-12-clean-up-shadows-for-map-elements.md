@@ -13,7 +13,6 @@ Map elements (mountains, buildings, trees, road) have inconsistent or missing sh
 
 ## Solution
 
-Audit all map elements in MapSvg.tsx and RoadPath.tsx for shadow consistency:
-- Ensure buildings, mountains, and key decorative elements have subtle drop shadows matching the LEGO instruction booklet aesthetic
-- Remove or soften any shadows that feel too heavy or misaligned
-- Consider using a shared shadow style (e.g., consistent offset and opacity) for visual coherence
+- **Road shadow must go** — the current drop shadow (`translate(3,6)`) makes the road look like it's hovering above the grass instead of being painted on it
+- Other element shadows (buildings, mountains, trees) should feel organic and grounded, not uniform or mechanical
+- Audit all map elements in MapSvg.tsx and RoadPath.tsx for shadow consistency with the LEGO instruction booklet aesthetic
