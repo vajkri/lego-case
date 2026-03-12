@@ -2,7 +2,7 @@
 // Covers FOUND-03 (no hydration errors — SSR-safe client component),
 // FOUND-04 (MotionConfig present), and NAV-01 stub (reducer holds state).
 
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
 import { PresentationProvider, usePresentation } from '../PresentationProvider'
 
@@ -42,25 +42,21 @@ describe('PresentationProvider', () => {
     expect(screen.getByTestId('mode').textContent).toBe('map')
   })
 
-  it('stub reducer does not throw on ADVANCE, BACK, CLOSE', () => {
-    // Suppress console.log output from stubs
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
-
+  it('real reducer transitions state correctly on ADVANCE, BACK, CLOSE', () => {
     render(
       <PresentationProvider>
         <StateDisplay />
       </PresentationProvider>
     )
 
+    // ADVANCE from stop 0 map → opens stop 1 in slide mode
     act(() => { screen.getByText('advance').click() })
-    act(() => { screen.getByText('back').click() })
+    expect(screen.getByTestId('stop').textContent).toBe('1')
+    expect(screen.getByTestId('mode').textContent).toBe('slide')
+
+    // CLOSE from slide mode → returns to map
     act(() => { screen.getByText('close').click() })
-
-    // State unchanged (stub returns same state — this is Phase 1 expected behavior)
-    expect(screen.getByTestId('stop').textContent).toBe('0')
     expect(screen.getByTestId('mode').textContent).toBe('map')
-
-    consoleSpy.mockRestore()
   })
 
   it('usePresentation throws when used outside provider', () => {
