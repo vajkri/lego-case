@@ -48,7 +48,14 @@ Plans:
   3. On a stop with 3 sub-slides, pressing ArrowRight steps through all 3 in sequence, then closes the overlay and returns to the map on the final advance
   4. When the slide overlay opens, focus is trapped inside it; when it closes, focus returns to the stop node button that triggered it — verifiable with a keyboard-only walkthrough
   5. A screen reader announces the current stop name and sub-slide number each time they change, without the user taking any extra action
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Wave 0: Reducer and SlideOverlay test scaffolds (RED state)
+- [ ] 02-02-PLAN.md — Real reducer implementation + JUMP_TO_STOP action + triggerRef in context
+- [ ] 02-03-PLAN.md — StopNode wiring: JUMP_TO_STOP dispatch + triggerRef capture
+- [ ] 02-04-PLAN.md — SlideOverlay component tree with focus trap and ARIA live region
+- [ ] 02-05-PLAN.md — OverlayPresence layout wiring + human verification
 
 ### Phase 3: Map and Car Animation
 **Goal**: The LEGO world map is visible as the root view with all 5 named stop nodes, and the red LEGO car travels smoothly between stops on the GPU compositor thread without dropped frames.
@@ -79,6 +86,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete   | 2026-03-12 |
-| 2. Navigation and Slides | 0/TBD | Not started | - |
+| 2. Navigation and Slides | 0/5 | Not started | - |
 | 3. Map and Car Animation | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |
