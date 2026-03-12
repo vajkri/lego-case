@@ -28,6 +28,7 @@ export function MapCanvas() {
           key={stop.slug}
           stop={stop}
           isActive={state.currentStop === index}
+          isVisited={state.visitedStops.includes(index)}
           index={index}
         />
       ))}
