@@ -6,7 +6,6 @@ import { stops } from '@/data/topics'
 import { SlideHeader } from './SlideHeader'
 import { SlideContent } from './SlideContent'
 import { SlideNavArrows } from './SlideNavArrows'
-import { SlideFooter } from './SlideFooter'
 
 export function SlideOverlay() {
   const { state, dispatch, triggerRef } = usePresentation()
@@ -32,7 +31,7 @@ export function SlideOverlay() {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.85 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="fixed inset-0 z-50 bg-slate-900 text-white flex flex-col"
+        className="absolute inset-0 bg-slate-900 text-white flex flex-col"
       >
         {/* ARIA live region — mounted once, never conditionally rendered (A11Y-02) */}
         <div aria-live="polite" aria-atomic="true" className="sr-only">
@@ -55,17 +54,6 @@ export function SlideOverlay() {
           <SlideContent heading={slide.heading} lines={slide.lines} />
         </div>
 
-        <SlideFooter
-          stops={stops}
-          currentStop={state.currentStop}
-          currentSlide={state.currentSlide}
-          mode={state.mode}
-          onJumpToStop={(i) => dispatch({ type: 'JUMP_TO_STOP', stopIndex: i })}
-          onClose={handleClose}
-          onToggle={handleClose}
-          onBack={() => dispatch({ type: 'BACK' })}
-          onAdvance={() => dispatch({ type: 'ADVANCE' })}
-        />
       </motion.div>
     </FocusTrap>
   )

@@ -12,7 +12,7 @@ export function MapCanvas() {
   const { state } = usePresentation()
 
   return (
-    <div className="relative w-full h-screen bg-slate-100">
+    <div className="relative w-full h-full bg-slate-100">
       {/* DEV INDICATOR — Phase 1 only. Remove in Phase 4 (or when no longer needed).
           Shows that keyboard events reach the reducer and state updates render. */}
       <div className="absolute top-4 left-4 font-mono text-xs bg-black/80 text-green-400 px-3 py-2 rounded select-none">

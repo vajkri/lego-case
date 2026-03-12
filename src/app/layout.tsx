@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { PresentationProvider, KeyboardController } from '@/components/features/presentation'
+import { PresentationProvider, KeyboardController, PresentationFooter } from '@/components/features/presentation'
 import { OverlayPresence } from '@/components/features/slide'
 import './globals.css'
 
@@ -17,10 +17,16 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <PresentationProvider>
-          {/* KeyboardController: no visual output, only attaches window keydown listener */}
           <KeyboardController />
-          <OverlayPresence />
-          {children}
+          <div className="flex flex-col h-screen">
+            {/* Content area — slide overlay and map both live here */}
+            <div className="flex-1 relative overflow-hidden">
+              <OverlayPresence />
+              {children}
+            </div>
+            {/* Footer always visible, both on map and slide views */}
+            <PresentationFooter />
+          </div>
         </PresentationProvider>
       </body>
     </html>
