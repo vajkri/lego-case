@@ -49,9 +49,9 @@ describe('PresentationProvider', () => {
       </PresentationProvider>
     )
 
-    // ADVANCE from stop 0 map → opens stop 1 in slide mode
+    // ADVANCE from stop 0 map → opens stop 0 in slide mode (first stop is reachable)
     act(() => { screen.getByText('advance').click() })
-    expect(screen.getByTestId('stop').textContent).toBe('1')
+    expect(screen.getByTestId('stop').textContent).toBe('0')
     expect(screen.getByTestId('mode').textContent).toBe('slide')
 
     // CLOSE from slide mode → returns to map

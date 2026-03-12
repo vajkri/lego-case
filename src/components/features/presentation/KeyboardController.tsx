@@ -12,6 +12,14 @@ export function KeyboardController() {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      // For Space: if the event originates from an interactive element (button, link,
+      // input), let that element's native activation (onClick) handle the dispatch.
+      // Dispatching from both the window handler AND the element's onClick would
+      // fire two actions per keypress (e.g. ADVANCE + JUMP_TO_STOP).
+      if (e.key === ' ') {
+        const target = e.target as Element | null
+        if (target?.closest('button, a, input, select, textarea')) return
+      }
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault()  // prevent Space from scrolling the page
         dispatch({ type: 'ADVANCE' })

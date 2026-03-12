@@ -18,8 +18,9 @@ const initialState: PresentationState = {
  * Presentation state machine — keyboard navigation model (A11Y-05).
  *
  * ADVANCE (ArrowRight / Space):
- *   - Map mode: opens next stop's slides (no-op at last stop)
- *   - Slide mode: advances sub-slide; closes overlay on last sub-slide
+ *   - Map mode: opens the current stop's slides (no-op at last stop when in map)
+ *   - Slide mode: advances sub-slide; on last sub-slide advances to next stop
+ *     (or returns to map if already on the last stop)
  *
  * BACK (ArrowLeft):
  *   - Map mode: opens previous stop at its LAST slide (no-op at first stop)
@@ -38,16 +39,20 @@ export function presentationReducer(state: PresentationState, action: Action): P
         const currentStop = stops[state.currentStop]
         const isLastSlide = state.currentSlide === currentStop.slides.length - 1
         if (isLastSlide) {
-          return { ...state, mode: 'map', currentSlide: 0 }
+          const isLastStop = state.currentStop === stops.length - 1
+          if (isLastStop) {
+            return { ...state, mode: 'map', currentSlide: 0 }
+          }
+          return { currentStop: state.currentStop + 1, currentSlide: 0, mode: 'slide' }
         }
         return { ...state, currentSlide: state.currentSlide + 1 }
       } else {
-        // map mode
+        // map mode: open the current stop's slides
         const isLastStop = state.currentStop === stops.length - 1
         if (isLastStop) {
-          return state // no-op
+          return state // no-op — already at last stop in map view
         }
-        return { currentStop: state.currentStop + 1, currentSlide: 0, mode: 'slide' }
+        return { ...state, mode: 'slide', currentSlide: 0 }
       }
     }
     case 'BACK': {

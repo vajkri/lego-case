@@ -13,9 +13,9 @@ const slideState0: PresentationState = { currentStop: 2, currentSlide: 0, mode: 
 describe('presentationReducer', () => {
   // ADVANCE cases
 
-  it('ADVANCE on map at stop 0 opens stop 1 at slide 0 in slide mode', () => {
+  it('ADVANCE on map at stop 0 opens stop 0 at slide 0 in slide mode', () => {
     const result = presentationReducer(mapState0, { type: 'ADVANCE' })
-    expect(result).toEqual({ currentStop: 1, currentSlide: 0, mode: 'slide' })
+    expect(result).toEqual({ currentStop: 0, currentSlide: 0, mode: 'slide' })
   })
 
   it('ADVANCE on map at last stop (stop 4) is a no-op', () => {
@@ -29,7 +29,7 @@ describe('presentationReducer', () => {
     expect(result.mode).toBe('slide')
   })
 
-  it('ADVANCE on last sub-slide of a stop closes overlay (mode becomes map)', () => {
+  it('ADVANCE on last sub-slide of a non-final stop advances to next stop in slide mode', () => {
     // stops[2] has 5 slides; last slide index is 4
     const lastSlideState: PresentationState = {
       currentStop: 2,
@@ -37,7 +37,17 @@ describe('presentationReducer', () => {
       mode: 'slide',
     }
     const result = presentationReducer(lastSlideState, { type: 'ADVANCE' })
-    expect(result).toEqual({ ...lastSlideState, mode: 'map', currentSlide: 0 })
+    expect(result).toEqual({ currentStop: 3, currentSlide: 0, mode: 'slide' })
+  })
+
+  it('ADVANCE on last sub-slide of the last stop closes overlay (mode becomes map)', () => {
+    const lastStopLastSlideState: PresentationState = {
+      currentStop: 4,
+      currentSlide: stops[4].slides.length - 1,
+      mode: 'slide',
+    }
+    const result = presentationReducer(lastStopLastSlideState, { type: 'ADVANCE' })
+    expect(result).toEqual({ currentStop: 4, currentSlide: 0, mode: 'map' })
   })
 
   // BACK cases
