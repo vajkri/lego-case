@@ -12,7 +12,7 @@ Four phases deliver the presentation app. Phase 1 establishes the architectural 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Next.js static export scaffold, typed topic data structure, and project conventions established
+- [x] **Phase 1: Foundation** - Next.js static export scaffold, typed topic data structure, and project conventions established (completed 2026-03-12)
 - [ ] **Phase 2: Navigation and Slides** - Full keyboard navigation, slide overlay with AnimatePresence, and accessibility built in from day one
 - [ ] **Phase 3: Map and Car Animation** - Inline SVG world map with 14 city nodes and animated car traveling between them
 - [ ] **Phase 4: Content and Polish** - All 14 topics fully authored, LEGO design tokens applied, production build verified
@@ -78,7 +78,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 4/5 | In Progress|  |
+| 1. Foundation | 5/5 | Complete   | 2026-03-12 |
 | 2. Navigation and Slides | 0/TBD | Not started | - |
 | 3. Map and Car Animation | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |

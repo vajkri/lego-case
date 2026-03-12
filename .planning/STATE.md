@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-foundation/01-04-PLAN.md
-last_updated: "2026-03-11T21:22:27.342Z"
+stopped_at: Completed 01-foundation/01-05-PLAN.md
+last_updated: "2026-03-12T04:47:24.378Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 40
 ---
 
@@ -52,6 +52,7 @@ Progress: [████░░░░░░] 40%
 *Updated after each plan completion*
 | Phase 01-foundation P03 | 2 | 2 tasks | 6 files |
 | Phase 01-foundation P04 | 5 | 2 tasks | 6 files |
+| Phase 01-foundation P05 | 8 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Stub reducer pattern: Phase 1 proves the wiring; Phase 2 replaces stubs with real transitions
 - [Phase 01-foundation]: MotionConfig inside PresentationProvider so entire app tree inherits reducedMotion=user automatically
 - [Phase 01-foundation]: KeyboardController is a null-rendering component mounted once in root layout — not a hook
+- [Phase 01-foundation]: Root layout stays a Server Component — PresentationProvider and KeyboardController form isolated client subtrees when imported
+- [Phase 01-foundation]: Dev indicator (stop/slide/mode overlay) retained in Phase 1 to verify reducer wiring; removed in Phase 4
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T21:22:27.339Z
-Stopped at: Completed 01-foundation/01-04-PLAN.md
+Last session: 2026-03-12T04:47:24.374Z
+Stopped at: Completed 01-foundation/01-05-PLAN.md
 Resume file: None
