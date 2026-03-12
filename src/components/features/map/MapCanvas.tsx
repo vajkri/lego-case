@@ -13,7 +13,7 @@ export function MapCanvas() {
   const { state } = usePresentation()
 
   return (
-    <div className="relative w-full h-full bg-slate-100">
+    <div className="relative w-full h-full overflow-hidden">
       <MapSvg className="absolute inset-0 w-full h-full" />
       {/* DEV INDICATOR — Phase 1 only. Remove in Phase 4 (or when no longer needed).
           Shows that keyboard events reach the reducer and state updates render. */}

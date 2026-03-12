@@ -7,6 +7,9 @@
 
 import { RoadPath } from './RoadPath'
 
+// Shared viewBox dimensions — used by MapCanvas for overlay coordinate mapping
+export const MAP_VIEWBOX = { width: 1400, height: 800 } as const
+
 interface MapSvgProps {
   className?: string
 }
@@ -45,7 +48,7 @@ export function MapSvg({ className }: MapSvgProps) {
     <svg
       viewBox="0 0 1400 800"
       xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="none"
       className={className}
     >
       <defs>
