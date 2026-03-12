@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 02-02: Real reducer + triggerRef"
-last_updated: "2026-03-12T06:38:07.818Z"
+stopped_at: Completed 02-navigation-and-slides-04-PLAN.md
+last_updated: "2026-03-12T06:40:32.536Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
   percent: 40
 ---
 
@@ -56,6 +56,7 @@ Progress: [████░░░░░░] 40%
 | Phase 02-navigation-and-slides P01 | 5 | 2 tasks | 2 files |
 | Phase 02-navigation-and-slides P03 | 3 | 2 tasks | 5 files |
 | Phase 02-navigation-and-slides P02 | 5 | 2 tasks | 3 files |
+| Phase 02-navigation-and-slides P04 | 4 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 02-navigation-and-slides]: Reducer (02-02): presentationReducer exported as named function for direct unit testing without React component mounting
 - [Phase 02-navigation-and-slides]: Reducer (02-02): No-op transitions return same state reference (not spread) to preserve referential equality for React.memo
 - [Phase 02-navigation-and-slides]: Reducer (02-02): triggerRef stored in PresentationContext value (not separate context) for minimal API surface
+- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Tests mock focus-trap-react and motion/react, wrap in real PresentationProvider — jsdom can't run real FocusTrap
+- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Always renders when mounted; AnimatePresence conditional rendering handled by parent in 02-05
+- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): LEGO placeholder is red rounded badge in SlideHeader; replaced with real asset in Phase 4
 
 ### Pending Todos
 
@@ -99,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T06:38:07.814Z
-Stopped at: Completed 02-02: Real reducer + triggerRef
+Last session: 2026-03-12T06:40:32.532Z
+Stopped at: Completed 02-navigation-and-slides-04-PLAN.md
 Resume file: None
