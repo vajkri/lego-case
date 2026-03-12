@@ -1,7 +1,7 @@
 // src/types/presentation.ts
 // Locked interface contracts for the presentation state machine.
 // Defined in Phase 1 and consumed by all subsequent phases.
-// Do NOT add fields to PresentationState or Action in Phase 2+ without revising this file.
+// Phase 3 additions: isCarTraveling, awaitingSlideOpen, visitedStops fields; ARRIVE action.
 
 export interface Slide {
   heading: string
@@ -36,21 +36,30 @@ export interface PresentationState {
   currentSlide: number
   /** 'map' = map view; 'slide' = slide overlay is open */
   mode: 'map' | 'slide'
+  /** true while car is animating between stops — ADVANCE is a no-op during travel (Phase 3) */
+  isCarTraveling: boolean
+  /** true after car arrives at stop — next ADVANCE opens the slide overlay instead of starting travel (Phase 3) */
+  awaitingSlideOpen: boolean
+  /** Indices of stops the car has reached — drives MAP-03 visited visual state (Phase 3) */
+  visitedStops: number[]
 }
 
 /**
  * Reducer actions for the presentation state machine.
  * Implemented as stubs in Phase 1 (console.log only).
  * Phase 2 fills in real navigation logic.
+ * Phase 3 adds ARRIVE for car animation completion.
  *
  * ADVANCE:      ArrowRight / Space — advance to next slide or next stop
  * BACK:         ArrowLeft          — go back one slide or close and return to map
  * CLOSE:        Escape             — close slide overlay and return to map
  * JUMP_TO_STOP: Clicking a stop node or footer circle — jump directly to that stop's first slide
  *               (Added in Phase 2 per CONTEXT.md approved decision)
+ * ARRIVE:       Dispatched by CarElement.onAnimationComplete when car reaches target stop (Phase 3)
  */
 export type Action =
   | { type: 'ADVANCE' }
   | { type: 'BACK' }
   | { type: 'CLOSE' }
   | { type: 'JUMP_TO_STOP'; stopIndex: number }
+  | { type: 'ARRIVE' }  // dispatched by CarElement.onAnimationComplete when car reaches target stop

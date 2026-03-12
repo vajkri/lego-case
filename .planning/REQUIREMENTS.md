@@ -21,16 +21,16 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 ### Map
 
-- [ ] **MAP-01**: An SVG inline world map renders as the root/default view with 14 named city nodes at defined coordinates
+- [x] **MAP-01**: An SVG inline world map renders as the root/default view with 14 named city nodes at defined coordinates
 - [ ] **MAP-02**: Each city node is a focusable `<button>` with visible label, keyboard-focusable, and accessible via screen reader
-- [ ] **MAP-03**: Visited cities have a distinct visual state from unvisited cities
+- [x] **MAP-03**: Visited cities have a distinct visual state from unvisited cities
 - [ ] **MAP-04**: A progress indicator shows the presenter's current position in the 14-topic journey
 
 ### Car & Travel
 
 - [ ] **CAR-01**: A red LEGO car element is rendered on the map and positioned at the current city
-- [ ] **CAR-02**: When advancing to the next topic, the car animates along a path from the current city to the next city using CSS motion path (`offsetPath`)
-- [ ] **CAR-03**: Car travel animation uses CSS transform properties (`x`/`y`), not SVG coordinate attributes, to avoid layout/paint on every frame
+- [x] **CAR-02**: When advancing to the next topic, the car animates along a path from the current city to the next city using CSS motion path (`offsetPath`)
+- [x] **CAR-03**: Car travel animation uses CSS transform properties (`x`/`y`), not SVG coordinate attributes, to avoid layout/paint on every frame
 - [ ] **CAR-04**: Car travel animation is smooth and does not drop frames on a standard laptop
 
 ### Navigation
@@ -125,13 +125,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | A11Y-03 | Phase 2 | Complete |
 | A11Y-04 | Phase 2 | Complete |
 | A11Y-05 | Phase 2 | Complete |
-| MAP-01 | Phase 3 | Pending |
+| MAP-01 | Phase 3 | Complete |
 | MAP-02 | Phase 3 | Pending |
-| MAP-03 | Phase 3 | Pending |
+| MAP-03 | Phase 3 | Complete |
 | MAP-04 | Phase 3 | Pending |
 | CAR-01 | Phase 3 | Pending |
-| CAR-02 | Phase 3 | Pending |
-| CAR-03 | Phase 3 | Pending |
+| CAR-02 | Phase 3 | Complete |
+| CAR-03 | Phase 3 | Complete |
 | CAR-04 | Phase 3 | Pending |
 | PERF-01 | Phase 4 | Pending |
 | PERF-02 | Phase 4 | Pending |

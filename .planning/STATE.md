@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-12T15:55:07.855Z"
+stopped_at: Completed 03-03-PLAN.md
+last_updated: "2026-03-12T17:15:47.981Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 15
+  completed_plans: 13
   percent: 40
 ---
 
@@ -58,6 +58,8 @@ Progress: [████░░░░░░] 40%
 | Phase 02-navigation-and-slides P02 | 5 | 2 tasks | 3 files |
 | Phase 02-navigation-and-slides P04 | 4 | 2 tasks | 7 files |
 | Phase 02-navigation-and-slides P05 | 20 | 2 tasks | 7 files |
+| Phase 03-map-and-car-animation P01 | 4 | 2 tasks | 4 files |
+| Phase 03-map-and-car-animation P03 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -95,6 +97,8 @@ Recent decisions affecting current work:
 - [Phase 02-navigation-and-slides]: Bug fix (02-05): Space key in KeyboardController returns early when target is button/link to prevent double-dispatch conflict with JUMP_TO_STOP
 - [Phase 02-navigation-and-slides]: Bug fix (02-05): map-mode ADVANCE opens current stop (state.currentStopIndex), not next — reducer was off-by-one
 - [Footer refactor — 2026-03-12]: PresentationFooter extracted from SlideOverlay and moved to root layout — footer is always visible on both map and slide views; SlideOverlay changed from `fixed inset-0` to `absolute inset-0` so it fills only the content area above the footer; MapCanvas changed from h-screen to h-full
+- [Phase 03-map-and-car-animation]: awaitingSlideOpen boolean in PresentationState distinguishes just-arrived from returned-from-overlay; ARRIVE action dispatched by CarElement; visitedStops starts as [0]
+- [Phase 03-map-and-car-animation]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth — prevents car animation drifting from visual road
 
 ### Pending Todos
 
@@ -108,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T15:55:07.851Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-map-and-car-animation/03-CONTEXT.md
+Last session: 2026-03-12T17:15:47.977Z
+Stopped at: Completed 03-03-PLAN.md
+Resume file: None

@@ -1,6 +1,7 @@
 // src/components/features/presentation/PresentationProvider.tsx
 // Manages all presentation navigation state.
 // Phase 2: real reducer with full navigation logic, triggerRef for focus return.
+// Phase 3: two-step car travel flow (ADVANCE → travel, ARRIVE → awaitingSlideOpen, ADVANCE → slide).
 'use client'
 
 import { createContext, useContext, useReducer, useRef, ReactNode } from 'react'
@@ -12,17 +13,28 @@ const initialState: PresentationState = {
   currentStop: 0,
   currentSlide: 0,
   mode: 'map',
+  isCarTraveling: false,
+  awaitingSlideOpen: false,
+  visitedStops: [0],  // stop 0 is active from the beginning
 }
 
 /**
  * Presentation state machine — keyboard navigation model (A11Y-05).
  *
  * ADVANCE (ArrowRight / Space):
- *   - Map mode: opens the current stop's slides (no-op at last stop when in map)
+ *   - Map mode, isCarTraveling: true  → no-op (ignore input during travel)
+ *   - Map mode, awaitingSlideOpen: true → opens slide overlay for current stop
+ *   - Map mode, parked at stop → starts car travel to next stop (increments currentStop, sets isCarTraveling)
+ *   - Map mode, at last stop → no-op
  *   - Slide mode: advances sub-slide; on last sub-slide advances to next stop
  *     (or returns to map if already on the last stop)
  *
+ * ARRIVE (dispatched by CarElement.onAnimationComplete):
+ *   - Sets isCarTraveling: false, awaitingSlideOpen: true
+ *   - Appends currentStop to visitedStops if not already present
+ *
  * BACK (ArrowLeft):
+ *   - Map mode, isCarTraveling: true → no-op
  *   - Map mode: opens previous stop at its LAST slide (no-op at first stop)
  *   - Slide mode: goes back one sub-slide; closes overlay at sub-slide 0
  *
@@ -30,7 +42,7 @@ const initialState: PresentationState = {
  *   - Always returns to map mode, preserving position for "Zoom in" restore
  *
  * JUMP_TO_STOP (stop node click / footer circle click):
- *   - Directly opens specified stop at sub-slide 0
+ *   - Directly opens specified stop at sub-slide 0, resets travel state
  */
 export function presentationReducer(state: PresentationState, action: Action): PresentationState {
   switch (action.type) {
@@ -43,16 +55,38 @@ export function presentationReducer(state: PresentationState, action: Action): P
           if (isLastStop) {
             return { ...state, mode: 'map', currentSlide: 0 }
           }
-          return { currentStop: state.currentStop + 1, currentSlide: 0, mode: 'slide' }
+          return { ...state, currentStop: state.currentStop + 1, currentSlide: 0, mode: 'slide' }
         }
         return { ...state, currentSlide: state.currentSlide + 1 }
       } else {
-        // map mode: open the current stop's slides
-        const isLastStop = state.currentStop === stops.length - 1
-        if (isLastStop) {
-          return state // no-op — already at last stop in map view
+        // Map mode: two-step travel model (Phase 3)
+        if (state.isCarTraveling) return state  // no-op during travel
+
+        if (state.awaitingSlideOpen) {
+          // Car has arrived at current stop — open slide overlay
+          return { ...state, mode: 'slide', currentSlide: 0, awaitingSlideOpen: false }
         }
-        return { ...state, mode: 'slide', currentSlide: 0 }
+
+        // Car is parked and presenter has already seen slides (or at start)
+        // → start travel to next stop
+        const isLastStop = state.currentStop === stops.length - 1
+        if (isLastStop) return state  // no-op at end of journey
+
+        return {
+          ...state,
+          currentStop: state.currentStop + 1,
+          isCarTraveling: true,
+        }
+      }
+    }
+    case 'ARRIVE': {
+      return {
+        ...state,
+        isCarTraveling: false,
+        awaitingSlideOpen: true,
+        visitedStops: state.visitedStops.includes(state.currentStop)
+          ? state.visitedStops
+          : [...state.visitedStops, state.currentStop],
       }
     }
     case 'BACK': {
@@ -63,11 +97,13 @@ export function presentationReducer(state: PresentationState, action: Action): P
         return { ...state, currentSlide: state.currentSlide - 1 }
       } else {
         // map mode
+        if (state.isCarTraveling) return state  // no-op during travel
         if (state.currentStop === 0) {
           return state // no-op
         }
         const prevStop = state.currentStop - 1
         return {
+          ...state,
           currentStop: prevStop,
           currentSlide: stops[prevStop].slides.length - 1,
           mode: 'slide',
@@ -78,7 +114,17 @@ export function presentationReducer(state: PresentationState, action: Action): P
       return { ...state, mode: 'map' }
     }
     case 'JUMP_TO_STOP': {
-      return { currentStop: action.stopIndex, currentSlide: 0, mode: 'slide' }
+      return {
+        ...state,
+        currentStop: action.stopIndex,
+        currentSlide: 0,
+        mode: 'slide',
+        isCarTraveling: false,
+        awaitingSlideOpen: false,
+        visitedStops: state.visitedStops.includes(action.stopIndex)
+          ? state.visitedStops
+          : [...state.visitedStops, action.stopIndex],
+      }
     }
     default:
       return state

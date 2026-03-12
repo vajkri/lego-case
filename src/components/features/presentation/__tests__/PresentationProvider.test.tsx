@@ -49,12 +49,12 @@ describe('PresentationProvider', () => {
       </PresentationProvider>
     )
 
-    // ADVANCE from stop 0 map → opens stop 0 in slide mode (first stop is reachable)
+    // Phase 3 two-step flow: ADVANCE from stop 0 map → starts car travel to stop 1
     act(() => { screen.getByText('advance').click() })
-    expect(screen.getByTestId('stop').textContent).toBe('0')
-    expect(screen.getByTestId('mode').textContent).toBe('slide')
+    expect(screen.getByTestId('stop').textContent).toBe('1')
+    expect(screen.getByTestId('mode').textContent).toBe('map')
 
-    // CLOSE from slide mode → returns to map
+    // CLOSE from map mode → stays in map (CLOSE is a no-op in map mode effectively)
     act(() => { screen.getByText('close').click() })
     expect(screen.getByTestId('mode').textContent).toBe('map')
   })
