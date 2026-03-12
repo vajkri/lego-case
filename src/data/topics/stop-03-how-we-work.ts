@@ -4,7 +4,9 @@ import type { Stop } from '@/types/presentation'
 export const stopHowWeWork: Stop = {
   slug: 'how-we-work',
   label: 'How We Work',
-  coordinates: { x: 50, y: 55 },
+  // Coordinates updated in Phase 3 to match actual SVG road positions.
+  // Update together with ROAD_PATH_D and STOP_OFFSETS in RoadPath.tsx if road geometry changes.
+  coordinates: { x: 39, y: 79 },
   slides: [
     {
       heading: 'Team Structure',

@@ -4,7 +4,9 @@ import type { Stop } from '@/types/presentation'
 export const stopMigration: Stop = {
   slug: 'migration',
   label: 'Migration',
-  coordinates: { x: 70, y: 40 },
+  // Coordinates updated in Phase 3 to match actual SVG road positions.
+  // Update together with ROAD_PATH_D and STOP_OFFSETS in RoadPath.tsx if road geometry changes.
+  coordinates: { x: 55, y: 59 },
   slides: [
     {
       heading: 'Incremental Route Migration',
