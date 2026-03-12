@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-navigation-and-slides-04-PLAN.md
-last_updated: "2026-03-12T06:40:32.536Z"
+stopped_at: Completed 02-navigation-and-slides-05-PLAN.md
+last_updated: "2026-03-12T14:53:16.491Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 40
 ---
 
@@ -57,6 +57,7 @@ Progress: [████░░░░░░] 40%
 | Phase 02-navigation-and-slides P03 | 3 | 2 tasks | 5 files |
 | Phase 02-navigation-and-slides P02 | 5 | 2 tasks | 3 files |
 | Phase 02-navigation-and-slides P04 | 4 | 2 tasks | 7 files |
+| Phase 02-navigation-and-slides P05 | 20 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Tests mock focus-trap-react and motion/react, wrap in real PresentationProvider — jsdom can't run real FocusTrap
 - [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Always renders when mounted; AnimatePresence conditional rendering handled by parent in 02-05
 - [Phase 02-navigation-and-slides]: SlideOverlay (02-04): LEGO placeholder is red rounded badge in SlideHeader; replaced with real asset in Phase 4
+- [Phase 02-navigation-and-slides]: OverlayPresence is a dedicated 'use client' wrapper so AnimatePresence can run while layout.tsx stays a Server Component
+- [Phase 02-navigation-and-slides]: Bug fix (02-05): Space key in KeyboardController returns early when target is button/link to prevent double-dispatch conflict with JUMP_TO_STOP
+- [Phase 02-navigation-and-slides]: Bug fix (02-05): map-mode ADVANCE opens current stop (state.currentStopIndex), not next — reducer was off-by-one
 
 ### Pending Todos
 
@@ -103,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T06:40:32.532Z
-Stopped at: Completed 02-navigation-and-slides-04-PLAN.md
+Last session: 2026-03-12T14:53:16.488Z
+Stopped at: Completed 02-navigation-and-slides-05-PLAN.md
 Resume file: None
