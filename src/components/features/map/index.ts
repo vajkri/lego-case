@@ -1,4 +1,5 @@
 // src/components/features/map/index.ts
+export * from './CarElement'
 export * from './MapCanvas'
 export * from './MapSvg'
 export * from './RoadPath'

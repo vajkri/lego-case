@@ -1,10 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
 
-// CarElement does not exist yet — this import will fail until 03-04 creates it.
-// This is intentional RED state (Nyquist compliance).
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error — module created in 03-04
 import { CarElement } from '../CarElement'
 
 // Mock motion/react — jsdom cannot animate CSS motion path
@@ -50,14 +46,18 @@ describe('CarElement — CAR-02: offsetDistance drives position along path', () 
   })
 
   it('animates to a different offsetDistance for targetStop 4 vs targetStop 0', () => {
-    const { getByTestId: getStop0 } = render(
+    const { container: container0 } = render(
       <CarElement targetStop={0} isMovingBackward={false} onArrival={noop} />
     )
-    const { getByTestId: getStop4 } = render(
+    const { container: container4 } = render(
       <CarElement targetStop={4} isMovingBackward={false} onArrival={noop} />
     )
-    expect(getStop0('car-element').getAttribute('data-offset-distance')).not.toBe(
-      getStop4('car-element').getAttribute('data-offset-distance')
+    // Use container-scoped querySelector to avoid multiple-elements error when both
+    // renders are in the same document.body (RTL v16 getByTestId queries document.body)
+    const el0 = container0.querySelector('[data-testid="car-element"]')
+    const el4 = container4.querySelector('[data-testid="car-element"]')
+    expect(el0?.getAttribute('data-offset-distance')).not.toBe(
+      el4?.getAttribute('data-offset-distance')
     )
   })
 })
