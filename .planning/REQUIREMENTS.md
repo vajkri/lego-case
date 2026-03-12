@@ -35,26 +35,26 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 ### Navigation
 
-- [ ] **NAV-01**: A single `PresentationContext` (useReducer) manages: current topic index, current sub-slide index, and whether the slide overlay is open
+- [x] **NAV-01**: A single `PresentationContext` (useReducer) manages: current topic index, current sub-slide index, and whether the slide overlay is open
 - [ ] **NAV-02**: A `KeyboardController` client component mounted in root layout listens globally for: `ArrowRight`/`Space` (advance), `ArrowLeft` (back), `Escape` (close slide / return to map)
-- [ ] **NAV-03**: Pressing advance on the last sub-slide of a topic closes the slide overlay and returns to the map view
-- [ ] **NAV-04**: Pressing advance on the map (no slide open) triggers car travel to next city and opens that city's slide
-- [ ] **NAV-05**: Navigation state is deterministic and unit-testable independent of UI
+- [x] **NAV-03**: Pressing advance on the last sub-slide of a topic closes the slide overlay and returns to the map view
+- [x] **NAV-04**: Pressing advance on the map (no slide open) triggers car travel to next city and opens that city's slide
+- [x] **NAV-05**: Navigation state is deterministic and unit-testable independent of UI
 
 ### Slides
 
-- [ ] **SLIDE-01**: When the car arrives at a city, a full-screen slide overlay animates in (zoom/scale takeover) via `AnimatePresence`
+- [x] **SLIDE-01**: When the car arrives at a city, a full-screen slide overlay animates in (zoom/scale takeover) via `AnimatePresence`
 - [ ] **SLIDE-02**: Slide overlay is rendered as a conditional React element in layout (not a route transition) to avoid the known App Router/AnimatePresence incompatibility
-- [ ] **SLIDE-03**: Each slide renders its topic content (heading, body) from typed data files — no hardcoded slide content in components
-- [ ] **SLIDE-04**: Multi-sub-slide topics step through each sub-slide in sequence before returning to the map
+- [x] **SLIDE-03**: Each slide renders its topic content (heading, body) from typed data files — no hardcoded slide content in components
+- [x] **SLIDE-04**: Multi-sub-slide topics step through each sub-slide in sequence before returning to the map
 - [ ] **SLIDE-05**: Slide overlay zooms back out smoothly when closing, returning focus and view to the map
 
 ### Accessibility
 
-- [ ] **A11Y-01**: Focus is trapped inside the slide overlay while it is open (WCAG 2.1.2) — implemented via `focus-trap-react` or equivalent
-- [ ] **A11Y-02**: An ARIA live region announces the current topic name and sub-slide number when they change, for screen reader users
+- [x] **A11Y-01**: Focus is trapped inside the slide overlay while it is open (WCAG 2.1.2) — implemented via `focus-trap-react` or equivalent
+- [x] **A11Y-02**: An ARIA live region announces the current topic name and sub-slide number when they change, for screen reader users
 - [ ] **A11Y-03**: All interactive elements (city nodes, slide close button) have visible focus indicators meeting WCAG 2.4.7
-- [ ] **A11Y-04**: When the slide overlay closes, focus returns to the city button that triggered it
+- [x] **A11Y-04**: When the slide overlay closes, focus returns to the city button that triggered it
 - [ ] **A11Y-05**: The keyboard navigation model is documented in code with clear comments — demonstrating accessibility competence to LEGO reviewers
 
 ### Performance & Quality
@@ -110,20 +110,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-01 | Phase 1 | Complete |
 | QUAL-02 | Phase 1 | Complete |
 | QUAL-03 | Phase 1 | Complete |
-| NAV-01 | Phase 2 | Pending |
+| NAV-01 | Phase 2 | Complete |
 | NAV-02 | Phase 2 | Pending |
-| NAV-03 | Phase 2 | Pending |
-| NAV-04 | Phase 2 | Pending |
-| NAV-05 | Phase 2 | Pending |
-| SLIDE-01 | Phase 2 | Pending |
+| NAV-03 | Phase 2 | Complete |
+| NAV-04 | Phase 2 | Complete |
+| NAV-05 | Phase 2 | Complete |
+| SLIDE-01 | Phase 2 | Complete |
 | SLIDE-02 | Phase 2 | Pending |
-| SLIDE-03 | Phase 2 | Pending |
-| SLIDE-04 | Phase 2 | Pending |
+| SLIDE-03 | Phase 2 | Complete |
+| SLIDE-04 | Phase 2 | Complete |
 | SLIDE-05 | Phase 2 | Pending |
-| A11Y-01 | Phase 2 | Pending |
-| A11Y-02 | Phase 2 | Pending |
+| A11Y-01 | Phase 2 | Complete |
+| A11Y-02 | Phase 2 | Complete |
 | A11Y-03 | Phase 2 | Pending |
-| A11Y-04 | Phase 2 | Pending |
+| A11Y-04 | Phase 2 | Complete |
 | A11Y-05 | Phase 2 | Pending |
 | MAP-01 | Phase 3 | Pending |
 | MAP-02 | Phase 3 | Pending |
