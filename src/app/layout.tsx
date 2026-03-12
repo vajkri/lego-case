@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { PresentationProvider, KeyboardController } from '@/components/features/presentation'
+import { OverlayPresence } from '@/components/features/slide'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
         <PresentationProvider>
           {/* KeyboardController: no visual output, only attaches window keydown listener */}
           <KeyboardController />
+          <OverlayPresence />
           {children}
         </PresentationProvider>
       </body>
