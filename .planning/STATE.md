@@ -94,6 +94,7 @@ Recent decisions affecting current work:
 - [Phase 02-navigation-and-slides]: OverlayPresence is a dedicated 'use client' wrapper so AnimatePresence can run while layout.tsx stays a Server Component
 - [Phase 02-navigation-and-slides]: Bug fix (02-05): Space key in KeyboardController returns early when target is button/link to prevent double-dispatch conflict with JUMP_TO_STOP
 - [Phase 02-navigation-and-slides]: Bug fix (02-05): map-mode ADVANCE opens current stop (state.currentStopIndex), not next — reducer was off-by-one
+- [Footer refactor — 2026-03-12]: PresentationFooter extracted from SlideOverlay and moved to root layout — footer is always visible on both map and slide views; SlideOverlay changed from `fixed inset-0` to `absolute inset-0` so it fills only the content area above the footer; MapCanvas changed from h-screen to h-full
 
 ### Pending Todos
 
