@@ -37,7 +37,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 - [x] **NAV-01**: A single `PresentationContext` (useReducer) manages: current topic index, current sub-slide index, and whether the slide overlay is open
 - [x] **NAV-02**: A `KeyboardController` client component mounted in root layout listens globally for: `ArrowRight`/`Space` (advance), `ArrowLeft` (back), `Escape` (close slide / return to map)
-- [x] **NAV-03**: Pressing advance on the last sub-slide of a topic closes the slide overlay and returns to the map view
+- [x] **NAV-03**: Pressing advance on the last sub-slide of a non-final stop seamlessly advances to the next stop's first slide (keeping the overlay open). Only pressing advance on the last sub-slide of the final stop closes the overlay and returns to the map view.
 - [x] **NAV-04**: Pressing advance on the map (no slide open) triggers car travel to next city and opens that city's slide
 - [x] **NAV-05**: Navigation state is deterministic and unit-testable independent of UI
 
@@ -144,4 +144,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 — traceability updated to match roadmap phases*
+*Last updated: 2026-03-12 — NAV-03 revised to reflect accepted implemented behaviour (non-final stop last sub-slide advances to next stop; only final stop last sub-slide returns to map)*
