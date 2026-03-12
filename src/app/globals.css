@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@source not "./.planning/**";
+@source not "./CLAUDE.md";
+@source not "./.claude/**";
+@source not "./.serena/**";
 
 @theme {
   /* LEGO design tokens deferred to Phase 4 — placeholders only */
