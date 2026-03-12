@@ -26,6 +26,7 @@ export function MapCanvas() {
           key={stop.slug}
           stop={stop}
           isActive={state.currentStop === index}
+          index={index}
         />
       ))}
     </div>
