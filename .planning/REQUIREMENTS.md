@@ -21,7 +21,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 ### Map
 
-- [ ] **MAP-01**: An SVG inline world map renders as the root/default view with 14 named city nodes at defined coordinates
+- [x] **MAP-01**: An SVG inline world map renders as the root/default view with 14 named city nodes at defined coordinates
 - [ ] **MAP-02**: Each city node is a focusable `<button>` with visible label, keyboard-focusable, and accessible via screen reader
 - [x] **MAP-03**: Visited cities have a distinct visual state from unvisited cities
 - [ ] **MAP-04**: A progress indicator shows the presenter's current position in the 14-topic journey
@@ -125,7 +125,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | A11Y-03 | Phase 2 | Complete |
 | A11Y-04 | Phase 2 | Complete |
 | A11Y-05 | Phase 2 | Complete |
-| MAP-01 | Phase 3 | Pending |
+| MAP-01 | Phase 3 | Complete |
 | MAP-02 | Phase 3 | Pending |
 | MAP-03 | Phase 3 | Complete |
 | MAP-04 | Phase 3 | Pending |
