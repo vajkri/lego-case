@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 02-navigation-and-slides plan 02-03: StopNode wiring"
-last_updated: "2026-03-12T06:37:30.260Z"
+stopped_at: "Completed 02-02: Real reducer + triggerRef"
+last_updated: "2026-03-12T06:38:07.818Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
@@ -55,6 +55,7 @@ Progress: [████░░░░░░] 40%
 | Phase 01-foundation P05 | 8 | 2 tasks | 5 files |
 | Phase 02-navigation-and-slides P01 | 5 | 2 tasks | 2 files |
 | Phase 02-navigation-and-slides P03 | 3 | 2 tasks | 5 files |
+| Phase 02-navigation-and-slides P02 | 5 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,9 @@ Recent decisions affecting current work:
 - [Phase 02-navigation-and-slides]: Wave 0 test scaffolds import from modules that do not exist yet — deliberate RED state for Nyquist compliance
 - [Phase 02-navigation-and-slides]: SlideOverlay tests use local mock PresentationContext to avoid circular deps and keep tests isolated
 - [Phase 02-navigation-and-slides]: StopNode (02-03): triggerRef capture pattern — store e.currentTarget before JUMP_TO_STOP dispatch for A11Y-04 focus return on overlay close
+- [Phase 02-navigation-and-slides]: Reducer (02-02): presentationReducer exported as named function for direct unit testing without React component mounting
+- [Phase 02-navigation-and-slides]: Reducer (02-02): No-op transitions return same state reference (not spread) to preserve referential equality for React.memo
+- [Phase 02-navigation-and-slides]: Reducer (02-02): triggerRef stored in PresentationContext value (not separate context) for minimal API surface
 
 ### Pending Todos
 
@@ -95,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T06:37:30.253Z
-Stopped at: Completed 02-navigation-and-slides plan 02-03: StopNode wiring
+Last session: 2026-03-12T06:38:07.814Z
+Stopped at: Completed 02-02: Real reducer + triggerRef
 Resume file: None
