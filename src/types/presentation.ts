@@ -43,11 +43,14 @@ export interface PresentationState {
  * Implemented as stubs in Phase 1 (console.log only).
  * Phase 2 fills in real navigation logic.
  *
- * ADVANCE: ArrowRight / Space — advance to next slide or next stop
- * BACK:    ArrowLeft          — go back one slide or close and return to map
- * CLOSE:   Escape             — close slide overlay and return to map
+ * ADVANCE:      ArrowRight / Space — advance to next slide or next stop
+ * BACK:         ArrowLeft          — go back one slide or close and return to map
+ * CLOSE:        Escape             — close slide overlay and return to map
+ * JUMP_TO_STOP: Clicking a stop node or footer circle — jump directly to that stop's first slide
+ *               (Added in Phase 2 per CONTEXT.md approved decision)
  */
 export type Action =
   | { type: 'ADVANCE' }
   | { type: 'BACK' }
   | { type: 'CLOSE' }
+  | { type: 'JUMP_TO_STOP'; stopIndex: number }
