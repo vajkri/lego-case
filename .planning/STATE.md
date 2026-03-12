@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 02-01: Wave 0 test scaffolds (reducer.test.ts, SlideOverlay.test.tsx)"
-last_updated: "2026-03-12T06:36:19.443Z"
+stopped_at: "Completed 02-navigation-and-slides plan 02-03: StopNode wiring"
+last_updated: "2026-03-12T06:37:30.260Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 10
-  completed_plans: 6
+  completed_plans: 8
   percent: 40
 ---
 
@@ -54,6 +54,7 @@ Progress: [████░░░░░░] 40%
 | Phase 01-foundation P04 | 5 | 2 tasks | 6 files |
 | Phase 01-foundation P05 | 8 | 2 tasks | 5 files |
 | Phase 02-navigation-and-slides P01 | 5 | 2 tasks | 2 files |
+| Phase 02-navigation-and-slides P03 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,7 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Dev indicator (stop/slide/mode overlay) retained in Phase 1 to verify reducer wiring; removed in Phase 4
 - [Phase 02-navigation-and-slides]: Wave 0 test scaffolds import from modules that do not exist yet — deliberate RED state for Nyquist compliance
 - [Phase 02-navigation-and-slides]: SlideOverlay tests use local mock PresentationContext to avoid circular deps and keep tests isolated
+- [Phase 02-navigation-and-slides]: StopNode (02-03): triggerRef capture pattern — store e.currentTarget before JUMP_TO_STOP dispatch for A11Y-04 focus return on overlay close
 
 ### Pending Todos
 
@@ -93,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T06:36:19.440Z
-Stopped at: Completed 02-01: Wave 0 test scaffolds (reducer.test.ts, SlideOverlay.test.tsx)
+Last session: 2026-03-12T06:37:30.253Z
+Stopped at: Completed 02-navigation-and-slides plan 02-03: StopNode wiring
 Resume file: None

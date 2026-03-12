@@ -53,7 +53,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 
 - [x] **A11Y-01**: Focus is trapped inside the slide overlay while it is open (WCAG 2.1.2) — implemented via `focus-trap-react` or equivalent
 - [x] **A11Y-02**: An ARIA live region announces the current topic name and sub-slide number when they change, for screen reader users
-- [ ] **A11Y-03**: All interactive elements (city nodes, slide close button) have visible focus indicators meeting WCAG 2.4.7
+- [x] **A11Y-03**: All interactive elements (city nodes, slide close button) have visible focus indicators meeting WCAG 2.4.7
 - [x] **A11Y-04**: When the slide overlay closes, focus returns to the city button that triggered it
 - [ ] **A11Y-05**: The keyboard navigation model is documented in code with clear comments — demonstrating accessibility competence to LEGO reviewers
 
@@ -122,7 +122,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SLIDE-05 | Phase 2 | Pending |
 | A11Y-01 | Phase 2 | Complete |
 | A11Y-02 | Phase 2 | Complete |
-| A11Y-03 | Phase 2 | Pending |
+| A11Y-03 | Phase 2 | Complete |
 | A11Y-04 | Phase 2 | Complete |
 | A11Y-05 | Phase 2 | Pending |
 | MAP-01 | Phase 3 | Pending |
