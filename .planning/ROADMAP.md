@@ -66,7 +66,14 @@ Plans:
   2. Pressing advance on the map triggers the red LEGO car to animate along a path from the current stop to the next stop before the slide overlay opens
   3. Stops the presenter has already visited display a visually distinct state from unvisited stops, and a progress indicator shows the current position in the 5-stop journey
   4. Car travel animation runs at 60fps on a standard laptop — no visible jank during stop-to-stop transitions — verified by watching Chrome DevTools Performance panel during travel
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — State machine extension: isCarTraveling + awaitingSlideOpen + ARRIVE action + reducer tests
+- [ ] 03-02-PLAN.md — Wave 0 test scaffolds: StopNode.test.tsx + CarElement.test.tsx (RED state)
+- [ ] 03-03-PLAN.md — Illustrated SVG world map: MapSvg + RoadPath constants
+- [ ] 03-04-PLAN.md — LEGO StopNode redesign (3 states) + CarElement motion path implementation
+- [ ] 03-05-PLAN.md — MapCanvas wiring + MapProgressIndicator + stop coordinate update + human verification
 
 ### Phase 4: Content and Polish
 **Goal**: All 5 stop slides are fully authored and visually complete with LEGO-inspired design tokens, the production build is clean, and the presentation is ready to give.
@@ -87,5 +94,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete   | 2026-03-12 |
 | 2. Navigation and Slides | 5/5 | Complete   | 2026-03-12 |
-| 3. Map and Car Animation | 0/TBD | Not started | - |
+| 3. Map and Car Animation | 0/5 | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |
