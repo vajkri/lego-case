@@ -1,14 +1,43 @@
-// src/components/features/map/MapSvg.tsx
-// The illustrated SVG world map — stylized terrain in LEGO instruction booklet style.
-// Rural idyll (left) → modern city (right), mirroring the AngularJS → React narrative.
-// This component is purely decorative: no interactive elements, no stop markers, no car.
-// Stop nodes and the car are overlaid as HTML elements in MapCanvas.
 'use client'
+
+// Illustrated SVG world map — LEGO instruction booklet aesthetic.
+// Narrative: rural idyll (left) → modern city (right), mirroring AngularJS → React journey.
+// Purely decorative — no interactive elements. Stop nodes and car overlaid by MapCanvas.
+// viewBox: 1400×800. Designed for full-screen desktop presentation.
 
 import { RoadPath } from './RoadPath'
 
 interface MapSvgProps {
   className?: string
+}
+
+// Reusable lollipop tree — LEGO flat-illustration style
+function Tree({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <rect x={-4 * s} y={0} width={8 * s} height={24 * s} fill="#6B4A1E" rx={2} />
+      <circle cx={0} cy={-18 * s} r={22 * s} fill="#1E8A14" />
+      <circle cx={0} cy={-18 * s} r={22 * s} fill="#34C020" opacity={0.55} />
+      {/* canopy highlight */}
+      <circle cx={-6 * s} cy={-26 * s} r={8 * s} fill="#50D838" opacity={0.4} />
+    </g>
+  )
+}
+
+// Flat-bottom cloud with rounded bumps — matches LEGO illustration inspiration
+function Cloud({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
+  return (
+    <g transform={`translate(${x},${y}) scale(${s})`}>
+      {/* Flat base */}
+      <rect x={-52} y={-4} width={104} height={20} fill="white" rx={8} />
+      {/* Left bump */}
+      <circle cx={-26} cy={-6} r={18} fill="white" />
+      {/* Centre bump — tallest */}
+      <circle cx={8} cy={-16} r={24} fill="white" />
+      {/* Right bump */}
+      <circle cx={36} cy={-4} r={15} fill="white" />
+    </g>
+  )
 }
 
 export function MapSvg({ className }: MapSvgProps) {
@@ -20,231 +49,189 @@ export function MapSvg({ className }: MapSvgProps) {
       className={className}
     >
       <defs>
-        {/* Sky gradient — bright light blue from Screenshot 1 */}
-        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#5BB8E8" />
-          <stop offset="60%" stopColor="#87CEEB" />
-          <stop offset="100%" stopColor="#C5E8F7" />
+        {/* Sky — bright LEGO cerulean */}
+        <linearGradient id="ms-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3AAEE0" />
+          <stop offset="45%" stopColor="#62C8EE" />
+          <stop offset="100%" stopColor="#A8DFF5" />
         </linearGradient>
-        {/* Grass gradient — bright green from Screenshot 1 */}
-        <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#7DC86A" />
-          <stop offset="100%" stopColor="#4FA83A" />
+        {/* Grass — vivid LEGO green */}
+        <linearGradient id="ms-grass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#58CC3A" />
+          <stop offset="60%" stopColor="#44B028" />
+          <stop offset="100%" stopColor="#349A18" />
         </linearGradient>
-        {/* Mountain gradient */}
-        <linearGradient id="mountainGrad1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#A8BDD4" />
-          <stop offset="100%" stopColor="#7A95B2" />
+        {/* Mountain gradients — grey */}
+        <linearGradient id="ms-mt-big" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stopColor="#8A8E94" />
+          <stop offset="100%" stopColor="#5C6068" />
         </linearGradient>
-        <linearGradient id="mountainGrad2" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#BFD0E0" />
-          <stop offset="100%" stopColor="#8FA8C4" />
+        <linearGradient id="ms-mt-sm" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stopColor="#9A9EA4" />
+          <stop offset="100%" stopColor="#6E7278" />
         </linearGradient>
+        {/* Pond */}
+        <radialGradient id="ms-pond" cx="38%" cy="32%" r="68%">
+          <stop offset="0%" stopColor="#7AD8F4" />
+          <stop offset="100%" stopColor="#28A8CC" />
+        </radialGradient>
       </defs>
 
-      {/* ── SKY ── */}
-      <rect width="1400" height="800" fill="url(#skyGrad)" />
+      {/* ── 1. SKY ── */}
+      <rect width="1400" height="800" fill="url(#ms-sky)" />
 
-      {/* ── GRASS — gentle undulating horizon line ── */}
+      {/* ── 2. SUN — upper left ── */}
+      <circle cx={148} cy={118} r={56} fill="#FFD830" />
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
+        const rad = (deg * Math.PI) / 180
+        return (
+          <line
+            key={`sun-${deg}`}
+            x1={148 + Math.cos(rad) * 68}
+            y1={118 + Math.sin(rad) * 68}
+            x2={148 + Math.cos(rad) * 88}
+            y2={118 + Math.sin(rad) * 88}
+            stroke="#FFD830"
+            strokeWidth={5.5}
+            strokeLinecap="round"
+          />
+        )
+      })}
+
+      {/* ── 3. CLOUDS — staggered heights for organic feel ── */}
+      <Cloud x={235} y={35} s={0.8} />
+      <Cloud x={425} y={115} s={1.32} />
+      <Cloud x={672} y={55} s={0.9} />
+      <Cloud x={940} y={150} s={1.05} />
+      <Cloud x={1175} y={75} s={0.75} />
+
+      {/* ── 4. MOUNTAINS — left side, grey, bases aligned with grass horizon y≈380 ── */}
+      {/* Far background hill */}
+      <path d="M 0,380 L 85,335 L 170,380 Z" fill="#A0A4AA" opacity={0.38} />
+      {/* Big mountain */}
+      <path d="M 48,380 L 222,215 L 398,380 Z" fill="url(#ms-mt-big)" />
+      <path d="M 222,215 L 222,380 L 398,380 Z" fill="rgba(0,0,0,0.10)" />
+      {/* Big snow cap */}
+      <path d="M 222,215 L 200,273 L 244,273 Z" fill="white" opacity={0.96} />
+      <path d="M 222,215 L 222,273 L 244,273 Z" fill="#D8EEFF" opacity={0.45} />
+      {/* Smaller mountain */}
+      <path d="M 282,380 L 412,275 L 544,380 Z" fill="url(#ms-mt-sm)" opacity={0.92} />
+      <path d="M 412,275 L 412,380 L 544,380 Z" fill="rgba(0,0,0,0.08)" />
+      {/* Smaller snow cap */}
+      <path d="M 412,275 L 396,312 L 428,312 Z" fill="white" opacity={0.93} />
+      <path d="M 412,275 L 412,312 L 428,312 Z" fill="#D8EEFF" opacity={0.4} />
+
+      {/* ── 5. CITY BUILDINGS — right side, bases at horizon (y≈350) ── */}
+
+      {/* B1 — LEGO Green */}
+      <rect x={1200} y={186} width={46} height={164} fill="#00A850" rx={3} />
+      <rect x={1200} y={186} width={46} height={9} fill="#00CC60" rx={2} />
+      {[205, 230, 255, 280].map((y) =>
+        [1212, 1232].map((x) => (
+          <rect key={`g${x}${y}`} x={x} y={y} width={10} height={12} fill="#A0ECC0" rx={1} opacity={0.85} />
+        ))
+      )}
+
+      {/* B2 — LEGO Red, tallest */}
+      <rect x={1250} y={102} width={52} height={248} fill="#E3000B" rx={3} />
+      <rect x={1250} y={102} width={52} height={10} fill="#FF2828" rx={2} />
+      {/* Antenna */}
+      <rect x={1273} y={90} width={4} height={16} fill="#AA0000" />
+      <circle cx={1275} cy={88} r={4} fill="#FF2222" />
+      {[122, 150, 178, 206, 234, 262, 290].map((y) =>
+        [1262, 1290].map((x) => (
+          <rect key={`r${x}${y}`} x={x} y={y} width={12} height={14} fill="#FFB8B0" rx={1} opacity={0.82} />
+        ))
+      )}
+
+      {/* B3 — LEGO Blue */}
+      <rect x={1306} y={120} width={48} height={230} fill="#0055BF" rx={3} />
+      <rect x={1306} y={120} width={48} height={10} fill="#1068E8" rx={2} />
+      {[139, 167, 195, 223, 251, 279].map((y) =>
+        [1316, 1340].map((x) => (
+          <rect key={`b${x}${y}`} x={x} y={y} width={12} height={13} fill="#98C8FF" rx={1} opacity={0.82} />
+        ))
+      )}
+
+      {/* B4 — LEGO Orange, fully within canvas */}
+      <rect x={1356} y={150} width={42} height={200} fill="#FF6600" rx={3} />
+      <rect x={1356} y={150} width={42} height={9} fill="#FF8830" rx={2} />
+      {[169, 196, 223, 250, 277].map((y) =>
+        [1366, 1386].map((x) => (
+          <rect key={`o${x}${y}`} x={x} y={y} width={10} height={13} fill="#FFD8A0" rx={1} opacity={0.82} />
+        ))
+      )}
+
+      {/* ── 6. GRASS — horizon at y≈350, gently undulating ── */}
       <path
-        d="M 0,445 Q 150,430 300,440 Q 450,450 600,435 Q 750,420 900,432 Q 1050,444 1200,436 Q 1300,430 1400,438 L 1400,800 L 0,800 Z"
-        fill="url(#grassGrad)"
+        d="M 0,360 Q 185,345 370,357 Q 555,370 740,353 Q 925,340 1110,347 Q 1260,357 1400,343 L 1400,800 L 0,800 Z"
+        fill="url(#ms-grass)"
       />
-      {/* Grass texture dots — subtle variation */}
-      <circle cx="160" cy="520" r="3" fill="#5AB845" opacity="0.4" />
-      <circle cx="320" cy="560" r="3" fill="#5AB845" opacity="0.4" />
-      <circle cx="480" cy="540" r="2.5" fill="#5AB845" opacity="0.4" />
-      <circle cx="640" cy="580" r="3" fill="#5AB845" opacity="0.4" />
-      <circle cx="800" cy="555" r="2.5" fill="#5AB845" opacity="0.4" />
-      <circle cx="960" cy="545" r="3" fill="#5AB845" opacity="0.4" />
-      <circle cx="1120" cy="565" r="2.5" fill="#5AB845" opacity="0.4" />
+      {/* Grass texture — LEGO-stud dot scatter */}
+      {[
+        [148,400],[268,426],[388,408],[510,420],[632,462],[752,412],[872,434],[992,404],[1112,420],[1232,410],
+        [208,470],[328,490],[448,466],[568,494],[688,458],[808,482],[928,464],[1048,454],[1168,468],
+        [178,540],[298,554],[418,534],[538,548],[658,528],[778,542],[898,532],[1018,524],
+        [148,610],[268,628],[448,608],[568,624],[688,604],[808,618],[928,608],[1048,598],
+      ].map(([x, y], i) => (
+        <circle
+          key={`gd${i}`}
+          cx={x}
+          cy={y}
+          r={3.2}
+          fill={i % 4 === 0 ? '#CC2200' : '#2A8A10'}
+          opacity={0.36}
+        />
+      ))}
 
-      {/* ── SUN (upper left) ── */}
-      <circle cx="110" cy="105" r="48" fill="#FFD93D" />
-      {/* Sun rays */}
-      <line x1="110" y1="47" x2="110" y2="28" stroke="#FFD93D" strokeWidth="4" strokeLinecap="round" />
-      <line x1="110" y1="163" x2="110" y2="182" stroke="#FFD93D" strokeWidth="4" strokeLinecap="round" />
-      <line x1="52" y1="105" x2="33" y2="105" stroke="#FFD93D" strokeWidth="4" strokeLinecap="round" />
-      <line x1="168" y1="105" x2="187" y2="105" stroke="#FFD93D" strokeWidth="4" strokeLinecap="round" />
-      <line x1="69" y1="64" x2="56" y2="51" stroke="#FFD93D" strokeWidth="3.5" strokeLinecap="round" />
-      <line x1="151" y1="146" x2="164" y2="159" stroke="#FFD93D" strokeWidth="3.5" strokeLinecap="round" />
-      <line x1="151" y1="64" x2="164" y2="51" stroke="#FFD93D" strokeWidth="3.5" strokeLinecap="round" />
-      <line x1="69" y1="146" x2="56" y2="159" stroke="#FFD93D" strokeWidth="3.5" strokeLinecap="round" />
+      {/* ── 7. TREES — lollipop clusters, organic y-stagger ── */}
+      {/* Left rural cluster */}
+      <Tree x={60}  y={395} s={1.1} />
+      <Tree x={120} y={432} s={0.9} />
+      <Tree x={148} y={410} s={1.0} />
+      {/* Between stop 1 & 2 */}
+      <Tree x={365} y={405} s={0.85} />
+      <Tree x={418} y={442} s={1.0}  />
+      <Tree x={448} y={418} s={0.75} />
+      {/* Centre-right — space for pond */}
+      <Tree x={872} y={630} s={0.9}  />
+      <Tree x={928} y={662} s={0.8}  />
+      <Tree x={956} y={642} s={0.85} />
+      {/* Near city entrance */}
+      <Tree x={990} y={400} s={0.9}  />
+      <Tree x={1044} y={438} s={0.8}  />
 
-      {/* ── MOUNTAINS / HILLS (left area, behind road) ── */}
-      {/* Back mountain — larger, slightly darker */}
-      <path d="M 150,445 L 290,255 L 430,445 Z" fill="url(#mountainGrad1)" opacity="0.85" />
-      {/* Snow cap */}
-      <path d="M 290,255 L 265,320 L 315,320 Z" fill="white" opacity="0.9" />
-      {/* Front-left smaller hill */}
-      <path d="M 80,445 L 175,330 L 270,445 Z" fill="url(#mountainGrad2)" opacity="0.7" />
-      {/* Right smaller hill */}
-      <path d="M 380,445 L 460,355 L 545,445 Z" fill="url(#mountainGrad2)" opacity="0.65" />
+      {/* ── 8. POND — centre area, 20% bigger, clear of road ── */}
+      <ellipse cx={680} cy={710} rx={90} ry={46} fill="url(#ms-pond)" opacity={0.9} />
+      <ellipse cx={668} cy={702} rx={60} ry={24} fill="#8CE0F8" opacity={0.45} />
+      <ellipse cx={658} cy={696} rx={22} ry={8} fill="white" opacity={0.28} />
 
-      {/* ── CLOUDS at VARIED heights ── */}
-      {/* Cloud 1 — large, upper-center (y≈75) */}
-      <g transform="translate(480, 75)">
-        <ellipse cx="0" cy="0" rx="72" ry="36" fill="white" opacity="0.92" />
-        <ellipse cx="58" cy="-12" rx="50" ry="28" fill="white" opacity="0.92" />
-        <ellipse cx="-52" cy="-8" rx="42" ry="24" fill="white" opacity="0.92" />
-      </g>
-      {/* Cloud 2 — medium, lower in sky (y≈145) — near center-right */}
-      <g transform="translate(780, 145)">
-        <ellipse cx="0" cy="0" rx="58" ry="28" fill="white" opacity="0.88" />
-        <ellipse cx="46" cy="-9" rx="38" ry="21" fill="white" opacity="0.88" />
-        <ellipse cx="-42" cy="-5" rx="34" ry="19" fill="white" opacity="0.88" />
-      </g>
-      {/* Cloud 3 — small, very high right (y≈48) */}
-      <g transform="translate(1050, 48)">
-        <ellipse cx="0" cy="0" rx="44" ry="22" fill="white" opacity="0.90" />
-        <ellipse cx="35" cy="-7" rx="30" ry="17" fill="white" opacity="0.90" />
-        <ellipse cx="-30" cy="-5" rx="26" ry="15" fill="white" opacity="0.90" />
-      </g>
-      {/* Cloud 4 — medium-small, mid-left (y≈108) */}
-      <g transform="translate(260, 108)">
-        <ellipse cx="0" cy="0" rx="46" ry="23" fill="white" opacity="0.82" />
-        <ellipse cx="36" cy="-7" rx="30" ry="17" fill="white" opacity="0.82" />
-        <ellipse cx="-32" cy="-4" rx="26" ry="15" fill="white" opacity="0.82" />
-      </g>
-      {/* Cloud 5 — small, upper-right (y≈90) */}
-      <g transform="translate(1220, 90)">
-        <ellipse cx="0" cy="0" rx="38" ry="19" fill="white" opacity="0.85" />
-        <ellipse cx="30" cy="-6" rx="25" ry="14" fill="white" opacity="0.85" />
-        <ellipse cx="-26" cy="-4" rx="22" ry="13" fill="white" opacity="0.85" />
-      </g>
-
-      {/* ── TREES (scattered, rural feel) ── */}
-      {/* Tree helper — trunk + round canopy */}
-      {/* Left area trees */}
-      <g transform="translate(95, 490)">
-        <rect x="-4" y="0" width="8" height="22" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-12" r="18" fill="#3D9E2A" />
-        <circle cx="0" cy="-12" r="18" fill="#4DB535" opacity="0.6" />
-      </g>
-      <g transform="translate(140, 510)">
-        <rect x="-3" y="0" width="6" height="18" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-10" r="14" fill="#3D9E2A" />
-        <circle cx="0" cy="-10" r="14" fill="#4DB535" opacity="0.6" />
-      </g>
-      <g transform="translate(560, 470)">
-        <rect x="-4" y="0" width="8" height="20" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-11" r="16" fill="#3D9E2A" />
-        <circle cx="0" cy="-11" r="16" fill="#4DB535" opacity="0.6" />
-      </g>
-      <g transform="translate(620, 500)">
-        <rect x="-3" y="0" width="6" height="16" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-9" r="13" fill="#3D9E2A" />
-      </g>
-      <g transform="translate(690, 480)">
-        <rect x="-4" y="0" width="8" height="20" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-11" r="16" fill="#3D9E2A" />
-        <circle cx="0" cy="-11" r="16" fill="#4DB535" opacity="0.5" />
-      </g>
-      <g transform="translate(850, 510)">
-        <rect x="-3" y="0" width="6" height="17" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-9" r="13" fill="#3D9E2A" />
-      </g>
-      <g transform="translate(920, 490)">
-        <rect x="-3.5" y="0" width="7" height="19" fill="#8B6914" rx="2" />
-        <circle cx="0" cy="-10" r="15" fill="#3D9E2A" />
-        <circle cx="0" cy="-10" r="15" fill="#4DB535" opacity="0.5" />
-      </g>
-
-      {/* ── POND (lower-left rural area) ── */}
-      <ellipse cx="430" cy="620" rx="80" ry="38" fill="#4EB0D8" opacity="0.8" />
-      <ellipse cx="430" cy="620" rx="68" ry="28" fill="#6EC8EA" opacity="0.5" />
-      {/* Pond reflection highlight */}
-      <ellipse cx="415" cy="610" rx="25" ry="8" fill="white" opacity="0.2" />
-
-      {/* ── WINDMILL (left-center, between mountains and road) ── */}
+      {/* ── 9. WINDMILL — bottom right corner, cream/beige, rotated 25° ── */}
       {/* Tower */}
-      <path d="M 300,540 L 308,470 L 316,470 L 324,540 Z" fill="#C8B48A" />
-      {/* Tower highlight */}
-      <path d="M 308,470 L 310,540 L 308,540 Z" fill="#D8C49A" opacity="0.5" />
-      {/* Windmill hub */}
-      <circle cx="314" cy="468" r="6" fill="#A08060" />
-      {/* Windmill blades — 4 arms */}
-      <g transform="translate(314, 468)">
-        {/* Top blade */}
-        <rect x="-4" y="-48" width="8" height="42" fill="#D4C4A0" rx="3" />
-        {/* Right blade */}
-        <rect x="6" y="-4" width="42" height="8" fill="#C8B890" rx="3" />
-        {/* Bottom blade */}
-        <rect x="-4" y="6" width="8" height="42" fill="#D4C4A0" rx="3" />
-        {/* Left blade */}
-        <rect x="-48" y="-4" width="42" height="8" fill="#C8B890" rx="3" />
-        {/* Center cap */}
-        <circle cx="0" cy="0" r="5" fill="#8A6840" />
+      <path d="M 1128,740 L 1136,662 L 1144,662 L 1152,740 Z" fill="#C8B48A" />
+      <path d="M 1136,662 L 1138,740 L 1136,740 Z" fill="#D8C49A" opacity={0.5} />
+      {/* Hub */}
+      <circle cx={1140} cy={660} r={8} fill="#A08060" />
+      {/* 4 blades — rotated 25° so shape reads clearly as windmill */}
+      <g transform="translate(1140,660) rotate(25)">
+        <rect x={-5} y={-54} width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
+        <rect x={6}  y={-5}  width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
+        <rect x={-5} y={6}   width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
+        <rect x={-54} y={-5} width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
+        <circle cx={0} cy={0} r={5} fill="#8A6840" />
       </g>
 
-      {/* ── FENCE (near road, bottom-left) ── */}
-      <g fill="none" stroke="#D8D0B8" strokeWidth="2.5" strokeLinecap="round">
-        {/* Posts */}
-        <line x1="130" y1="620" x2="130" y2="645" />
-        <line x1="155" y1="618" x2="155" y2="643" />
-        <line x1="180" y1="616" x2="180" y2="641" />
-        <line x1="205" y1="615" x2="205" y2="640" />
-        <line x1="230" y1="614" x2="230" y2="639" />
-        <line x1="255" y1="614" x2="255" y2="639" />
-        <line x1="280" y1="615" x2="280" y2="640" />
-        {/* Rails */}
-        <line x1="128" y1="630" x2="282" y2="628" />
-        <line x1="128" y1="641" x2="282" y2="639" />
+      {/* ── 10. PICKET FENCE — far left, on grass ── */}
+      <g fill="none" stroke="#CABF96" strokeWidth={3} strokeLinecap="round">
+        {[30, 56, 82, 108, 134, 160, 186, 212, 238].map((x, i) => (
+          <line key={`fp${i}`} x1={x} y1={420 + i * 1.2} x2={x} y2={450 + i * 1.2} />
+        ))}
+        <line x1={28}  y1={429} x2={240} y2={432} />
+        <line x1={28}  y1={441} x2={240} y2={444} />
       </g>
 
-      {/* ── ROAD ── */}
+      {/* ── 11. ROAD — rendered last, on top of all terrain ── */}
       <RoadPath />
-
-      {/* ── BUILDINGS / CITYSCAPE (right side, upper area) ── */}
-      {/* Background tall building */}
-      <rect x="1300" y="248" width="44" height="192" fill="#4A5B6A" rx="3" />
-      <rect x="1308" y="262" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1326" y="262" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1308" y="284" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1326" y="284" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1308" y="306" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1326" y="306" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1308" y="328" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1326" y="328" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-
-      {/* Tallest center building */}
-      <rect x="1090" y="268" width="58" height="172" fill="#5A6B7A" rx="3" />
-      <rect x="1100" y="282" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1122" y="282" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1100" y="308" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1122" y="308" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1100" y="334" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1122" y="334" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1100" y="360" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-      <rect x="1122" y="360" width="10" height="13" fill="#B0D0E8" opacity="0.8" />
-
-      {/* Mid-right building */}
-      <rect x="1160" y="298" width="50" height="142" fill="#7A8B9A" rx="3" />
-      <rect x="1170" y="312" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1190" y="312" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1170" y="336" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1190" y="336" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1170" y="360" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1190" y="360" width="9" height="11" fill="#A8C8E0" opacity="0.8" />
-
-      {/* Short wide building */}
-      <rect x="1218" y="328" width="72" height="112" fill="#8A9BAA" rx="3" />
-      <rect x="1228" y="342" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1253" y="342" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1228" y="368" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1253" y="368" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1228" y="394" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-      <rect x="1253" y="394" width="11" height="13" fill="#A8C8E0" opacity="0.8" />
-
-      {/* Left building of cityscape */}
-      <rect x="1048" y="310" width="36" height="130" fill="#6A7A88" rx="3" />
-      <rect x="1056" y="324" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1056" y="347" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-      <rect x="1056" y="370" width="8" height="10" fill="#A8C8E0" opacity="0.75" />
-
-      {/* Building antenna / detail on tallest */}
-      <rect x="1116" y="255" width="4" height="18" fill="#3A4B5A" />
-      <circle cx="1118" cy="253" r="3" fill="#CC4444" />
     </svg>
   )
 }
