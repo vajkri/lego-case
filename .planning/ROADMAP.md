@@ -94,5 +94,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete   | 2026-03-12 |
 | 2. Navigation and Slides | 5/5 | Complete   | 2026-03-12 |
-| 3. Map and Car Animation | 3/5 | In Progress|  |
+| 3. Map and Car Animation | 4/5 | In Progress|  |
 | 4. Content and Polish | 0/TBD | Not started | - |

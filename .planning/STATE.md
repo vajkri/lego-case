@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-03-12T17:15:47.981Z"
+stopped_at: Completed 03-04-PLAN.md
+last_updated: "2026-03-12T19:57:40.872Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
   percent: 40
 ---
 
@@ -60,6 +60,7 @@ Progress: [████░░░░░░] 40%
 | Phase 02-navigation-and-slides P05 | 20 | 2 tasks | 7 files |
 | Phase 03-map-and-car-animation P01 | 4 | 2 tasks | 4 files |
 | Phase 03-map-and-car-animation P03 | 3 | 2 tasks | 3 files |
+| Phase 03-map-and-car-animation P04 | 4 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,8 @@ Recent decisions affecting current work:
 - [Footer refactor — 2026-03-12]: PresentationFooter extracted from SlideOverlay and moved to root layout — footer is always visible on both map and slide views; SlideOverlay changed from `fixed inset-0` to `absolute inset-0` so it fills only the content area above the footer; MapCanvas changed from h-screen to h-full
 - [Phase 03-map-and-car-animation]: awaitingSlideOpen boolean in PresentationState distinguishes just-arrived from returned-from-overlay; ARRIVE action dispatched by CarElement; visitedStops starts as [0]
 - [Phase 03-map-and-car-animation]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth — prevents car animation drifting from visual road
+- [Phase 03-map-and-car-animation]: StopNode (03-04): MarkerPin SVG sub-component with variant prop for 3-state LEGO pin — circle head + pointed base
+- [Phase 03-map-and-car-animation]: CarElement (03-04): Single motion.div with offsetPath/offsetDistance — no nested motion.div to avoid test mock data-testid collision
 
 ### Pending Todos
 
@@ -112,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T17:15:47.977Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-03-12T19:57:40.869Z
+Stopped at: Completed 03-04-PLAN.md
 Resume file: None
