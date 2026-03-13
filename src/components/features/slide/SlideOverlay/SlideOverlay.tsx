@@ -31,7 +31,7 @@ export function SlideOverlay() {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.85 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="absolute inset-0 bg-slate-900 text-white flex flex-col"
+        className="absolute inset-0 z-40 bg-slate-900 text-white flex flex-col"
       >
         {/* ARIA live region — mounted once, never conditionally rendered (A11Y-02) */}
         <div aria-live="polite" aria-atomic="true" className="sr-only">
