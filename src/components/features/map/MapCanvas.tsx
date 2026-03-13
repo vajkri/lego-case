@@ -8,7 +8,7 @@
 // A viewBox-matched overlay (1400×800 CSS px, transform-scaled) ensures the car's
 // CSS offsetPath coordinates align exactly with the rendered SVG road.
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useLayoutEffect, useState } from 'react'
 import { stops } from '@/data/topics'
 import { usePresentation } from '@/components/features/presentation'
 import { MapSvg, MAP_VIEWBOX } from './MapSvg'
@@ -37,16 +37,22 @@ export function MapCanvas() {
 
   // --- Contain-fit sizing: fit 1400×800 inside the available space ---
   const outerRef = useRef<HTMLDivElement>(null)
-  const [size, setSize] = useState<{ w: number; h: number }>({ w: VB_W, h: VB_H })
+  const [size, setSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = outerRef.current
     if (!el) return
-    const ro = new ResizeObserver(([entry]) => {
-      const { width: ow, height: oh } = entry.contentRect
+
+    // Synchronous initial measurement — runs before browser paint, prevents flash
+    const measure = () => {
+      const { width: ow, height: oh } = el.getBoundingClientRect()
       const scale = Math.min(ow / VB_W, oh / VB_H)
       setSize({ w: VB_W * scale, h: VB_H * scale })
-    })
+    }
+    measure()
+
+    // ResizeObserver for subsequent window/container resizes
+    const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
