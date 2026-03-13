@@ -15,7 +15,7 @@ const initialState: PresentationState = {
   mode: 'map',
   isCarTraveling: false,
   awaitingSlideOpen: false,
-  visitedStops: [0],  // stop 0 is active from the beginning
+  visitedStops: [],  // empty — car starts before stop 0, first ADVANCE drives there
 }
 
 /**
@@ -55,7 +55,8 @@ export function presentationReducer(state: PresentationState, action: Action): P
           if (isLastStop) {
             return { ...state, mode: 'map', currentSlide: 0 }
           }
-          return { ...state, currentStop: state.currentStop + 1, currentSlide: 0, mode: 'slide' }
+          // Close overlay and start car travel to next stop — car drives first, then slides open on arrival
+          return { ...state, currentStop: state.currentStop + 1, currentSlide: 0, mode: 'map', isCarTraveling: true }
         }
         return { ...state, currentSlide: state.currentSlide + 1 }
       } else {
@@ -67,7 +68,12 @@ export function presentationReducer(state: PresentationState, action: Action): P
           return { ...state, mode: 'slide', currentSlide: 0, awaitingSlideOpen: false }
         }
 
-        // Car is parked and presenter has already seen slides (or at start)
+        // Pre-start: car hasn't reached any stop yet — drive to stop 0
+        if (state.visitedStops.length === 0) {
+          return { ...state, isCarTraveling: true }
+        }
+
+        // Car is parked and presenter has already seen slides
         // → start travel to next stop
         const isLastStop = state.currentStop === stops.length - 1
         if (isLastStop) return state  // no-op at end of journey

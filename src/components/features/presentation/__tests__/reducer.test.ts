@@ -4,6 +4,7 @@ import type { PresentationState } from '@/types/presentation'
 import { stops } from '@/data/topics'
 
 // Fixture states — updated in Phase 3 to include isCarTraveling, awaitingSlideOpen, visitedStops
+const preStartState: PresentationState = { currentStop: 0, currentSlide: 0, mode: 'map', isCarTraveling: false, awaitingSlideOpen: false, visitedStops: [] }
 const mapState0: PresentationState = { currentStop: 0, currentSlide: 0, mode: 'map', isCarTraveling: false, awaitingSlideOpen: false, visitedStops: [0] }
 const mapState2: PresentationState = { currentStop: 2, currentSlide: 0, mode: 'map', isCarTraveling: false, awaitingSlideOpen: false, visitedStops: [0, 1, 2] }
 const mapState4: PresentationState = { currentStop: 4, currentSlide: 0, mode: 'map', isCarTraveling: false, awaitingSlideOpen: false, visitedStops: [0, 1, 2, 3, 4] }
@@ -13,7 +14,13 @@ const slideState0: PresentationState = { currentStop: 2, currentSlide: 0, mode: 
 describe('presentationReducer', () => {
   // ADVANCE cases
 
-  it('ADVANCE on map at stop 0 (awaitingSlideOpen: false) starts car travel to stop 1', () => {
+  it('ADVANCE before first stop starts car travel to stop 0 (pre-start)', () => {
+    const result = presentationReducer(preStartState, { type: 'ADVANCE' })
+    expect(result).toEqual({ ...preStartState, isCarTraveling: true })
+    expect(result.currentStop).toBe(0) // stays at 0, car travels TO stop 0
+  })
+
+  it('ADVANCE on map at stop 0 (already visited) starts car travel to stop 1', () => {
     const result = presentationReducer(mapState0, { type: 'ADVANCE' })
     expect(result).toEqual({ ...mapState0, currentStop: 1, isCarTraveling: true })
   })
@@ -41,7 +48,7 @@ describe('presentationReducer', () => {
     expect(result.mode).toBe('slide')
   })
 
-  it('ADVANCE on last sub-slide of a non-final stop advances to next stop in slide mode', () => {
+  it('ADVANCE on last sub-slide of a non-final stop closes overlay and starts car travel to next stop', () => {
     // stops[2] has 5 slides; last slide index is 4
     const lastSlideState: PresentationState = {
       currentStop: 2,
@@ -54,7 +61,8 @@ describe('presentationReducer', () => {
     const result = presentationReducer(lastSlideState, { type: 'ADVANCE' })
     expect(result.currentStop).toBe(3)
     expect(result.currentSlide).toBe(0)
-    expect(result.mode).toBe('slide')
+    expect(result.mode).toBe('map')           // overlay closes
+    expect(result.isCarTraveling).toBe(true)   // car drives to next stop
   })
 
   it('ADVANCE on last sub-slide of the last stop closes overlay (mode becomes map)', () => {

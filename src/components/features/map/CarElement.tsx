@@ -2,13 +2,13 @@
 // src/components/features/map/CarElement.tsx
 // Animates the red LEGO car along the road path using CSS motion path (CAR-02, CAR-03).
 // Position is driven by offsetPath + offsetDistance — NOT top/left coordinates.
-// onArrival fires via onAnimationComplete when car reaches targetStop.
+// onArrival fires via onAnimationComplete when car reaches the target offset.
 
 import { motion } from 'motion/react'
-import { ROAD_PATH_D, STOP_OFFSETS } from './RoadPath'
+import { ROAD_PATH_D, CAR_START_OFFSET } from './RoadPath'
 
 interface CarElementProps {
-  targetStop: number         // 0-4 — drives offsetDistance to STOP_OFFSETS[targetStop]
+  targetOffset: string       // e.g. '0%', '10%', '44%' — drives offsetDistance
   isMovingBackward: boolean  // true when going to a lower-index stop
   onArrival: () => void      // dispatched to reducer as ARRIVE action
 }
@@ -38,10 +38,11 @@ function CarSvg() {
   )
 }
 
-export function CarElement({ targetStop, isMovingBackward, onArrival }: CarElementProps) {
+export function CarElement({ targetOffset, isMovingBackward, onArrival }: CarElementProps) {
   return (
     <motion.div
       data-testid="car-element"
+      initial={{ offsetDistance: CAR_START_OFFSET }}
       style={{
         position: 'absolute',
         // CSS motion path — GPU composited, does NOT trigger layout/paint per frame (CAR-03)
@@ -53,7 +54,7 @@ export function CarElement({ targetStop, isMovingBackward, onArrival }: CarEleme
         // Center the car on the path point using CSS transform (not top/left positioning)
         transform: 'translate(-50%, -50%)',
       }}
-      animate={{ offsetDistance: STOP_OFFSETS[targetStop] }}
+      animate={{ offsetDistance: targetOffset }}
       transition={{
         type: 'tween',
         duration: 1.4,

@@ -49,9 +49,9 @@ describe('PresentationProvider', () => {
       </PresentationProvider>
     )
 
-    // Phase 3 two-step flow: ADVANCE from stop 0 map → starts car travel to stop 1
+    // Pre-start: first ADVANCE starts car travel TO stop 0 (doesn't increment)
     act(() => { screen.getByText('advance').click() })
-    expect(screen.getByTestId('stop').textContent).toBe('1')
+    expect(screen.getByTestId('stop').textContent).toBe('0')
     expect(screen.getByTestId('mode').textContent).toBe('map')
 
     // CLOSE from map mode → stays in map (CLOSE is a no-op in map mode effectively)

@@ -15,6 +15,7 @@ import { MapSvg, MAP_VIEWBOX } from './MapSvg'
 import { StopNode } from './StopNode'
 import { CarElement } from './CarElement'
 import { MapProgressIndicator } from './MapProgressIndicator'
+import { STOP_OFFSETS, CAR_START_OFFSET } from './RoadPath'
 
 const VB_W = MAP_VIEWBOX.width   // 1400
 const VB_H = MAP_VIEWBOX.height  // 800
@@ -80,7 +81,11 @@ export function MapCanvas() {
         >
           {/* Car element — CSS motion path in 1400×800 coordinate space */}
           <CarElement
-            targetStop={state.currentStop}
+            targetOffset={
+              state.visitedStops.length === 0 && !state.isCarTraveling
+                ? CAR_START_OFFSET
+                : STOP_OFFSETS[state.currentStop]
+            }
             isMovingBackward={isMovingBackward}
             onArrival={handleCarArrival}
           />

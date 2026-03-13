@@ -12,11 +12,14 @@
 export const ROAD_PATH_D =
   'M 85,715 C 160,655 230,585 325,560 C 420,535 450,645 540,630 C 630,615 675,490 770,470 C 865,450 905,570 1000,555 C 1080,538 1150,410 1205,355'
 
+// Car starts here before any stop is visited — the very beginning of the road.
+export const CAR_START_OFFSET = '0%'
+
 // Approximate offsetDistance % for each stop index 0–4.
 // Computed to match the path inflection points visually.
 // These are design-time constants — update together with ROAD_PATH_D if path changes.
 export const STOP_OFFSETS: readonly string[] = [
-  '2%',   // Stop 0 — rural start (85, 715)
+  '10%',  // Stop 0 — slightly ahead of road start so car visibly drives there
   '22%',  // Stop 1 — first rise (≈325, 560)
   '44%',  // Stop 2 — first dip (≈540, 630)
   '65%',  // Stop 3 — second rise (≈770, 470)

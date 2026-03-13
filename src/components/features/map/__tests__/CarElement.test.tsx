@@ -19,38 +19,37 @@ vi.mock('motion/react', () => ({
 
 const noop = () => {}
 
-describe('CarElement — CAR-01: renders on map at target stop', () => {
+describe('CarElement — CAR-01: renders on map at target offset', () => {
   it('renders without crashing', () => {
     const { getByTestId } = render(
-      <CarElement targetStop={0} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="10%" isMovingBackward={false} onArrival={noop} />
     )
     expect(getByTestId('car-element')).toBeDefined()
   })
 
   it('renders a visible car element (not null)', () => {
     const { container } = render(
-      <CarElement targetStop={2} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="44%" isMovingBackward={false} onArrival={noop} />
     )
     expect(container.firstChild).not.toBeNull()
   })
 })
 
 describe('CarElement — CAR-02: offsetDistance drives position along path', () => {
-  it('animates to the offsetDistance for targetStop 0', () => {
+  it('animates to the offsetDistance for the given target offset', () => {
     const { getByTestId } = render(
-      <CarElement targetStop={0} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="10%" isMovingBackward={false} onArrival={noop} />
     )
     const el = getByTestId('car-element')
-    // The offsetDistance value should match STOP_OFFSETS[0]
-    expect(el.getAttribute('data-offset-distance')).toBeTruthy()
+    expect(el.getAttribute('data-offset-distance')).toBe('10%')
   })
 
-  it('animates to a different offsetDistance for targetStop 4 vs targetStop 0', () => {
+  it('animates to a different offsetDistance for different target offsets', () => {
     const { container: container0 } = render(
-      <CarElement targetStop={0} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="10%" isMovingBackward={false} onArrival={noop} />
     )
     const { container: container4 } = render(
-      <CarElement targetStop={4} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="97%" isMovingBackward={false} onArrival={noop} />
     )
     // Use container-scoped querySelector to avoid multiple-elements error when both
     // renders are in the same document.body (RTL v16 getByTestId queries document.body)
@@ -65,7 +64,7 @@ describe('CarElement — CAR-02: offsetDistance drives position along path', () 
 describe('CarElement — CAR-03: uses offsetPath not top/left coordinates', () => {
   it('style prop contains offsetPath (CSS motion path) not top or left', () => {
     const { getByTestId } = render(
-      <CarElement targetStop={1} isMovingBackward={false} onArrival={noop} />
+      <CarElement targetOffset="22%" isMovingBackward={false} onArrival={noop} />
     )
     const el = getByTestId('car-element')
     const style = el.getAttribute('style') || ''
@@ -77,7 +76,7 @@ describe('CarElement — CAR-03: uses offsetPath not top/left coordinates', () =
 
   it('onArrival callback prop is accepted without TypeScript error', () => {
     const onArrival = vi.fn()
-    render(<CarElement targetStop={0} isMovingBackward={false} onArrival={onArrival} />)
+    render(<CarElement targetOffset="0%" isMovingBackward={false} onArrival={onArrival} />)
     // If it renders without error, the prop interface is correct
     expect(true).toBe(true)
   })
