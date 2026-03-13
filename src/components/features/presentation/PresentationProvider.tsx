@@ -86,6 +86,9 @@ export function presentationReducer(state: PresentationState, action: Action): P
       }
     }
     case 'ARRIVE': {
+      // Ignore spurious arrivals (e.g. framer-motion fires onAnimationComplete on mount)
+      if (!state.isCarTraveling) return state
+
       return {
         ...state,
         isCarTraveling: false,
