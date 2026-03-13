@@ -13,27 +13,37 @@ interface CarElementProps {
   onArrival: () => void      // dispatched to reducer as ARRIVE action
 }
 
-// The car SVG — simple top-down view, red LEGO car with stud on roof
+// LEGO car — side view with studs, wheels, cabin, headlight/taillight
 function CarSvg() {
   return (
-    <svg width="48" height="28" viewBox="0 0 48 28" fill="none" aria-hidden="true">
-      {/* Car body */}
-      <rect x="2" y="8" width="44" height="16" rx="4" fill="#E32B2B" />
-      {/* Car cabin/roof */}
-      <rect x="12" y="4" width="22" height="14" rx="3" fill="#C82020" />
-      {/* Windshield */}
-      <rect x="14" y="5" width="18" height="10" rx="2" fill="#A8D4E8" opacity="0.9" />
-      {/* LEGO stud on roof */}
-      <circle cx="23" cy="4" r="3" fill="#B81C1C" />
-      <circle cx="23" cy="4" r="2" fill="#D82020" />
+    <svg width="60" height="40" viewBox="0 0 60 40" fill="none" aria-hidden="true">
       {/* Wheels */}
-      <circle cx="11" cy="24" r="4" fill="#1A1A1A" />
-      <circle cx="37" cy="24" r="4" fill="#1A1A1A" />
-      <circle cx="11" cy="4" r="4" fill="#1A1A1A" />
-      <circle cx="37" cy="4" r="4" fill="#1A1A1A" />
-      {/* Wheel highlights */}
-      <circle cx="11" cy="24" r="2" fill="#333333" />
-      <circle cx="37" cy="24" r="2" fill="#333333" />
+      <circle cx="15" cy="32" r="6" fill="#1f2937" />
+      <circle cx="15" cy="32" r="3" fill="#9ca3af" />
+      <circle cx="45" cy="32" r="6" fill="#1f2937" />
+      <circle cx="45" cy="32" r="3" fill="#9ca3af" />
+      {/* Car Body - Bottom Block */}
+      <rect x="5" y="16" width="50" height="12" rx="2" fill="#ef4444" />
+      <rect x="5" y="16" width="50" height="12" rx="2" fill="url(#car-highlight)" opacity="0.5" />
+      {/* Car Body - Top Cabin */}
+      <rect x="15" y="6" width="26" height="10" rx="2" fill="#ef4444" />
+      <rect x="15" y="6" width="26" height="10" rx="2" fill="url(#car-highlight)" opacity="0.5" />
+      {/* Windows */}
+      <rect x="17" y="8" width="8" height="6" rx="1" fill="#60a5fa" opacity="0.8" />
+      <rect x="27" y="8" width="12" height="6" rx="1" fill="#60a5fa" opacity="0.8" />
+      {/* Studs */}
+      <rect x="18" y="3" width="6" height="3" rx="1" fill="#ef4444" />
+      <rect x="28" y="3" width="6" height="3" rx="1" fill="#ef4444" />
+      {/* Headlight */}
+      <circle cx="53" cy="22" r="2.5" fill="#fde047" />
+      {/* Taillight */}
+      <rect x="5" y="20" width="2" height="4" fill="#f87171" />
+      <defs>
+        <linearGradient id="car-highlight" x1="30" y1="0" x2="30" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" stopOpacity="0.4" />
+          <stop offset="1" stopColor="black" stopOpacity="0.2" />
+        </linearGradient>
+      </defs>
     </svg>
   )
 }
@@ -49,8 +59,8 @@ export function CarElement({ targetOffset, isMovingBackward, onArrival }: CarEle
         offsetPath: `path("${ROAD_PATH_D}")`,
         offsetRotate: isMovingBackward ? 'reverse' : 'auto',
         willChange: 'transform',  // GPU compositor hint
-        width: 48,
-        height: 28,
+        width: 60,
+        height: 40,
         // Center the car on the path point using CSS transform (not top/left positioning)
         transform: 'translate(-50%, -50%)',
       }}

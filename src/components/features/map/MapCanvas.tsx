@@ -14,7 +14,6 @@ import { usePresentation } from '@/components/features/presentation'
 import { MapSvg, MAP_VIEWBOX } from './MapSvg'
 import { StopNode } from './StopNode'
 import { CarElement } from './CarElement'
-import { MapProgressIndicator } from './MapProgressIndicator'
 import { STOP_OFFSETS, CAR_START_OFFSET } from './RoadPath'
 
 const VB_W = MAP_VIEWBOX.width   // 1400
@@ -101,13 +100,6 @@ export function MapCanvas() {
             />
           ))}
         </div>
-
-        {/* Progress indicator — bottom-right, non-intrusive */}
-        <MapProgressIndicator
-          currentStop={state.currentStop}
-          totalStops={stops.length}
-          isCarTraveling={state.isCarTraveling}
-        />
 
         {/* DEV INDICATOR — remove in Phase 4 */}
         <div className="absolute top-4 left-4 font-mono text-xs bg-black/80 text-green-400 px-3 py-2 rounded select-none z-50">
