@@ -6,9 +6,12 @@
 //         active (colorful multi-brick palette + entrance animation), visited (all-green + color sweep)
 // Labels are positioned above or below per stop.labelPosition (MAP-02 always visible).
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Stop } from '@/types/presentation'
 import { usePresentation } from '@/components/features/presentation'
+
+// Car travel duration in ms — must match CarElement's transition duration (1.4s)
+const CAR_TRAVEL_MS = 1400
 
 // ─── SVG constants (from mockup stop-marker-states.html) ───────────────────
 const VB_W = 48
@@ -147,13 +150,19 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
     level2RightStuds.push(STUD_X.right) // right side uncovered by half brick
   }
 
+  // Dynamic viewBox — crop to actual content bounds (eliminates dead space above short stacks)
+  // Top stud shadow y: level3=12, level2=25, level1=38. Bottom: plate shadow=67.
+  const contentTop = hasLevel3 ? 10 : hasLevel2 ? 23 : 36
+  const contentBottom = 68
+  const contentHeight = contentBottom - contentTop
+  const scale = 0.8
+
   return (
     <svg
-      width={VB_W * 0.8}
-      height={VB_H * 0.8}
-      viewBox={`0 0 ${VB_W} ${VB_H}`}
+      width={VB_W * scale}
+      height={contentHeight * scale}
+      viewBox={`0 ${contentTop} ${VB_W} ${contentHeight}`}
       fill="none"
-      overflow="visible"
       aria-hidden="true"
     >
       {/* Baseplate */}
@@ -306,8 +315,24 @@ export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: S
           ? 'visited'
           : 'default'
 
-  // Brick colors delay until car arrives — bricks stay grey while car is traveling
-  const brickColorState: BrickState = (variant === 'active' && isCarTraveling)
+  // Brick colors activate at 90% of car approach — not immediately, not on full arrival
+  const [brickActivated, setBrickActivated] = useState(!isCarTraveling && isActive)
+
+  useEffect(() => {
+    if (isActive && isCarTraveling) {
+      setBrickActivated(false)
+      const timer = setTimeout(() => setBrickActivated(true), CAR_TRAVEL_MS * 0.9)
+      return () => clearTimeout(timer)
+    }
+    if (isActive && !isCarTraveling) {
+      setBrickActivated(true)
+    }
+    if (!isActive) {
+      setBrickActivated(false)
+    }
+  }, [isActive, isCarTraveling])
+
+  const brickColorState: BrickState = (variant === 'active' && !brickActivated)
     ? 'default'
     : variant
 

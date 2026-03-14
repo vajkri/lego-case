@@ -575,7 +575,86 @@ html += `
     </div>
   </div>`;
 
-// 7. Label positioning
+// 7. Label variants on grass — all states × interactions
+html += `
+  <div class="section" style="background: #6ABF4B; padding: 48px 40px 56px;">
+    <div class="section-tag discuss" style="background: white; color: #2C2C2C;">To Decide</div>
+    <h2 style="color: white;">Label Variants — All States × Interactions</h2>
+    <p class="subtitle" style="color: rgba(255,255,255,0.85);">All label styles shown on grass-green background. Three data states (default, active, visited) × three interaction states (resting, hover, focus). Open this in browser for feedback.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; max-width: 900px; margin-top: 24px;">
+
+      <!-- Column headers -->
+      <div style="text-align:center;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;color:white;">Resting</div>
+      <div style="text-align:center;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;color:white;">Hover</div>
+      <div style="text-align:center;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;color:white;">Focus</div>
+
+      <!-- Row: Default state -->
+      ${['default', 'hover', 'focus'].map(interaction => {
+        const labelClass = interaction === 'default' ? 'default' : interaction;
+        return `
+        <div style="text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Default + ${interaction}</div>
+          <div style="display:inline-flex;flex-direction:column;align-items:center;gap:14px;">
+            <span class="marker-label ${labelClass}">The Case</span>
+            <div class="marker-wrap ${interaction}">${createMarkerSVG(0, 'default')}</div>
+          </div>
+        </div>`;
+      }).join('')}
+
+      <!-- Row: Active state -->
+      ${['default', 'hover', 'focus'].map(interaction => {
+        // Active state always shows active label; hover/focus modify the marker only
+        return `
+        <div style="text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Active + ${interaction === 'default' ? 'resting' : interaction}</div>
+          <div style="display:inline-flex;flex-direction:column;align-items:center;gap:14px;">
+            <span class="marker-label active">Migration</span>
+            <div class="marker-wrap ${interaction === 'default' ? 'active' : interaction}">${createMarkerSVG(3, 'active')}</div>
+          </div>
+        </div>`;
+      }).join('')}
+
+      <!-- Row: Visited state -->
+      ${['default', 'hover', 'focus'].map(interaction => {
+        const labelClass = interaction === 'default' ? 'visited' : interaction;
+        return `
+        <div style="text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Visited + ${interaction}</div>
+          <div style="display:inline-flex;flex-direction:column;align-items:center;gap:14px;">
+            <span class="marker-label ${labelClass}">Vision</span>
+            <div class="marker-wrap ${interaction}">${createMarkerSVG(1, 'visited')}</div>
+          </div>
+        </div>`;
+      }).join('')}
+
+    </div>
+
+    <!-- Label style specs -->
+    <table class="spec-table" style="margin-top:32px; max-width:900px; background: rgba(255,255,255,0.95); border-radius: 8px; overflow: hidden;">
+      <thead>
+        <tr>
+          <th>State + Interaction</th>
+          <th>Background</th>
+          <th>Text Color</th>
+          <th>Font Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Default</strong> (resting)</td><td><code>#FFFFFF</code></td><td><code>#6D6E70</code></td><td>600</td></tr>
+        <tr><td><strong>Default</strong> (hover)</td><td><code>rgba(160,161,163,0.22)</code></td><td><code>#6D6E70</code></td><td>700</td></tr>
+        <tr><td><strong>Default</strong> (focus)</td><td><code>rgba(0,85,191,0.1)</code></td><td><code>#0055BF</code></td><td>700</td></tr>
+        <tr><td><strong>Active</strong> (resting)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
+        <tr><td><strong>Active</strong> (hover)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
+        <tr><td><strong>Active</strong> (focus)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
+        <tr><td><strong>Visited</strong> (resting)</td><td><code>#FFFFFF</code></td><td><code>#00A850</code></td><td>600</td></tr>
+        <tr><td><strong>Visited</strong> (hover)</td><td><code>rgba(160,161,163,0.22)</code></td><td><code>#6D6E70</code></td><td>700</td></tr>
+        <tr><td><strong>Visited</strong> (focus)</td><td><code>rgba(0,85,191,0.1)</code></td><td><code>#0055BF</code></td><td>700</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+
+// 8. Label positioning
 html += `
   <div class="section">
     <div class="section-tag discuss">To Discuss</div>
