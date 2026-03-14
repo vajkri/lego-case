@@ -2,6 +2,7 @@
 import React from 'react'
 import { usePresentation } from './PresentationProvider'
 import { stops } from '@/data/topics'
+import { Button } from '@/components/ui'
 
 export function PresentationFooter() {
   const { state, dispatch } = usePresentation()
@@ -19,19 +20,15 @@ export function PresentationFooter() {
   }
 
   return (
-    <footer className="flex items-center gap-3 px-6 py-3 bg-white border-t border-gray-100 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
-      {/* Prev */}
-      <button
-        onClick={handleBack}
-        aria-label="Previous"
-        className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
-      >
+    <footer className="flex items-center gap-3 px-6 py-3 bg-white border-t border-gray-100 shadow-md">
+      {/* Prev — grey brick button */}
+      <Button variant="grey" size="icon" onClick={handleBack} aria-label="Previous">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="15 18 9 12 15 6" />
         </svg>
-      </button>
+      </Button>
 
-      {/* Progress track */}
+      {/* Progress track — UNCHANGED (Phase 03.3 redesigns this section) */}
       <div className="flex items-center flex-1 justify-center">
         {stops.map((stop, i) => (
           <React.Fragment key={stop.slug}>
@@ -62,11 +59,8 @@ export function PresentationFooter() {
         ))}
       </div>
 
-      {/* Map / Zoom in toggle */}
-      <button
-        onClick={handleToggle}
-        className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-      >
+      {/* Map / Zoom in toggle — yellow primary action button */}
+      <Button variant="yellow" size="label" onClick={handleToggle}>
         {state.mode === 'slide' ? (
           <>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -87,18 +81,14 @@ export function PresentationFooter() {
             Zoom in
           </>
         )}
-      </button>
+      </Button>
 
-      {/* Next */}
-      <button
-        onClick={handleAdvance}
-        aria-label="Next"
-        className="w-9 h-9 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
-      >
+      {/* Next — red brick button */}
+      <Button variant="red" size="icon" onClick={handleAdvance} aria-label="Next">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="9 18 15 12 9 6" />
         </svg>
-      </button>
+      </Button>
     </footer>
   )
 }
