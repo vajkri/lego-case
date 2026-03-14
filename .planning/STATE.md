@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: "Completed 03.1-03-PLAN.md: Content blocks + CLAUDE.md design system docs"
-last_updated: "2026-03-14T08:39:30.213Z"
+stopped_at: "Completed 03.1-02-PLAN.md: SlideFrame chrome + SlideOverlay/PresentationFooter refactor"
+last_updated: "2026-03-14T08:41:04.346Z"
 last_activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 18
-  completed_plans: 16
+  completed_plans: 17
   percent: 37
 ---
 
@@ -48,6 +48,7 @@ Progress: [████░░░░░░] 37%
 | 03-map-and-car-animation | 5 | 15 min | 3 min |
 | Phase 03.1-design-system-integration P01 | 12 | 2 tasks | 6 files |
 | Phase 03.1-design-system-integration P03 | 4 | 2 tasks | 12 files |
+| Phase 03.1 P02 | 15 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Recent decisions affecting current work:
 - [Phase 03.1-03]: variantStyleMap uses inline style prop (not Tailwind classes) for rgba-based variant colors — Tailwind v4 cannot represent rgba values as tokens
 - [Phase 03.1-03]: EntityCards defaults to yellow variant (yellow = primary action color per color hierarchy)
 - [Phase 03.1-03]: Content block depth shadow via box-shadow CSS vars (not border-bottom) to preserve rounded corners
+- [Phase 03.1]: SlideFrame is NOT 'use client' — layout-only, parent SlideOverlay owns client boundary
+- [Phase 03.1]: close button id='slide-close-btn' is immutable FocusTrap constraint — documented in SlideFrame source
+- [Phase 03.1]: Nav arrows inlined as ReactNode slots in SlideFrame — chrome slot pattern for flexible nav injection
 
 ### Roadmap Evolution
 
@@ -98,6 +102,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T08:39:30.209Z
-Stopped at: Completed 03.1-03-PLAN.md: Content blocks + CLAUDE.md design system docs
+Last session: 2026-03-14T08:41:04.340Z
+Stopped at: Completed 03.1-02-PLAN.md: SlideFrame chrome + SlideOverlay/PresentationFooter refactor
 Resume file: None
