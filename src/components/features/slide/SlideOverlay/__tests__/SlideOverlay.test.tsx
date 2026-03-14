@@ -24,6 +24,9 @@ vi.mock('motion/react', () => ({
     div: ({ children, className, ...rest }: React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }) => (
       <div className={className} {...rest}>{children}</div>
     ),
+    span: ({ children, className, style, animate, transition, ...rest }: React.HTMLAttributes<HTMLSpanElement> & { children?: React.ReactNode; animate?: Record<string, unknown>; transition?: Record<string, unknown> }) => (
+      <span className={className} style={{ ...style, ...(animate as React.CSSProperties) }} {...rest}>{children}</span>
+    ),
   },
   MotionConfig: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,

@@ -1,6 +1,6 @@
 'use client'
 
-type ButtonVariant = 'yellow' | 'red' | 'grey'
+type ButtonVariant = 'yellow' | 'red' | 'grey' | 'ghost'
 type ButtonSize = 'icon' | 'label'
 
 interface ButtonProps {
@@ -8,6 +8,7 @@ interface ButtonProps {
   size?: ButtonSize
   onClick?: () => void
   disabled?: boolean
+  id?: string
   'aria-label'?: string
   children: React.ReactNode
   className?: string
@@ -17,6 +18,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   yellow: 'bg-lego-yellow text-lego-dark border-b-4 border-lego-yellow-dark hover:brightness-105 active:translate-y-0.5 active:border-b-2',
   red:    'bg-lego-red text-white border-b-4 border-lego-red-dark hover:brightness-110 active:translate-y-0.5 active:border-b-2',
   grey:   'bg-lego-grey-wash text-lego-grey border-b-4 border-lego-grey-pale hover:brightness-95 active:translate-y-0.5 active:border-b-2',
+  ghost:  'bg-transparent text-white hover:bg-white/20',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -29,16 +31,18 @@ export function Button({
   size = 'label',
   onClick,
   disabled = false,
+  id,
   'aria-label': ariaLabel,
   children,
   className,
 }: ButtonProps) {
-  const disabledClasses = disabled ? 'opacity-40 cursor-not-allowed' : ''
+  const disabledClasses = disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
 
   return (
     <button
       type="button"
       data-testid="button"
+      id={id}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       aria-label={ariaLabel}

@@ -1,12 +1,21 @@
 // src/components/ui/SlideFrame/__tests__/SlideFrame.test.tsx
 // Tests for SlideFrame chrome wrapper, StopBadge, and SubSlideProgress components.
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { SlideFrame } from '../SlideFrame'
 import { StopBadge } from '../StopBadge'
 import { SubSlideProgress } from '../SubSlideProgress'
+
+// Mock motion/react — SubSlideProgress uses motion.span for dot animations
+vi.mock('motion/react', () => ({
+  motion: {
+    span: ({ children, className, style, animate, transition, ...rest }: React.HTMLAttributes<HTMLSpanElement> & { children?: React.ReactNode; animate?: Record<string, unknown>; transition?: Record<string, unknown> }) => (
+      <span className={className} style={{ ...style, ...(animate as React.CSSProperties) }} {...rest}>{children}</span>
+    ),
+  },
+}))
 
 // ---------------------------------------------------------------------------
 // SlideFrame
@@ -111,11 +120,12 @@ describe('SubSlideProgress', () => {
   it('current dot (index matches current prop) has a different style than non-current dots', () => {
     const { container } = render(<SubSlideProgress total={3} current={1} />)
     const dots = container.querySelectorAll('span')
-    // Dot at index 1 is the current dot — wider pill (22px inline style)
-    // The current dot class includes 'h-2' (pill height)
+    // Dot at index 1 is the current dot — wider pill (22px via animated width)
     expect(dots[1].className).toContain('h-2')
-    // Verify non-current and current dots differ (current has a unique class/style)
-    expect(dots[0].className).not.toBe(dots[1].className)
+    // Current dot gets width: 22 via animate prop (mocked as inline style)
+    expect(dots[1].style.width).toBe('22px')
+    // Non-current dots get width: 8
+    expect(dots[0].style.width).toBe('8px')
   })
 
   it('container div is aria-hidden="true" (decorative)', () => {

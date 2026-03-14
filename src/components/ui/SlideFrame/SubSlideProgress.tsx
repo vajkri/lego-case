@@ -1,8 +1,13 @@
 // SubSlideProgress — dot row showing current/visited/upcoming sub-slide progress
-// Purely decorative (aria-hidden). Three dot states:
-//   - Current: wider pill 22×8px, LEGO red
+// Animated with Motion: current dot morphs to a wider pill, visited dots fade.
+// Three visual states, all rendered as the same motion.span with animated properties:
+//   - Current: 22×8px pill, LEGO red, full opacity
 //   - Visited (i < current): 8×8 circle, LEGO red at 45% opacity
-//   - Upcoming (i > current): 8×8 circle, grey-pale
+//   - Upcoming (i > current): 8×8 circle, grey-pale, full opacity
+
+'use client'
+
+import { motion } from 'motion/react'
 
 interface SubSlideProgressProps {
   total: number
@@ -13,29 +18,25 @@ export function SubSlideProgress({ total, current }: SubSlideProgressProps) {
   return (
     <div className="flex items-center gap-1.5" aria-hidden="true">
       {Array.from({ length: total }).map((_, i) => {
-        if (i === current) {
-          // Current dot: wider pill
-          return (
-            <span
-              key={i}
-              className="block w-[22px] h-2 rounded-pill bg-lego-red"
-            />
-          )
-        }
-        if (i < current) {
-          // Visited dot: circle, reduced opacity
-          return (
-            <span
-              key={i}
-              className="block w-2 h-2 rounded-full bg-lego-red opacity-45"
-            />
-          )
-        }
-        // Upcoming dot: grey circle
+        const isCurrent = i === current
+        const isVisited = i < current
+
         return (
-          <span
+          <motion.span
             key={i}
-            className="block w-2 h-2 rounded-full bg-lego-grey-pale"
+            className={[
+              'block h-2 rounded-pill',
+              isCurrent || isVisited ? 'bg-lego-red' : 'bg-lego-grey-pale',
+            ].join(' ')}
+            animate={{
+              width: isCurrent ? 22 : 8,
+              opacity: isVisited ? 0.45 : 1,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 500,
+              damping: 30,
+            }}
           />
         )
       })}

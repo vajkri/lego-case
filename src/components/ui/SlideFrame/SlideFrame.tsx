@@ -6,6 +6,8 @@
 // SlideOverlay uses FocusTrap with focusTrapOptions={{ initialFocus: '#slide-close-btn' }}.
 // Changing or removing this id will break keyboard focus management.
 
+import { Button } from '@/components/ui'
+
 interface SlideFrameProps {
   onClose: () => void
   leftArrow?: React.ReactNode
@@ -24,12 +26,13 @@ export function SlideFrame({ onClose, leftArrow, rightArrow, children }: SlideFr
         </span>
 
         {/* Close button — right side. id="slide-close-btn" MUST remain for FocusTrap. */}
-        <button
+        <Button
           id="slide-close-btn"
-          type="button"
+          variant="ghost"
+          size="icon"
           onClick={onClose}
           aria-label="Close slide overlay"
-          className="flex items-center justify-center w-10 h-10 rounded-md text-white hover:bg-white/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="w-10 h-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +49,7 @@ export function SlideFrame({ onClose, leftArrow, rightArrow, children }: SlideFr
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
-        </button>
+        </Button>
       </header>
 
       {/* White inner card */}
