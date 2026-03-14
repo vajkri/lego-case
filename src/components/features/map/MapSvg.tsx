@@ -64,26 +64,23 @@ export function MapSvg({ className }: MapSvgProps) {
           <stop offset="60%" stopColor="#44B028" />
           <stop offset="100%" stopColor="#349A18" />
         </linearGradient>
-        {/* Mountain gradients — grey */}
-        <linearGradient id="ms-mt-big" x1="0.2" y1="0" x2="0.8" y2="1">
-          <stop offset="0%" stopColor="#8A8E94" />
-          <stop offset="100%" stopColor="#5C6068" />
-        </linearGradient>
-        <linearGradient id="ms-mt-sm" x1="0.2" y1="0" x2="0.8" y2="1">
-          <stop offset="0%" stopColor="#9A9EA4" />
-          <stop offset="100%" stopColor="#6E7278" />
-        </linearGradient>
         {/* Pond */}
         <radialGradient id="ms-pond" cx="38%" cy="32%" r="68%">
           <stop offset="0%" stopColor="#7AD8F4" />
           <stop offset="100%" stopColor="#28A8CC" />
         </radialGradient>
+        {/* Baseplate stud pattern for grass */}
+        <pattern id="ms-studs" width="18" height="18" patternUnits="userSpaceOnUse">
+          <circle cx="9" cy="9" r="2.8" fill="rgba(0,80,0,0.1)" />
+        </pattern>
       </defs>
 
       {/* ── 1. SKY ── */}
       <rect width="1400" height="800" fill="url(#ms-sky)" />
 
-      {/* ── 2. SUN — upper left ── */}
+      {/* ── 2. SUN — upper left, warm glow + studs ── */}
+      <circle cx={148} cy={118} r={76} fill="#FFD830" opacity={0.12} />
+      <circle cx={148} cy={118} r={62} fill="#FFD830" opacity={0.15} />
       <circle cx={148} cy={118} r={56} fill="#FFD830" />
       {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
         const rad = (deg * Math.PI) / 180
@@ -100,6 +97,11 @@ export function MapSvg({ className }: MapSvgProps) {
           />
         )
       })}
+      {/* Sun studs */}
+      <circle cx={138} cy={108} r={5} fill="rgba(255,255,255,0.22)" />
+      <circle cx={158} cy={108} r={5} fill="rgba(255,255,255,0.22)" />
+      <circle cx={138} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
+      <circle cx={158} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
 
       {/* ── 3. CLOUDS — staggered heights for organic feel ── */}
       <Cloud x={235} y={35} s={0.8} />
@@ -108,68 +110,67 @@ export function MapSvg({ className }: MapSvgProps) {
       <Cloud x={940} y={150} s={1.05} />
       <Cloud x={1175} y={75} s={0.75} />
 
-      {/* ── 4. MOUNTAINS — left side, grey, bases aligned with grass horizon y≈380 ── */}
-      {/* Far background hill */}
-      <path d="M 0,380 L 85,335 L 170,380 Z" fill="#A0A4AA" opacity={0.38} />
-      {/* Big mountain */}
-      <path d="M 48,380 L 222,215 L 398,380 Z" fill="url(#ms-mt-big)" />
-      <path d="M 222,215 L 222,380 L 398,380 Z" fill="rgba(0,0,0,0.10)" />
-      {/* Big snow cap */}
-      <path d="M 222,215 L 200,273 L 244,273 Z" fill="white" opacity={0.96} />
-      <path d="M 222,215 L 222,273 L 244,273 Z" fill="#D8EEFF" opacity={0.45} />
-      {/* Smaller mountain */}
-      <path d="M 282,380 L 412,275 L 544,380 Z" fill="url(#ms-mt-sm)" opacity={0.92} />
-      <path d="M 412,275 L 412,380 L 544,380 Z" fill="rgba(0,0,0,0.08)" />
-      {/* Smaller snow cap */}
-      <path d="M 412,275 L 396,312 L 428,312 Z" fill="white" opacity={0.93} />
-      <path d="M 412,275 L 412,312 L 428,312 Z" fill="#D8EEFF" opacity={0.4} />
-
-      {/* ── 5. CITY BUILDINGS — right side, bases at horizon (y≈350) ── */}
+      {/* ── 4. CITY BUILDINGS — right side, bases at horizon ── */}
 
       {/* B1 — LEGO Green */}
-      <rect x={1200} y={186} width={46} height={164} fill="#00A850" rx={3} />
-      <rect x={1200} y={186} width={46} height={9} fill="#00CC60" rx={2} />
-      {[205, 230, 255, 280].map((y) =>
+      <rect x={1200} y={191} width={46} height={164} fill="#00A850" rx={3} />
+      <rect x={1200} y={191} width={46} height={9} fill="#00CC60" rx={2} />
+      {/* Roof studs */}
+      <circle cx={1212} cy={197} r={3.5} fill="rgba(255,255,255,0.15)" />
+      <circle cx={1224} cy={197} r={3.5} fill="rgba(255,255,255,0.15)" />
+      <circle cx={1236} cy={197} r={3.5} fill="rgba(255,255,255,0.15)" />
+      {[210, 235, 260, 285].map((y) =>
         [1212, 1232].map((x) => (
           <rect key={`g${x}${y}`} x={x} y={y} width={10} height={12} fill="#A0ECC0" rx={1} opacity={0.85} />
         ))
       )}
 
       {/* B2 — LEGO Red, tallest */}
-      <rect x={1250} y={102} width={52} height={248} fill="#E3000B" rx={3} />
-      <rect x={1250} y={102} width={52} height={10} fill="#FF2828" rx={2} />
+      <rect x={1250} y={107} width={52} height={248} fill="#E3000B" rx={3} />
+      <rect x={1250} y={107} width={52} height={10} fill="#FF2828" rx={2} />
+      {/* Roof studs */}
+      <circle cx={1264} cy={113} r={3.5} fill="rgba(255,200,200,0.2)" />
+      <circle cx={1276} cy={113} r={3.5} fill="rgba(255,200,200,0.2)" />
+      <circle cx={1288} cy={113} r={3.5} fill="rgba(255,200,200,0.2)" />
       {/* Antenna */}
-      <rect x={1273} y={90} width={4} height={16} fill="#AA0000" />
-      <circle cx={1275} cy={88} r={4} fill="#FF2222" />
-      {[122, 150, 178, 206, 234, 262, 290].map((y) =>
+      <rect x={1273} y={95} width={4} height={16} fill="#AA0000" />
+      <circle cx={1275} cy={93} r={4} fill="#FF2222" />
+      {[127, 155, 183, 211, 239, 267, 295].map((y) =>
         [1262, 1290].map((x) => (
           <rect key={`r${x}${y}`} x={x} y={y} width={12} height={14} fill="#FFB8B0" rx={1} opacity={0.82} />
         ))
       )}
 
       {/* B3 — LEGO Blue */}
-      <rect x={1306} y={120} width={48} height={230} fill="#0055BF" rx={3} />
-      <rect x={1306} y={120} width={48} height={10} fill="#1068E8" rx={2} />
-      {[139, 167, 195, 223, 251, 279].map((y) =>
+      <rect x={1306} y={125} width={48} height={230} fill="#0055BF" rx={3} />
+      <rect x={1306} y={125} width={48} height={10} fill="#1068E8" rx={2} />
+      {/* Roof studs */}
+      <circle cx={1318} cy={131} r={3.5} fill="rgba(150,200,255,0.2)" />
+      <circle cx={1330} cy={131} r={3.5} fill="rgba(150,200,255,0.2)" />
+      <circle cx={1342} cy={131} r={3.5} fill="rgba(150,200,255,0.2)" />
+      {[144, 172, 200, 228, 256, 284].map((y) =>
         [1316, 1340].map((x) => (
           <rect key={`b${x}${y}`} x={x} y={y} width={12} height={13} fill="#98C8FF" rx={1} opacity={0.82} />
         ))
       )}
 
       {/* B4 — LEGO Orange, fully within canvas */}
-      <rect x={1356} y={150} width={42} height={200} fill="#FF6600" rx={3} />
-      <rect x={1356} y={150} width={42} height={9} fill="#FF8830" rx={2} />
-      {[169, 196, 223, 250, 277].map((y) =>
+      <rect x={1356} y={155} width={42} height={200} fill="#FF6600" rx={3} />
+      <rect x={1356} y={155} width={42} height={9} fill="#FF8830" rx={2} />
+      {/* Roof studs */}
+      <circle cx={1368} cy={160} r={3.5} fill="rgba(255,220,160,0.2)" />
+      <circle cx={1380} cy={160} r={3.5} fill="rgba(255,220,160,0.2)" />
+      <circle cx={1392} cy={160} r={3.5} fill="rgba(255,220,160,0.2)" />
+      {[174, 201, 228, 255, 282].map((y) =>
         [1366, 1386].map((x) => (
           <rect key={`o${x}${y}`} x={x} y={y} width={10} height={13} fill="#FFD8A0" rx={1} opacity={0.82} />
         ))
       )}
 
-      {/* ── 6. GRASS — horizon at y≈350, gently undulating ── */}
-      <path
-        d="M 0,360 Q 185,345 370,357 Q 555,370 740,353 Q 925,340 1110,347 Q 1260,357 1400,343 L 1400,800 L 0,800 Z"
-        fill="url(#ms-grass)"
-      />
+      {/* ── 5. GRASS — straight horizon at y=355 ── */}
+      <rect x={0} y={355} width={1400} height={445} fill="url(#ms-grass)" />
+      {/* Baseplate stud pattern overlay */}
+      <rect x={0} y={355} width={1400} height={445} fill="url(#ms-studs)" />
       {/* Grass texture — LEGO-stud dot scatter */}
       {[
         [148,400],[268,426],[388,408],[510,420],[632,462],[752,412],[872,434],[992,404],[1112,420],[1232,410],
@@ -186,6 +187,29 @@ export function MapSvg({ className }: MapSvgProps) {
           opacity={0.36}
         />
       ))}
+
+      {/* ── 6. MOUNTAINS — left side, stepped bricks, on top of grass ── */}
+      {/* Far background hill — subtle stepped */}
+      <rect x={10} y={335} width={150} height={20} fill="#A0A4AA" opacity={0.25} rx={1} />
+      <rect x={30} y={318} width={110} height={17} fill="#A0A4AA" opacity={0.2} rx={1} />
+      <rect x={50} y={303} width={70} height={15} fill="#A0A4AA" opacity={0.15} rx={1} />
+      {/* Big stepped mountain */}
+      <rect x={82} y={330} width={280} height={25} fill="#6E7278" rx={1} />
+      <rect x={117} y={305} width={210} height={25} fill="#7E8288" rx={1} />
+      <rect x={152} y={280} width={140} height={25} fill="#8A8E94" rx={1} />
+      <rect x={182} y={255} width={80} height={25} fill="#9A9EA4" rx={1} />
+      <rect x={197} y={233} width={50} height={22} fill="#AAAFB4" rx={1} />
+      <rect x={207} y={215} width={30} height={18} fill="white" rx={1} />
+      {/* Snow cap studs */}
+      <circle cx={216} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
+      <circle cx={228} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
+      {/* Smaller stepped mountain */}
+      <rect x={322} y={330} width={180} height={25} fill="#7E8288" rx={1} />
+      <rect x={347} y={305} width={130} height={25} fill="#8E9298" rx={1} />
+      <rect x={372} y={280} width={80} height={25} fill="#9EA2A8" rx={1} />
+      <rect x={392} y={262} width={40} height={18} fill="white" rx={1} />
+      <circle cx={407} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
+      <circle cx={418} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
 
       {/* ── 7. TREES — lollipop clusters, organic y-stagger ── */}
       {/* Left rural cluster */}
@@ -204,19 +228,19 @@ export function MapSvg({ className }: MapSvgProps) {
       <Tree x={990} y={400} s={0.9}  />
       <Tree x={1044} y={438} s={0.8}  />
 
-      {/* ── 8. POND — centre area, 20% bigger, clear of road ── */}
-      <ellipse cx={680} cy={710} rx={90} ry={46} fill="url(#ms-pond)" opacity={0.9} />
-      <ellipse cx={668} cy={702} rx={60} ry={24} fill="#8CE0F8" opacity={0.45} />
-      <ellipse cx={658} cy={696} rx={22} ry={8} fill="white" opacity={0.28} />
+      {/* ── 8. POND — centre-right area, clear of road ── */}
+      <ellipse cx={740} cy={710} rx={90} ry={46} fill="url(#ms-pond)" opacity={0.9} />
+      <ellipse cx={728} cy={702} rx={60} ry={24} fill="#8CE0F8" opacity={0.45} />
+      <ellipse cx={718} cy={696} rx={22} ry={8} fill="white" opacity={0.28} />
 
-      {/* ── 9. WINDMILL — bottom right corner, cream/beige, rotated 25° ── */}
+      {/* ── 9. WINDMILL — bottom right, cream/beige, rotated 25° ── */}
       {/* Tower */}
-      <path d="M 1128,740 L 1136,662 L 1144,662 L 1152,740 Z" fill="#C8B48A" />
-      <path d="M 1136,662 L 1138,740 L 1136,740 Z" fill="#D8C49A" opacity={0.5} />
+      <path d="M 1178,740 L 1186,662 L 1194,662 L 1202,740 Z" fill="#C8B48A" />
+      <path d="M 1186,662 L 1188,740 L 1186,740 Z" fill="#D8C49A" opacity={0.5} />
       {/* Hub */}
-      <circle cx={1140} cy={660} r={8} fill="#A08060" />
+      <circle cx={1190} cy={660} r={8} fill="#A08060" />
       {/* 4 blades — rotated 25° so shape reads clearly as windmill */}
-      <g transform="translate(1140,660) rotate(25)">
+      <g transform="translate(1190,660) rotate(25)">
         <rect x={-5} y={-54} width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
         <rect x={6}  y={-5}  width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
         <rect x={-5} y={6}   width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
