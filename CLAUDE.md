@@ -127,3 +127,12 @@ Two depth techniques are used — choose based on context:
 | Yellow | "What to do next" (action)| Primary CTA buttons, entity cards default |
 | Green  | "Where you've been" (visited) | Visited stop indicators   |
 | Grey   | "Not yet / go back" (secondary) | Inactive stops, secondary buttons |
+
+## Documentation & Memory
+
+Where persistent knowledge lives — see `.claude/rules/memory-placement.md` for the full placement guide.
+
+- **`CLAUDE.md`** — prescriptive code conventions (this file)
+- **`.claude/memory/`** — behavioral corrections, user preferences, reference pointers
+- **`.planning/`** — GSD phases, roadmap, research, project state
+- **`.serena/memories/`** — descriptive project knowledge (when Serena is configured)
