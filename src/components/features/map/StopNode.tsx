@@ -255,7 +255,10 @@ function getMarkerStyle(variant: BrickState): React.CSSProperties {
     transform: 'translateY(-3px)',
     filter: 'drop-shadow(0 5px 12px rgba(0,0,0,0.22))',
   }
-  return base
+  return {
+    ...base,
+    filter: 'drop-shadow(2px 3px 0 rgba(0,0,0,0.1))',
+  }
 }
 
 // Label styles are static per data state — they do NOT change on hover/focus
@@ -267,6 +270,7 @@ function getLabelStyle(dataState: 'default' | 'active' | 'visited'): React.CSSPr
     whiteSpace: 'nowrap',
     padding: '3px 12px',
     borderRadius: '8px',
+    boxShadow: '2px 3px 0 rgba(0,0,0,0.1)',
   }
   if (dataState === 'active') return {
     ...base,

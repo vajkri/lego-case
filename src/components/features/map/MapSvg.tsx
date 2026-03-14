@@ -22,6 +22,8 @@ interface MapSvgProps {
 function Tree({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
   return (
     <g transform={`translate(${x},${y})`}>
+      {/* Ground shadow — offset right, sun from upper-left */}
+      <ellipse cx={5 * s} cy={22 * s} rx={18 * s} ry={5 * s} fill="rgba(0,0,0,0.07)" />
       <rect x={-4 * s} y={0} width={8 * s} height={24 * s} fill="#6B4A1E" rx={2} />
       <circle cx={0} cy={-18 * s} r={22 * s} fill="#1E8A14" />
       <circle cx={0} cy={-18 * s} r={22 * s} fill="#34C020" opacity={0.55} />
@@ -35,6 +37,8 @@ function Tree({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
 function Cloud({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
   return (
     <g transform={`translate(${x},${y}) scale(${s})`}>
+      {/* Underbelly shadow — subtle bottom darkening, lit from above */}
+      <ellipse cx={2} cy={14} rx={48} ry={6} fill="rgba(0,0,0,0.04)" />
       {/* Flat base */}
       <rect x={-52} y={-4} width={104} height={20} fill="white" rx={8} />
       {/* Left bump */}
@@ -137,8 +141,13 @@ export function MapSvg({ className }: MapSvgProps) {
 
       {/* ── 4. CITY BUILDINGS — right side, bases at horizon ── */}
 
+      {/* Building cluster ground shadow — extends onto grass below base */}
+      <rect x={1198} y={355} width={202} height={10} fill="rgba(0,0,0,0.07)" rx={2} />
+
       {/* B1 — LEGO Green */}
       <rect x={1200} y={191} width={46} height={164} fill="#00A850" rx={3} />
+      {/* Right-side shade wall — away from sun */}
+      <rect x={1238} y={191} width={8} height={164} fill="rgba(0,0,0,0.08)" rx={1} />
       <rect x={1200} y={191} width={46} height={9} fill="#00CC60" rx={2} />
       {/* Roof studs */}
       <circle cx={1212} cy={197} r={3.5} fill="rgba(255,255,255,0.15)" />
@@ -152,6 +161,7 @@ export function MapSvg({ className }: MapSvgProps) {
 
       {/* B2 — LEGO Red, tallest */}
       <rect x={1250} y={107} width={52} height={248} fill="#E3000B" rx={3} />
+      <rect x={1292} y={107} width={10} height={248} fill="rgba(0,0,0,0.08)" rx={1} />
       <rect x={1250} y={107} width={52} height={10} fill="#FF2828" rx={2} />
       {/* Roof studs */}
       <circle cx={1264} cy={113} r={3.5} fill="rgba(255,200,200,0.2)" />
@@ -168,6 +178,7 @@ export function MapSvg({ className }: MapSvgProps) {
 
       {/* B3 — LEGO Blue */}
       <rect x={1306} y={125} width={48} height={230} fill="#0055BF" rx={3} />
+      <rect x={1344} y={125} width={10} height={230} fill="rgba(0,0,0,0.08)" rx={1} />
       <rect x={1306} y={125} width={48} height={10} fill="#1068E8" rx={2} />
       {/* Roof studs */}
       <circle cx={1318} cy={131} r={3.5} fill="rgba(150,200,255,0.2)" />
@@ -181,6 +192,7 @@ export function MapSvg({ className }: MapSvgProps) {
 
       {/* B4 — LEGO Orange, fully within canvas */}
       <rect x={1356} y={155} width={42} height={200} fill="#FF6600" rx={3} />
+      <rect x={1390} y={155} width={8} height={200} fill="rgba(0,0,0,0.08)" rx={1} />
       <rect x={1356} y={155} width={42} height={9} fill="#FF8830" rx={2} />
       {/* Roof studs */}
       <circle cx={1368} cy={160} r={3.5} fill="rgba(255,220,160,0.2)" />
@@ -210,6 +222,9 @@ export function MapSvg({ className }: MapSvgProps) {
       ))}
 
       {/* ── 6. MOUNTAINS — left side, stepped bricks, on top of grass ── */}
+      {/* Ground shadows — mountains sit on baseplate */}
+      <rect x={115} y={355} width={278} height={8} fill="rgba(0,0,0,0.06)" rx={1} />
+      <rect x={355} y={355} width={178} height={8} fill="rgba(0,0,0,0.06)" rx={1} />
       {/* Far background hill — subtle stepped */}
       <rect x={40} y={335} width={150} height={20} fill="#A0A4AA" opacity={0.25} rx={1} />
       <rect x={60} y={318} width={110} height={17} fill="#A0A4AA" opacity={0.2} rx={1} />
@@ -248,6 +263,9 @@ export function MapSvg({ className }: MapSvgProps) {
       {/* Near city entrance */}
       <Tree x={990} y={400} s={0.9}  />
       <Tree x={1044} y={438} s={0.8}  />
+      {/* Right side — between road end and windmill */}
+      <Tree x={1280} y={520} s={0.85} />
+      <Tree x={1340} y={560} s={0.95} />
 
       {/* ── 8. POND — centre-right area, clear of road ── */}
       <ellipse cx={740} cy={710} rx={90} ry={46} fill="url(#ms-pond)" opacity={0.9} />
@@ -255,6 +273,8 @@ export function MapSvg({ className }: MapSvgProps) {
       <ellipse cx={718} cy={696} rx={22} ry={8} fill="white" opacity={0.28} />
 
       {/* ── 9. WINDMILL — bottom right, cream/beige, rotated 25° ── */}
+      {/* Ground shadow */}
+      <ellipse cx={1195} cy={742} rx={18} ry={5} fill="rgba(0,0,0,0.06)" />
       {/* Tower */}
       <path d="M 1178,740 L 1186,662 L 1194,662 L 1202,740 Z" fill="#C8B48A" />
       <path d="M 1186,662 L 1188,740 L 1186,740 Z" fill="#D8C49A" opacity={0.5} />

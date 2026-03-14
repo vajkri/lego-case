@@ -76,6 +76,7 @@ export function CarElement({ targetOffset, isMovingBackward, onArrival, style: e
         // Right-side driving: Y offset shifts car perpendicular to path direction.
         // -10% = right side (forward), -90% = left side (backward).
         // scaleX(-1) flips car to face backward direction.
+        filter: 'drop-shadow(2px 3px 0 rgba(0,0,0,0.12))',
         transform: isMovingBackward
           ? 'translate(-50%, -90%) scaleX(-1)'
           : 'translate(-50%, -10%)',
