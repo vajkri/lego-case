@@ -75,9 +75,49 @@ Plans:
 - [ ] 03-04-PLAN.md — LEGO StopNode redesign (3 states) + CarElement motion path implementation
 - [ ] 03-05-PLAN.md — MapCanvas wiring + MapProgressIndicator + stop coordinate update + human verification
 
+### Phase 03.1: Design system integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 3
+**Plans:** 4/5 plans complete
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 03.1 to break down)
+
+### Phase 03.2: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 03.1
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 03.2 to break down)
+
+### Phase 03.3: Progress track redesign - visual states for default, hover, current, visited (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 03.1
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 03.3 to break down)
+
+### Phase 03.4: Map visual redesign - Legoesque aesthetic proposal mockups and implementation (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phases 03.1, 03.2, 03.3
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 03.4 to break down)
+
 ### Phase 4: Content and Polish
-**Goal**: All 5 stop slides are fully authored and visually complete with LEGO-inspired design tokens, the production build is clean, and the presentation is ready to give.
-**Depends on**: Phase 3
+**Goal**: All 5 stop slides are fully authored with final content, the production build is clean, and the presentation is ready to give. (LEGO design tokens and visual identity established in Phases 03.1–03.4.)
+**Depends on**: Phase 03.4
 **Requirements**: PERF-01, PERF-02, PERF-03
 **Success Criteria** (what must be TRUE):
   1. `next build` completes with zero errors, zero warnings related to static export, server components, or image optimization, and zero console errors in the production build
@@ -88,11 +128,15 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03.4 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 5/5 | Complete   | 2026-03-12 |
-| 2. Navigation and Slides | 5/5 | Complete   | 2026-03-12 |
-| 3. Map and Car Animation | 4/5 | In Progress|  |
+| 1. Foundation | 5/5 | Complete | 2026-03-12 |
+| 2. Navigation and Slides | 5/5 | Complete | 2026-03-12 |
+| 3. Map and Car Animation | 4/5 | In Progress | |
+| 03.1 Design system integration | 0/TBD | Not started | - |
+| 03.2 Stop marker redesign | 0/TBD | Not started | - |
+| 03.3 Progress track redesign | 0/TBD | Not started | - |
+| 03.4 Map visual redesign (Legoesque) | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |

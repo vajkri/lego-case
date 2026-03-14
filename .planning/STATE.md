@@ -4,10 +4,10 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: "Checkpoint 03-05: Task 1 complete, awaiting human-verify Task 2"
-last_updated: "2026-03-12T20:02:15.275Z"
+last_updated: "2026-03-14T08:04:09.274Z"
 last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
 progress:
-  total_phases: 4
+  total_phases: 8
   completed_phases: 2
   total_plans: 15
   completed_plans: 14
@@ -102,6 +102,13 @@ Recent decisions affecting current work:
 - [Phase 03-map-and-car-animation]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth — prevents car animation drifting from visual road
 - [Phase 03-map-and-car-animation]: StopNode (03-04): MarkerPin SVG sub-component with variant prop for 3-state LEGO pin — circle head + pointed base
 - [Phase 03-map-and-car-animation]: CarElement (03-04): Single motion.div with offsetPath/offsetDistance — no nested motion.div to avoid test mock data-testid collision
+
+### Roadmap Evolution
+
+- Phase 03.1 inserted after Phase 3: Design system integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
+- Phase 03.2 inserted after Phase 3.1: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
+- Phase 03.3 inserted after Phase 3: Progress track redesign — visual states for default, hover, current, visited (URGENT)
+- Phase 03.4 inserted after Phase 3: Map visual redesign — Legoesque aesthetic proposal mockups and implementation (URGENT)
 
 ### Pending Todos
 
