@@ -6,7 +6,7 @@ export const stopTheCase: Stop = {
   label: 'The Case',
   // Coordinates updated in Phase 3 to match actual SVG road positions.
   // Update together with ROAD_PATH_D and STOP_OFFSETS in RoadPath.tsx if road geometry changes.
-  coordinates: { x: 10, y: 81 },
+  coordinates: { x: 10, y: 82 },
   labelPosition: 'above',
   slides: [
     {

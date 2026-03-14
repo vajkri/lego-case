@@ -149,8 +149,8 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
 
   return (
     <svg
-      width={VB_W}
-      height={VB_H}
+      width={VB_W * 0.8}
+      height={VB_H * 0.8}
       viewBox={`0 0 ${VB_W} ${VB_H}`}
       fill="none"
       overflow="visible"
@@ -220,6 +220,7 @@ interface StopNodeProps {
   index: number
   isActive: boolean
   isVisited: boolean
+  isCarTraveling: boolean
 }
 
 // Inline style objects per variant state
@@ -278,18 +279,18 @@ function getLabelStyle(variant: BrickState): React.CSSProperties {
   }
   if (variant === 'visited') return {
     ...base,
-    background: 'transparent',
+    background: '#FFFFFF',
     color: '#00A850',
   }
   // default
   return {
     ...base,
-    background: 'transparent',
+    background: '#FFFFFF',
     color: '#6D6E70',
   }
 }
 
-export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
+export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: StopNodeProps) {
   const { dispatch, triggerRef } = usePresentation()
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -305,6 +306,11 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
           ? 'visited'
           : 'default'
 
+  // Brick colors delay until car arrives — bricks stay grey while car is traveling
+  const brickColorState: BrickState = (variant === 'active' && isCarTraveling)
+    ? 'default'
+    : variant
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Store this button as the focus return target when overlay closes (A11Y-04)
     triggerRef.current = e.currentTarget
@@ -317,6 +323,9 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
 
   // Road-side placement: labels above → left of road, labels below → right of road
   const sideOffset = stop.labelPosition === 'above' ? -25 : 25
+
+  // Z-index: labels-above stops render behind the car, labels-below in front
+  const zIndex = stop.labelPosition === 'above' ? 5 : 15
 
   return (
     <button
@@ -337,6 +346,7 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
         padding: '4px',
         cursor: 'pointer',
         outline: 'none',
+        zIndex,
       }}
     >
       <div
@@ -344,7 +354,7 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
           display: 'flex',
           flexDirection,
           alignItems: 'center',
-          gap: '4px',
+          gap: '14px',
         }}
       >
         {/* Always-visible label — MAP-02 requires labels never hidden */}
@@ -352,12 +362,9 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
           {stop.label}
         </span>
 
-        {/* Marker wrapper — receives transform, shadow, and focus outline; 80% base scale */}
-        <div style={(() => {
-          const ms = getMarkerStyle(variant)
-          return { ...ms, transform: `scale(0.8) ${ms.transform || ''}`.trim() }
-        })()}>
-          <BrickMarker stopIndex={index} state={variant} />
+        {/* Marker wrapper — receives transform, shadow, and focus outline */}
+        <div style={getMarkerStyle(variant)}>
+          <BrickMarker stopIndex={index} state={brickColorState} />
         </div>
       </div>
     </button>

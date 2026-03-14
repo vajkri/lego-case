@@ -93,6 +93,7 @@ export function MapCanvas() {
             }
             isMovingBackward={isMovingBackward}
             onArrival={handleCarArrival}
+            style={{ zIndex: 10 }}
           />
 
           {/* Stop node buttons — positioned by their coordinate percentages */}
@@ -103,6 +104,7 @@ export function MapCanvas() {
               index={index}
               isActive={state.currentStop === index}
               isVisited={state.visitedStops.includes(index)}
+              isCarTraveling={state.isCarTraveling}
             />
           ))}
         </div>

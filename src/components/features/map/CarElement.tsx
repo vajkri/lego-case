@@ -11,6 +11,7 @@ interface CarElementProps {
   targetOffset: string       // e.g. '0%', '10%', '44%' — drives offsetDistance
   isMovingBackward: boolean  // true when going to a lower-index stop
   onArrival: () => void      // dispatched to reducer as ARRIVE action
+  style?: React.CSSProperties  // additional styles (e.g. zIndex for layering)
 }
 
 // LEGO car — side view with studs, wheels, cabin, headlight/taillight
@@ -48,7 +49,7 @@ function CarSvg() {
   )
 }
 
-export function CarElement({ targetOffset, isMovingBackward, onArrival }: CarElementProps) {
+export function CarElement({ targetOffset, isMovingBackward, onArrival, style: extraStyle }: CarElementProps) {
   return (
     <motion.div
       data-testid="car-element"
@@ -63,6 +64,7 @@ export function CarElement({ targetOffset, isMovingBackward, onArrival }: CarEle
         height: 40,
         // Center the car on the path point using CSS transform (not top/left positioning)
         transform: 'translate(-50%, -50%)',
+        ...extraStyle,
       }}
       animate={{ offsetDistance: targetOffset }}
       transition={{
