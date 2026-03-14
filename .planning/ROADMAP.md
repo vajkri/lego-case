@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3.1: Design System Integration** - Tailwind tokens, UI components, CLAUDE.md docs (INSERTED) (completed 2026-03-14)
 - [x] **Phase 3.2: Stop Marker Redesign** - Chosen proposal in StopNode.tsx with label positioning (INSERTED) (completed 2026-03-14)
 - [x] **Phase 3.3: Progress Track Redesign** - Visual states for default, hover, current, visited (INSERTED) (completed 2026-03-14)
-- [ ] **Phase 3.4: Map Visual Redesign** - Legoesque aesthetic proposal mockups and implementation (INSERTED)
+- [x] **Phase 3.4: Map Visual Redesign** - Legoesque aesthetic proposal mockups and implementation (INSERTED) (completed 2026-03-14)
 - [ ] **Phase 4: Content and Polish** - All 5 stops fully authored, production build verified
 
 ## Phase Details

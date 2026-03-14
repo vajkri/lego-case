@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready for Phase 03.4
-stopped_at: Phase 03.3 complete — progress track redesign verified and approved
-last_updated: "2026-03-14T16:55:09.181Z"
-last_activity: "2026-03-14 — Phase 03.3 complete: MinifigHead progress track, connector sweep animations, MapProgressIndicator removed"
+status: Ready for Phase 4
+stopped_at: Phase 03.4 complete — map visual redesign approved
+last_updated: "2026-03-14T20:00:00.000Z"
+last_activity: "2026-03-14 — Phase 03.4 complete: full-bleed backgrounds, ambient animations, shadow system, car alignment, road smoothing"
 progress:
   total_phases: 8
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 23
   completed_plans: 23
   percent: 100
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** A compelling, accessible, story-driven presentation that makes the migration case so clearly — for both engineers and business stakeholders — that the path forward feels obvious.
-**Current focus:** Phase 03.4 — Map Visual Redesign
+**Current focus:** Phase 4 — Content and Polish
 
 ## Current Position
 
-Phase: 03.3 of 8 (Progress Track Redesign — complete)
-Plan: 02 complete — phase 03.3 done, next: 03.4
-Status: Ready for Phase 03.4
-Last activity: 2026-03-14 — Phase 03.3 complete: MinifigHead progress track, connector sweep animations, MapProgressIndicator removed
+Phase: 03.4 of 8 (Map Visual Redesign — complete)
+Plan: iterative feedback — phase 03.4 done, next: Phase 4
+Status: Ready for Phase 4
+Last activity: 2026-03-14 — Phase 03.4 complete: full-bleed backgrounds, ambient animations, shadow system, car alignment
 
-Progress: [██████████] 100% (of planned phases; 03.4 and 4 not yet planned)
+Progress: [██████████] 100% (7 of 8 phases complete; Phase 4 not yet planned)
 
 ## Performance Metrics
 
@@ -105,6 +105,13 @@ Recent decisions affecting current work:
 - [Phase 03.3-02]: Red connectors use clip-path inset animation (sweep wipe) on mount; green visited connectors crossfade from red via CSS background transition
 - [Phase 03.3-02]: MapProgressIndicator.tsx deleted — footer is now the sole progress indicator; MapProgressIndicator was already unused in MapCanvas
 - [Phase 03.3-02]: Index-based hoveredIndex/focusedIndex (number|null) manages hover/focus for all 5 minifig head buttons with single React state pair
+- [Phase 03.4]: Full-bleed sky/grass via CSS background layers in MapCanvas, anchored to inner container's horizon (44.375%), SVG has transparent background
+- [Phase 03.4]: HORIZON_Y constant exported from MapSvg, consumed by MapCanvas — single source of truth for sky/grass split
+- [Phase 03.4]: Road colors softened (#5C6370 edge, #6E7685 surface) to reduce visual dominance vs stop markers
+- [Phase 03.4]: Car drives right side of road (Y offset -10%) via transform, flips with scaleX(-1) when backward
+- [Phase 03.4]: Ambient animations via SVG SMIL (not CSS) — native user units avoid viewBox scaling mismatch. prefers-reduced-motion disables all
+- [Phase 03.4]: Cloud wrapping: duplicate cloud at +1600 SVG units, animateTransform translates group by -1600, seamless infinite loop
+- [Phase 03.4]: Shadow system: hard flat shadows (2-3px offset, no blur, rgba 0.06-0.1) matching sun direction (upper-left), applied to trees/buildings/mountains/windmill/stops/car
 
 ### Roadmap Evolution
 
@@ -116,15 +123,15 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 - [x] ~~Add favicon to project (2026-03-12) — area: ui~~ — done
-- [ ] Add subtle animations to map elements (2026-03-12) — sun pulse, cloud drift, windmill rotation
-- [ ] Clean up shadows for map elements (2026-03-12) — road shadow removal, consistent depth treatment
+- [x] ~~Add subtle animations to map elements (2026-03-12) — sun pulse, cloud drift, windmill rotation~~ — done
+- [x] ~~Clean up shadows for map elements (2026-03-12) — road shadow removal, consistent depth treatment~~ — done
 
 ### Blockers/Concerns
 
-- Phase 3.2 blocked on user choosing stop marker proposal (1–5 from stop-marker-proposals.html)
+None
 
 ## Session Continuity
 
-Last session: 2026-03-14T17:30:00.000Z
-Stopped at: Phase 03.3 complete — progress track redesign verified and approved, next: 03.4
+Last session: 2026-03-14T20:00:00.000Z
+Stopped at: Phase 03.4 complete — map visual redesign approved
 Resume file: None
