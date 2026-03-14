@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready for Phase 03.3
-stopped_at: Phase 03.4 context gathered
-last_updated: "2026-03-14T14:35:34.686Z"
+stopped_at: Completed 03.3-02-PLAN.md — progress track redesign complete
+last_updated: "2026-03-14T16:30:26.544Z"
 last_activity: "2026-03-14 — Phase 03.2 complete: BrickMarker SVG, 5-state stop markers, 4 visual feedback rounds"
 progress:
   total_phases: 8
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 23
-  completed_plans: 21
+  completed_plans: 22
   percent: 95
 ---
 
@@ -54,6 +54,7 @@ Progress: [████████░░] 95%
 | Phase 03.2-stop-marker-redesign P02 | 525671min | 2 tasks | 10 files |
 | Phase 03.2-stop-marker-redesign P02 | 35min | 2 tasks | 10 files |
 | Phase 03.3-progress-track-redesign P01 | 4min | 2 tasks | 7 files |
+| Phase 03.3 P02 | 168 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,9 @@ Recent decisions affecting current work:
 - [Phase 03.3-01]: SubSlideProgress size prop uses SIZE_CONFIG object mapping variant names to dimension values — not conditional ternaries
 - [Phase 03.3-01]: MinifigHead face expressions are separate FC components — no transition on face features, only on rect fills (200ms)
 - [Phase 03.3-01]: MinifigHead is a pure Server Component (no 'use client') — no hooks, no event handlers needed
+- [Phase 03.3-02]: Red connectors use clip-path inset animation (sweep wipe) on mount; green visited connectors crossfade from red via CSS background transition
+- [Phase 03.3-02]: MapProgressIndicator.tsx deleted — footer is now the sole progress indicator; MapProgressIndicator was already unused in MapCanvas
+- [Phase 03.3-02]: Index-based hoveredIndex/focusedIndex (number|null) manages hover/focus for all 5 minifig head buttons with single React state pair
 
 ### Roadmap Evolution
 
@@ -121,6 +125,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T14:35:34.681Z
-Stopped at: Phase 03.4 context gathered
-Resume file: .planning/phases/03.4-map-visual-redesign-legoesque-aesthetic-proposal-mockups-and-implementation/03.4-CONTEXT.md
+Last session: 2026-03-14T16:30:26.538Z
+Stopped at: Completed 03.3-02-PLAN.md — progress track redesign complete
+Resume file: None

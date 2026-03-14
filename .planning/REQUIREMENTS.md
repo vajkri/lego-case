@@ -31,7 +31,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 - [x] **CAR-01**: A red LEGO car element is rendered on the map and positioned at the current city
 - [x] **CAR-02**: When advancing to the next topic, the car animates along a path from the current city to the next city using CSS motion path (`offsetPath`)
 - [x] **CAR-03**: Car travel animation uses CSS transform properties (`x`/`y`), not SVG coordinate attributes, to avoid layout/paint on every frame
-- [ ] **CAR-04**: Car travel animation is smooth and does not drop frames on a standard laptop
+- [x] **CAR-04**: Car travel animation is smooth and does not drop frames on a standard laptop
 
 ### Navigation
 
@@ -132,7 +132,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAR-01 | Phase 3 | Complete |
 | CAR-02 | Phase 3 | Complete |
 | CAR-03 | Phase 3 | Complete |
-| CAR-04 | Phase 3 | Pending |
+| CAR-04 | Phase 3 | Complete |
 | PERF-01 | Phase 4 | Pending |
 | PERF-02 | Phase 4 | Pending |
 | PERF-03 | Phase 4 | Pending |

@@ -109,7 +109,7 @@ Plans:
 **Goal:** The footer progress wizard is redesigned with LEGO minifig head step indicators (3 facial expressions: default smile, current grin, visited wink), thicker semantic-colored connectors (grey/red/green), sub-slide dots under the current stop, and the redundant MapProgressIndicator corner widget is removed.
 **Requirements**: MAP-04, MAP-03, CAR-04
 **Depends on:** Phase 03.1
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 03.3-01-PLAN.md — Design token + SubSlideProgress promotion + MinifigHead SVG component
