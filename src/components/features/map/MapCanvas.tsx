@@ -136,15 +136,6 @@ export function MapCanvas() {
             />
           ))}
         </div>
-
-        {/* DEV INDICATOR — remove in Phase 4 */}
-        <div className="absolute top-4 left-4 font-mono text-xs bg-black/80 text-green-400 px-3 py-2 rounded select-none z-50">
-          <div>stop: {state.currentStop}</div>
-          <div>slide: {state.currentSlide}</div>
-          <div>mode: {state.mode}</div>
-          <div>traveling: {String(state.isCarTraveling)}</div>
-          <div>awaiting: {String(state.awaitingSlideOpen)}</div>
-        </div>
       </div>
     </div>
   )

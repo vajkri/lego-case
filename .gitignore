@@ -40,3 +40,6 @@ next-env.d.ts
 
 # worktrees
 .worktrees
+
+# planning assets (screenshots, mockups — local only)
+.planning/assets/
