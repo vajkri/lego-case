@@ -95,13 +95,14 @@ Plans:
 
 ### Phase 03.2: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal:** The StopNode map markers are replaced with Build Progress Bricks (Proposal #2) — favicon-proportioned SVG brick stacks where brick count grows per stop (1-5), with 5 visual states (default/hover/focus/active/visited), smart label positioning (above/below per stop), and CSS-driven animations (brick-drop entrance, color sweep transition).
+**Requirements**: MAP-02, MAP-03, A11Y-03
 **Depends on:** Phase 03.1
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 03.2 to break down)
+- [ ] 03.2-01-PLAN.md — Stop type extension with labelPosition + data files + test scaffolds
+- [ ] 03.2-02-PLAN.md — BrickMarker SVG component + StopNode rewrite + visual verification
 
 ### Phase 03.3: Progress track redesign - visual states for default, hover, current, visited (INSERTED)
 
@@ -144,7 +145,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 2. Navigation and Slides | 5/5 | Complete | 2026-03-12 |
 | 3. Map and Car Animation | 5/5 | Complete | 2026-03-14 |
 | 3.1 Design system integration | 4/4 | Complete | 2026-03-14 |
-| 3.2 Stop marker redesign | 0/TBD | Not started | - |
+| 3.2 Stop marker redesign | 0/2 | Not started | - |
 | 3.3 Progress track redesign | 0/TBD | Not started | - |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |
