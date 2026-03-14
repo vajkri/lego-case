@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 03.3 context gathered
-last_updated: "2026-03-14T13:59:05.422Z"
+stopped_at: Completed 03.2-02-PLAN.md (BrickMarker visual verification — 4 feedback rounds)
+last_updated: "2026-03-14T14:02:59.630Z"
 last_activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 progress:
   total_phases: 8
@@ -51,6 +51,8 @@ Progress: [████░░░░░░] 37%
 | Phase 03.1 P02 | 15 | 2 tasks | 10 files |
 | Phase 03.1-design-system-integration P04 | 3 | 1 tasks | 1 files |
 | Phase 03.2-01 P01 | 8 min | 2 tasks | 8 files |
+| Phase 03.2-stop-marker-redesign P02 | 525671min | 2 tasks | 10 files |
+| Phase 03.2-stop-marker-redesign P02 | 35min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -90,6 +92,11 @@ Recent decisions affecting current work:
 - [Phase 03.2]: MarkerPin removed entirely; BrickMarker is the complete replacement using brick-stack SVG as the new visual language for stop markers
 - [Phase 03.2]: CSS fill transition (300ms ease) on SVG rect style prop (not SVG fill attribute) enables active-to-visited color sweep without JS animation library
 - [Phase 03.2]: brick-drop animation applied only to topmost brick group element, not whole SVG, for per-brick entrance effect
+- [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Road-side placement: labels-above stops offset -25px left, labels-below +25px right
+- [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Brick sizing at 80% via SVG width/height (not CSS transform) to preserve correct stud proportions
+- [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Dynamic SVG viewBox crops to content bounds per stop index — eliminates inflated gap above shorter stacks
+- [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Static labels only 3 states (default/active/visited) — no hover/focus label changes after feedback round 4
+- [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Brick color activation at 80% car travel (1.12s into 1.4s) via useEffect+setTimeout for visual anticipation
 
 ### Roadmap Evolution
 
@@ -110,6 +117,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T13:59:05.417Z
-Stopped at: Phase 03.3 context gathered
-Resume file: .planning/phases/03.3-progress-track-redesign-visual-states-for-default-hover-current-visited/03.3-CONTEXT.md
+Last session: 2026-03-14T14:02:59.626Z
+Stopped at: Completed 03.2-02-PLAN.md (BrickMarker visual verification — 4 feedback rounds)
+Resume file: None
