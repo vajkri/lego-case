@@ -46,4 +46,10 @@ describe('stops data', () => {
     const unique = new Set(slugs)
     expect(unique.size).toBe(stops.length)
   })
+
+  it('every stop has a valid labelPosition', () => {
+    for (const stop of stops) {
+      expect(['above', 'below']).toContain(stop.labelPosition)
+    }
+  })
 })
