@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: "Completed 03.1-01-PLAN.md: Design tokens + Button component"
-last_updated: "2026-03-14T08:33:25.232Z"
+stopped_at: "Completed 03.1-03-PLAN.md: Content blocks + CLAUDE.md design system docs"
+last_updated: "2026-03-14T08:39:30.213Z"
 last_activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 18
-  completed_plans: 15
+  completed_plans: 16
   percent: 37
 ---
 
@@ -47,6 +47,7 @@ Progress: [████░░░░░░] 37%
 | 02-navigation-and-slides | 5 | 37 min | 7 min |
 | 03-map-and-car-animation | 5 | 15 min | 3 min |
 | Phase 03.1-design-system-integration P01 | 12 | 2 tasks | 6 files |
+| Phase 03.1-design-system-integration P03 | 4 | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Recent decisions affecting current work:
 - [Phase 03.1-01]: rgba() values in :root not @theme — Tailwind v4 @theme silently drops rgba color values; tints and depth shadows live in :root
 - [Phase 03.1-01]: Button exports className prop for composition by downstream components (SlideNavArrows, PresentationFooter)
 - [Phase 03.1-01]: border-b-4 active:border-b-2 + active:translate-y-0.5 for Button brick press effect via pure CSS active: pseudo-class
+- [Phase 03.1-03]: variantStyleMap uses inline style prop (not Tailwind classes) for rgba-based variant colors — Tailwind v4 cannot represent rgba values as tokens
+- [Phase 03.1-03]: EntityCards defaults to yellow variant (yellow = primary action color per color hierarchy)
+- [Phase 03.1-03]: Content block depth shadow via box-shadow CSS vars (not border-bottom) to preserve rounded corners
 
 ### Roadmap Evolution
 
@@ -94,6 +98,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T08:33:25.229Z
-Stopped at: Completed 03.1-01-PLAN.md: Design tokens + Button component
+Last session: 2026-03-14T08:39:30.209Z
+Stopped at: Completed 03.1-03-PLAN.md: Content blocks + CLAUDE.md design system docs
 Resume file: None

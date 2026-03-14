@@ -85,7 +85,7 @@ Plans:
 **Goal:** The full LEGO design system is defined as Tailwind v4 tokens, reusable UI primitives (Button, SlideFrame, 6 content blocks) are built and tested, existing slide and footer components consume the new primitives, and CLAUDE.md documents the design system for future phases.
 **Requirements**: DS-TOKENS, DS-FONTS, DS-BUTTON, DS-SLIDEFRAME, DS-CONTENTBLOCKS, DS-REFACTOR, DS-DOCS
 **Depends on:** Phase 3
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 03.1-01-PLAN.md — Design tokens + next/font + Button component
