@@ -1,7 +1,7 @@
 import { BlockVariant, variantStyleMap } from './variants'
 
 interface BulletListProps {
-  heading: string
+  heading?: string
   items: string[]
   variant?: BlockVariant
 }
@@ -18,9 +18,11 @@ export function BulletList({ heading, items, variant = 'default' }: BulletListPr
       className="rounded-md p-6"
       style={variantStyleMap[variant]}
     >
-      <h3 className="font-display font-bold text-[22px] text-lego-dark mb-4">
-        {heading}
-      </h3>
+      {heading && (
+        <h3 className="font-display font-bold text-[22px] text-lego-dark mb-4">
+          {heading}
+        </h3>
+      )}
       <ul className="space-y-2">
         {items.map((item, index) => (
           <li key={index} className="flex items-start gap-3 font-body text-base">

@@ -25,7 +25,7 @@ const mockStop: Stop = {
   label: 'Test Stop',
   coordinates: { x: 50, y: 50 },
   labelPosition: 'above',
-  slides: [{ heading: 'Heading', lines: ['Line 1'] }],
+  slides: [{ heading: 'Heading', blocks: [{ type: 'bullet-list' as const, items: ['Line 1'] }] }],
 }
 
 describe('StopNode — MAP-02: focusable button with accessible label', () => {

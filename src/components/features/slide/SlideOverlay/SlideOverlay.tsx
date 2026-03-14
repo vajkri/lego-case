@@ -101,7 +101,7 @@ export function SlideOverlay() {
         >
           <StopBadge stopIndex={state.currentStop} stopLabel={stop.label} />
           <SubSlideProgress total={stop.slides.length} current={state.currentSlide} />
-          <SlideContent heading={slide.heading} lines={slide.lines} />
+          <SlideContent heading={slide.heading} blocks={slide.blocks} />
         </SlideFrame>
       </motion.div>
     </FocusTrap>

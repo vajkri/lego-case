@@ -1,44 +1,44 @@
 'use client'
 
+import {
+  BulletList,
+  TwoColumnCards,
+  EntityCards,
+  NumberedSteps,
+  CalloutBox,
+  DataTable,
+} from '@/components/ui'
+import type { ContentBlock } from '@/types/presentation'
+
 interface SlideContentProps {
   heading: string
-  lines: string[]
+  blocks: ContentBlock[]
 }
 
-export function SlideContent({ heading, lines }: SlideContentProps) {
-  const intro = lines[0] ?? null
-  const bullets = lines.slice(1)
+function renderBlock(block: ContentBlock, index: number) {
+  switch (block.type) {
+    case 'bullet-list':
+      return <BulletList key={index} heading={block.heading} items={block.items} variant={block.variant} />
+    case 'two-column-cards':
+      return <TwoColumnCards key={index} cards={block.cards} variant={block.variant} />
+    case 'entity-cards':
+      return <EntityCards key={index} entities={block.entities} variant={block.variant} />
+    case 'numbered-steps':
+      return <NumberedSteps key={index} steps={block.steps} variant={block.variant} />
+    case 'callout':
+      return <CalloutBox key={index}>{block.text}</CalloutBox>
+    case 'data-table':
+      return <DataTable key={index} headers={block.headers} rows={block.rows} variant={block.variant} />
+  }
+}
 
+export function SlideContent({ heading, blocks }: SlideContentProps) {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center gap-8 w-full max-w-4xl mx-auto px-4 py-8">
-      {/* Large centered heading */}
-      <h2 className="text-4xl font-bold text-center text-lego-dark leading-tight tracking-tight">
+    <div className="flex-1 flex flex-col gap-6 w-full max-w-4xl mx-auto px-4 py-8 overflow-y-auto">
+      <h2 className="font-display font-bold text-[30px] text-lego-dark leading-tight tracking-tight">
         {heading}
       </h2>
-
-      {/* Content card */}
-      {(intro || bullets.length > 0) && (
-        <div className="w-full rounded-2xl bg-lego-grey-wash border border-lego-grey-pale p-8 flex flex-col gap-6">
-          {/* Intro paragraph (lines[0]) */}
-          {intro && (
-            <p className="text-lego-grey text-lg leading-relaxed">{intro}</p>
-          )}
-
-          {/* Numbered list items (lines[1..]) — all shown at once, no stagger */}
-          {bullets.length > 0 && (
-            <ol className="flex flex-col gap-4">
-              {bullets.map((line, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-400 text-slate-900 font-bold text-sm flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <span className="text-lego-dark text-base leading-relaxed pt-1">{line}</span>
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
-      )}
+      {blocks.map((block, index) => renderBlock(block, index))}
     </div>
   )
 }

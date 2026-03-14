@@ -2,15 +2,31 @@
 // Locked interface contracts for the presentation state machine.
 // Defined in Phase 1 and consumed by all subsequent phases.
 // Phase 3 additions: isCarTraveling, awaitingSlideOpen, visitedStops fields; ARRIVE action.
+// Phase 4 additions: ContentBlock discriminated union; Slide.lines replaced with Slide.blocks.
+
+import type { BlockVariant } from '@/components/ui/content-blocks/variants'
+
+/**
+ * Discriminated union of the 6 content block types.
+ * Each member maps 1:1 to a UI component in src/components/ui/content-blocks/.
+ */
+export type ContentBlock =
+  | { type: 'bullet-list'; heading?: string; items: string[]; variant?: BlockVariant }
+  | { type: 'two-column-cards'; cards: { title: string; description: string }[]; variant?: BlockVariant }
+  | { type: 'entity-cards'; entities: { initials: string; title: string; description: string }[]; variant?: BlockVariant }
+  | { type: 'numbered-steps'; steps: { title: string; description: string }[]; variant?: BlockVariant }
+  | { type: 'callout'; text: string }
+  | { type: 'data-table'; headers: string[]; rows: string[][]; variant?: BlockVariant }
 
 export interface Slide {
   heading: string
   /**
-   * Minimum concrete content shape.
-   * Each string is one bullet-point line rendered in the slide body.
-   * React.ReactNode upgrade deferred to Phase 2+ if richer content is needed.
+   * Typed content blocks rendered by SlideContent's block dispatcher.
+   * Each block maps to one of the 6 UI components (BulletList, TwoColumnCards,
+   * EntityCards, NumberedSteps, CalloutBox, DataTable).
+   * Replaces the flat lines: string[] shape from Phase 1.
    */
-  lines: string[]
+  blocks: ContentBlock[]
 }
 
 export interface Stop {
