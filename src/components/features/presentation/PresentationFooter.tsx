@@ -15,12 +15,8 @@ export function PresentationFooter() {
   const handleAdvance = () => dispatch({ type: 'ADVANCE' })
   const handleJumpToStop = (i: number) => dispatch({ type: 'JUMP_TO_STOP', stopIndex: i })
 
-  const handleToggle = () => {
-    if (state.mode === 'slide') {
-      dispatch({ type: 'CLOSE' })
-    } else {
-      dispatch({ type: 'JUMP_TO_STOP', stopIndex: state.currentStop })
-    }
+  const handleZoomIn = () => {
+    dispatch({ type: 'JUMP_TO_STOP', stopIndex: state.currentStop })
   }
 
   const getHeadState = (i: number): 'default' | 'current' | 'visited' => {
@@ -131,28 +127,15 @@ export function PresentationFooter() {
           ))}
         </div>
 
-        {/* Map / Zoom in toggle — yellow primary action button */}
-        <Button variant="yellow" size="label" onClick={handleToggle}>
-          {state.mode === 'slide' ? (
-            <>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-                <line x1="9" y1="3" x2="9" y2="18" />
-                <line x1="15" y1="6" x2="15" y2="21" />
-              </svg>
-              Map
-            </>
-          ) : (
-            <>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                <line x1="11" y1="8" x2="11" y2="14" />
-                <line x1="8" y1="11" x2="14" y2="11" />
-              </svg>
-              Zoom in
-            </>
-          )}
+        {/* Zoom in — opens current stop's slides */}
+        <Button variant="yellow" size="label" onClick={handleZoomIn}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <line x1="11" y1="8" x2="11" y2="14" />
+            <line x1="8" y1="11" x2="14" y2="11" />
+          </svg>
+          Zoom in
         </Button>
 
         {/* Next — red brick button */}

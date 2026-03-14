@@ -35,13 +35,15 @@ export default function RootLayout({
         <PresentationProvider>
           <KeyboardController />
           <div className="flex flex-col h-screen">
-            {/* Content area — slide overlay and map both live here */}
-            <div className="flex-1 relative overflow-hidden">
+            {/* Content area — map, footer, and slide overlay all live here.
+                The overlay's absolute inset-0 naturally covers both map and footer. */}
+            <div className="flex-1 relative overflow-hidden flex flex-col">
+              <div className="flex-1 relative">
+                {children}
+              </div>
+              <PresentationFooter />
               <OverlayPresence />
-              {children}
             </div>
-            {/* Footer always visible, both on map and slide views */}
-            <PresentationFooter />
           </div>
         </PresentationProvider>
       </body>
