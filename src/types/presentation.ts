@@ -26,6 +26,8 @@ export interface Stop {
     x: number  // % of SVG viewport width, e.g. 45.2
     y: number  // % of SVG viewport height, e.g. 32.1
   }
+  /** Manual label positioning above or below the brick marker -- set per stop to avoid road overlap */
+  labelPosition: 'above' | 'below'
   slides: Slide[]
 }
 

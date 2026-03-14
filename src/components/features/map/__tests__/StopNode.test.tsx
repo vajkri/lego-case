@@ -24,6 +24,7 @@ const mockStop: Stop = {
   slug: 'test-stop',
   label: 'Test Stop',
   coordinates: { x: 50, y: 50 },
+  labelPosition: 'above',
   slides: [{ heading: 'Heading', lines: ['Line 1'] }],
 }
 
