@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide Layout Comparison — Option A vs Option B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════
+     DESIGN TOKENS (from styleguide.md)
+     ═══════════════════════════════════════════════════ */
+  :root {
+    --lego-red:            #E3000B;
+    --lego-red-dark:       #A00008;
+    --lego-red-tint:       rgba(227, 0, 11, 0.08);
+    --lego-red-tint-md:    rgba(227, 0, 11, 0.10);
+    --lego-yellow:         #F5CD2D;
+    --lego-yellow-dark:    #D4A800;
+    --lego-yellow-tint:    rgba(245, 205, 45, 0.12);
+    --lego-yellow-tint-md: rgba(245, 205, 45, 0.18);
+    --lego-blue:           #0055BF;
+    --lego-green:          #00A850;
+    --lego-green-dark:     #007038;
+    --lego-dark:           #2C2C2C;
+    --lego-grey:           #6D6E70;
+    --lego-grey-light:     #A0A1A3;
+    --lego-grey-pale:      #D4D4D8;
+    --lego-grey-wash:      #F0EEE8;
+    --lego-cream:          #FAF8F2;
+
+    --font-display: 'Baloo 2', cursive;
+    --font-body:    'DM Sans', sans-serif;
+
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  12px;
+    --radius-xl:  16px;
+    --radius-pill: 999px;
+
+    --border-thin:    1.5px;
+    --border-default: 3px;
+    --border-depth:   4px;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+    --depth-default: 0 6px 0 0 var(--lego-grey-pale);
+    --depth-red:     0 6px 0 0 rgba(227,0,11,0.18);
+    --depth-yellow:  0 6px 0 0 rgba(245,205,45,0.35);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     RESET & BASE
+     ═══════════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--lego-dark);
+    background: var(--lego-cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PAGE LAYOUT — COMPARISON FRAME
+     ═══════════════════════════════════════════════════ */
+  .comparison-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--lego-dark);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+    color: var(--lego-grey);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 56px;
+  }
+
+  .option-section {
+    margin-bottom: 72px;
+  }
+
+  .option-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .option-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--lego-red);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    border-radius: var(--radius-md);
+    border-bottom: 3px solid var(--lego-red-dark);
+  }
+
+  .option-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--lego-dark);
+  }
+
+  .option-desc {
+    font-size: 15px;
+    color: var(--lego-grey);
+    margin-bottom: 24px;
+    max-width: 600px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     VIEWPORT FRAME — simulates browser/app window
+     ═══════════════════════════════════════════════════ */
+  .viewport-frame {
+    border: var(--border-default) solid var(--lego-grey-pale);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--lego-grey-wash);
+    /* Simulate a 16:10 viewport */
+    aspect-ratio: 16 / 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     STUD PATTERN — reusable pseudo-element
+     ═══════════════════════════════════════════════════ */
+  .stud-pattern {
+    position: relative;
+  }
+  .stud-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(255,255,255,0.08) 6px, transparent 6px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     HEADER BAR — RED STUD PATTERN STRIP
+     ═══════════════════════════════════════════════════ */
+  .slide-header-bar {
+    background: var(--lego-red);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  /* Option A: minimal header — logo + close only */
+  .header-minimal {
+    padding: 14px 24px;
+  }
+
+  /* Option B: full chrome header — logo + stop info + close */
+  .header-full {
+    padding: 14px 24px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lego-logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-stop-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .header-progress {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .header-dot {
+    height: 6px;
+    border-radius: var(--radius-pill);
+    transition: all 0.3s;
+  }
+  .header-dot.visited  { width: 6px; background: white; opacity: 0.45; }
+  .header-dot.current  { width: 18px; background: white; }
+  .header-dot.upcoming { width: 6px; background: rgba(255,255,255,0.3); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.22); }
+  .close-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    fill: none;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SLIDE CONTENT AREA
+     ═══════════════════════════════════════════════════ */
+  .slide-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 24px 80px;
+    overflow: hidden;
+    background: var(--lego-grey-wash);
+  }
+
+  .slide-inner-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 40px 48px 48px;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 780px;
+    min-height: 0;
+  }
+
+  /* ── Stop badge (inside slide body for Option A) ── */
+  .stop-badge-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .stop-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--lego-red);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 5px 16px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .progress-dots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dot {
+    height: 7px;
+    border-radius: var(--radius-pill);
+    transition: all 0.3s;
+  }
+  .dot.visited  { width: 7px; background: var(--lego-red); opacity: 0.45; }
+  .dot.current  { width: 20px; background: var(--lego-red); }
+  .dot.upcoming { width: 7px; background: var(--lego-grey-pale); }
+
+  /* ── Slide heading ── */
+  .slide-heading {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--lego-dark);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .slide-subheading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--lego-dark);
+    margin-bottom: 6px;
+  }
+
+  .slide-body-text {
+    font-size: 16px;
+    color: var(--lego-dark);
+    margin-bottom: 20px;
+  }
+
+  /* ── Two-column cards (content type) ── */
+  .content-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .content-card {
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+  }
+  .content-card.v-default {
+    background: white;
+    border: var(--border-default) solid var(--lego-grey-pale);
+    box-shadow: var(--depth-default);
+  }
+  .content-card.v-red {
+    background: var(--lego-red-tint);
+    border: var(--border-default) solid var(--lego-red-tint-md);
+    box-shadow: var(--depth-red);
+  }
+
+  .content-card h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--lego-dark);
+    margin-bottom: 10px;
+  }
+
+  .content-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .content-card li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 15px;
+    color: var(--lego-dark);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .content-card.v-default li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lego-grey-pale);
+  }
+  .content-card.v-red li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lego-red);
+    opacity: 0.5;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     NAV ARROWS — page-edge positioned
+     ═══════════════════════════════════════════════════ */
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    z-index: 5;
+  }
+  .nav-arrow svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .nav-arrow-left  { left: 16px; }
+  .nav-arrow-right { right: 16px; }
+
+  .nav-arrow-grey {
+    background: var(--lego-grey-wash);
+    color: var(--lego-grey);
+    border-bottom: var(--border-depth) solid var(--lego-grey-pale);
+  }
+  .nav-arrow-grey:hover { background: #E8E6E0; }
+  .nav-arrow-grey:active { border-bottom-width: 2px; transform: translateY(calc(-50% + 2px)); }
+
+  .nav-arrow-red {
+    background: var(--lego-red);
+    color: white;
+    border-bottom: var(--border-depth) solid var(--lego-red-dark);
+  }
+  .nav-arrow-red:hover { background: #F01020; }
+  .nav-arrow-red:active { border-bottom-width: 2px; transform: translateY(calc(-50% + 2px)); }
+
+  /* ═══════════════════════════════════════════════════
+     FOOTER BAR
+     ═══════════════════════════════════════════════════ */
+  .slide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: white;
+    border-top: 1.5px solid var(--lego-grey-pale);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+    flex-shrink: 0;
+  }
+
+  /* Footer buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 15px;
+    transition: all 0.15s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(2px);
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+  }
+  .btn-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .btn-wide {
+    height: 48px;
+    padding: 0 22px;
+    border-radius: var(--radius-lg);
+  }
+  .btn-wide svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .btn-yellow {
+    background: var(--lego-yellow);
+    color: var(--lego-dark);
+    border-bottom: var(--border-depth) solid var(--lego-yellow-dark);
+  }
+  .btn-yellow:hover:not(:disabled) { background: #F7D74A; }
+  .btn-yellow:active:not(:disabled) { border-bottom-width: 2px; }
+
+  .btn-red-footer {
+    background: var(--lego-red);
+    color: white;
+    border-bottom: var(--border-depth) solid var(--lego-red-dark);
+  }
+  .btn-red-footer:hover:not(:disabled) { background: #F01020; }
+  .btn-red-footer:active:not(:disabled) { border-bottom-width: 2px; }
+
+  .btn-grey-footer {
+    background: var(--lego-grey-wash);
+    color: var(--lego-grey);
+    border-bottom: var(--border-depth) solid var(--lego-grey-pale);
+  }
+  .btn-grey-footer:hover:not(:disabled) { background: #E8E6E0; }
+  .btn-grey-footer:active:not(:disabled) { border-bottom-width: 2px; }
+
+  /* ═══════════════════════════════════════════════════
+     DIVIDER
+     ═══════════════════════════════════════════════════ */
+  .divider {
+    height: 2px;
+    background: var(--lego-grey-pale);
+    border-radius: 1px;
+    margin: 16px 0 56px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     RESPONSIVE: smaller screens scale down
+     ═══════════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .comparison-page { padding: 32px 16px 60px; }
+    .slide-body { padding: 20px 60px; }
+    .slide-inner-card { padding: 28px 28px 36px; }
+    .content-two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="comparison-page">
+
+  <h1 class="page-title">Slide Layout Comparison</h1>
+  <p class="page-subtitle">Two options for the slide overlay chrome. Same content — different header treatment. Both use the LEGO design system with light theme and stud-pattern header.</p>
+
+  <!-- ═══════════════════════════════════════════════════
+       OPTION A — MINIMAL HEADER
+       ═══════════════════════════════════════════════════ -->
+  <div class="option-section">
+    <div class="option-label">
+      <div class="option-badge">A</div>
+      <span class="option-name">Minimal Header</span>
+    </div>
+    <p class="option-desc">
+      Red stud-pattern bar holds only Logo (left) and Close (right).
+      Stop badge, progress dots, and slide heading live inside the content card.
+      Content area has more vertical space for the chrome elements.
+    </p>
+
+    <div class="viewport-frame">
+      <!-- Header: logo + close only -->
+      <div class="slide-header-bar header-minimal stud-pattern">
+        <div class="header-left">
+          <div class="lego-logo-placeholder">LEGO</div>
+        </div>
+        <div class="header-right">
+          <button class="close-btn" aria-label="Close">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide body: badge + progress + heading + content -->
+      <div class="slide-body">
+        <!-- Left nav arrow -->
+        <button class="nav-arrow nav-arrow-left nav-arrow-grey" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="slide-inner-card">
+          <!-- Stop badge + progress -->
+          <div class="stop-badge-area">
+            <span class="stop-badge">Stop 2 · Vision</span>
+            <div class="progress-dots">
+              <div class="dot visited"></div>
+              <div class="dot current"></div>
+              <div class="dot upcoming"></div>
+            </div>
+          </div>
+
+          <h2 class="slide-heading">Frontend Architecture</h2>
+          <p class="slide-subheading">Core Approach</p>
+          <p class="slide-body-text">The platform will use a <strong>modular frontend architecture within a monorepo.</strong></p>
+
+          <div class="content-two-col">
+            <div class="content-card v-default">
+              <h4>Goals</h4>
+              <ul>
+                <li>Shared tooling and standards</li>
+                <li>Easy cross-team collaboration</li>
+                <li>Simplified dependency management</li>
+                <li>Clear ownership boundaries</li>
+              </ul>
+            </div>
+            <div class="content-card v-default">
+              <h4>Monorepo Advantages</h4>
+              <ul>
+                <li>Easier sharing of UI components</li>
+                <li>Consistent CI/CD pipeline</li>
+                <li>Simplified refactoring</li>
+                <li>Unified dependency management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right nav arrow -->
+        <button class="nav-arrow nav-arrow-right nav-arrow-red" aria-label="Next slide">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="slide-footer">
+        <button class="btn btn-icon btn-grey-footer" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="btn btn-wide btn-yellow">
+          <svg viewBox="0 0 24 24"><path d="M9 3H3v6M15 21h6v-6M3 3l7 7M21 21l-7-7"/></svg>
+          Map
+        </button>
+        <button class="btn btn-icon btn-red-footer" aria-label="Next">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════
+       OPTION B — FULL CHROME HEADER
+       ═══════════════════════════════════════════════════ -->
+  <div class="option-section">
+    <div class="option-label">
+      <div class="option-badge">B</div>
+      <span class="option-name">Full Chrome Header</span>
+    </div>
+    <p class="option-desc">
+      Red stud-pattern bar holds Logo (left), stop name + progress (center), and Close (right).
+      The slide content area is purely content — no chrome, no badge.
+      More presentation real estate for the actual slide material.
+    </p>
+
+    <div class="viewport-frame">
+      <!-- Header: logo + stop info + close -->
+      <div class="slide-header-bar header-full stud-pattern">
+        <div class="header-left">
+          <div class="lego-logo-placeholder">LEGO</div>
+        </div>
+        <div class="header-center">
+          <div class="header-stop-name">Stop 2 · Vision</div>
+          <div class="header-progress">
+            <div class="header-dot visited"></div>
+            <div class="header-dot current"></div>
+            <div class="header-dot upcoming"></div>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="close-btn" aria-label="Close">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide body: heading + content only (no badge/progress) -->
+      <div class="slide-body">
+        <!-- Left nav arrow -->
+        <button class="nav-arrow nav-arrow-left nav-arrow-grey" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="slide-inner-card">
+          <h2 class="slide-heading" style="margin-bottom: 20px;">Frontend Architecture</h2>
+          <p class="slide-subheading">Core Approach</p>
+          <p class="slide-body-text">The platform will use a <strong>modular frontend architecture within a monorepo.</strong></p>
+
+          <div class="content-two-col">
+            <div class="content-card v-default">
+              <h4>Goals</h4>
+              <ul>
+                <li>Shared tooling and standards</li>
+                <li>Easy cross-team collaboration</li>
+                <li>Simplified dependency management</li>
+                <li>Clear ownership boundaries</li>
+              </ul>
+            </div>
+            <div class="content-card v-default">
+              <h4>Monorepo Advantages</h4>
+              <ul>
+                <li>Easier sharing of UI components</li>
+                <li>Consistent CI/CD pipeline</li>
+                <li>Simplified refactoring</li>
+                <li>Unified dependency management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right nav arrow -->
+        <button class="nav-arrow nav-arrow-right nav-arrow-red" aria-label="Next slide">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="slide-footer">
+        <button class="btn btn-icon btn-grey-footer" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="btn btn-wide btn-yellow">
+          <svg viewBox="0 0 24 24"><path d="M9 3H3v6M15 21h6v-6M3 3l7 7M21 21l-7-7"/></svg>
+          Map
+        </button>
+        <button class="btn btn-icon btn-red-footer" aria-label="Next">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
