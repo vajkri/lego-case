@@ -126,14 +126,18 @@ Plans:
 - [ ] TBD (run /gsd:plan-phase 03.4 to break down)
 
 ### Phase 4: Content and Polish
-**Goal**: All 5 stop slides are fully authored with final content, the production build is clean, and the presentation is ready to give. (LEGO design tokens and visual identity established in Phases 03.1–03.4.)
+**Goal**: All 5 stop slides are fully authored with final content, the production build is clean, and the presentation is ready to give. (LEGO design tokens and visual identity established in Phases 03.1-03.4.)
 **Depends on**: Phase 03.4
 **Requirements**: PERF-01, PERF-02, PERF-03
 **Success Criteria** (what must be TRUE):
   1. `next build` completes with zero errors, zero warnings related to static export, server components, or image optimization, and zero console errors in the production build
   2. The app is interactive in under 3 seconds on a standard laptop over Wi-Fi, measured from navigation to first meaningful paint
   3. A run-through of all 5 stops from first to last produces no broken slides, placeholder content, missing data, or visual regressions
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Type system extension (ContentBlock union) + block dispatcher + all 18 slides authored
+- [ ] 04-02-PLAN.md — Production build verification + visual walkthrough checkpoint
 
 ## Progress
 
@@ -149,4 +153,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 3.2 Stop marker redesign | 2/2 | Complete   | 2026-03-14 |
 | 3.3 Progress track redesign | 2/2 | Complete | 2026-03-14 |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
-| 4. Content and Polish | 0/TBD | Not started | - |
+| 4. Content and Polish | 0/2 | Not started | - |
