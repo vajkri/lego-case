@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Marker Proposals — LEGO Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lego-yellow: #F5CD2D;
+    --lego-yellow-dark: #D4A800;
+    --lego-red: #E3000B;
+    --lego-blue: #0055BF;
+    --lego-blue-light: #4DA6FF;
+    --lego-green: #00A850;
+    --lego-grey: #6D6E70;
+    --lego-grey-light: #A0A1A3;
+    --lego-grey-pale: #D4D4D8;
+    --lego-cream: #FAF8F2;
+    --lego-dark: #2C2C2C;
+    --shadow: rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--lego-cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--lego-dark);
+    padding: 0 0 80px;
+    overflow-x: hidden;
+  }
+
+  .page-header {
+    background: var(--lego-red);
+    padding: 48px 40px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(255,255,255,0.06) 6px, transparent 6px);
+    background-size: 32px 32px;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 40px;
+    color: white;
+    position: relative;
+  }
+  .page-header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.82);
+    margin-top: 8px;
+    position: relative;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  .legend {
+    display: flex;
+    gap: 32px;
+    padding: 20px 40px;
+    background: white;
+    border-bottom: 2px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lego-grey);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .legend-dot.default { background: var(--lego-grey-pale); border: 2px solid var(--lego-grey-light); }
+  .legend-dot.focused { background: var(--lego-grey-pale); border: 2px solid var(--lego-blue); box-shadow: 0 0 0 3px rgba(0,85,191,0.25); }
+  .legend-dot.active { background: var(--lego-yellow); border: 2px solid var(--lego-yellow-dark); }
+  .legend-dot.visited { background: var(--lego-green); border: 2px solid #008040; }
+
+  .proposal {
+    padding: 48px 40px 56px;
+    border-bottom: 3px solid #E8E6E0;
+    position: relative;
+  }
+  .proposal:nth-child(odd) { background: white; }
+  .proposal-number {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 14px;
+    color: white;
+    background: var(--lego-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .proposal h2 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--lego-dark);
+    margin-bottom: 4px;
+  }
+  .proposal .subtitle {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    max-width: 700px;
+  }
+  .proposal .narrative {
+    font-size: 13px;
+    color: var(--lego-blue);
+    font-style: italic;
+    margin-bottom: 32px;
+    padding: 10px 16px;
+    background: rgba(0,85,191,0.05);
+    border-left: 3px solid var(--lego-blue);
+    border-radius: 0 6px 6px 0;
+    max-width: 700px;
+  }
+
+  .road-canvas {
+    width: 100%;
+    max-width: 900px;
+    height: 280px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .marker-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+  .marker-group.label-above { flex-direction: column; }
+  .marker-group.label-below { flex-direction: column-reverse; }
+
+  .marker-label {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin: 4px 0;
+  }
+  .state-tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--lego-grey-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    text-align: center;
+  }
+  .marker-group.label-below .state-tag { order: 3; }
+
+  /* ══════════════════════════════════════════
+     PROPOSAL 1: Instruction Step Numbers
+     The presentation IS a LEGO instruction booklet.
+     Stops are numbered build steps.
+     ══════════════════════════════════════════ */
+
+  .step-marker {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 16px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .step-marker.default {
+    background: white;
+    color: var(--lego-grey-light);
+    border: 2.5px solid var(--lego-grey-pale);
+  }
+  .step-label.default { background: rgba(160,161,163,0.12); color: var(--lego-grey); }
+
+  .step-marker.focused {
+    background: white;
+    color: var(--lego-blue);
+    border: 2.5px solid var(--lego-blue);
+    box-shadow: 0 0 0 4px rgba(0,85,191,0.15);
+  }
+  .step-label.focused { background: rgba(0,85,191,0.08); color: var(--lego-blue); }
+
+  .step-marker.active {
+    background: var(--lego-red);
+    color: white;
+    border: 2.5px solid var(--lego-red);
+    box-shadow: 0 3px 0 #a00008, 0 4px 12px rgba(227,0,11,0.3);
+    transform: scale(1.15);
+  }
+  .step-label.active { background: var(--lego-red); color: white; font-weight: 700; }
+
+  .step-marker.visited {
+    background: var(--lego-green);
+    color: white;
+    border: 2.5px solid var(--lego-green);
+    box-shadow: 0 2px 0 #007038;
+  }
+  .step-marker.visited .num { display: none; }
+  .step-marker.visited::after {
+    content: '\2713';
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .step-label.visited { background: rgba(0,168,80,0.1); color: var(--lego-green); }
+
+  /* ══════════════════════════════════════════
+     PROPOSAL 2: Build Progress Bricks
+     Each stop is a build step. Unvisited = grey baseplate.
+     Active = bricks being placed. Visited = complete mini-build.
+     ══════════════════════════════════════════ */
+
+  .build-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    transition: all 0.3s;
+  }
+  .build-brick {
+    width: 28px;
+    height: 10px;
+    border-radius: 2px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .build-brick::before,
+  .build-brick::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 7px;
+    height: 4px;
+    border-radius: 2px 2px 0 0;
+    background: inherit;
+    filter: brightness(1.1);
+  }
+  .build-brick::before { left: 4px; }
+  .build-brick::after { right: 4px; }
+
+  .build-baseplate {
+    width: 34px;
+    height: 5px;
+    border-radius: 2px;
+    background: #58CC3A;
+    margin-top: 1px;
+  }
+
+  .build-marker.default .build-brick { background: var(--lego-grey-pale); opacity: 0.5; }
+  .build-marker.default .build-baseplate { background: var(--lego-grey-pale); }
+  .build-label.default { background: rgba(160,161,163,0.12); color: var(--lego-grey); }
+
+  .build-marker.focused .build-brick { background: var(--lego-grey-pale); }
+  .build-marker.focused { filter: drop-shadow(0 0 4px var(--lego-blue)) drop-shadow(0 0 8px rgba(0,85,191,0.2)); }
+  .build-label.focused { background: rgba(0,85,191,0.08); color: var(--lego-blue); }
+
+  .build-marker.active .build-brick:nth-child(1) { background: var(--lego-yellow); }
+  .build-marker.active .build-brick:nth-child(2) { background: var(--lego-red); animation: place 0.6s ease-out; }
+  .build-marker.active { transform: translateY(-3px); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.18)); }
+  .build-label.active { background: var(--lego-yellow); color: var(--lego-dark); font-weight: 700; }
+
+  @keyframes place {
+    0% { transform: translateY(-12px); opacity: 0; }
+    60% { transform: translateY(2px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .build-marker.visited .build-brick:nth-child(1) { background: var(--lego-green); }
+  .build-marker.visited .build-brick:nth-child(2) { background: var(--lego-green); opacity: 0.8; }
+  .build-label.visited { background: rgba(0,168,80,0.1); color: var(--lego-green); }
+
+  /* ══════════════════════════════════════════
+     PROPOSAL 3: LEGO Stud Connectors
+     The journey connects ideas. Each stud snaps in.
+     ══════════════════════════════════════════ */
+
+  .conn-marker {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .conn-inner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .conn-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px dashed transparent;
+    transition: all 0.3s;
+  }
+
+  .conn-marker.default {
+    background: #e0e0e4;
+    box-shadow: 0 2px 4px var(--shadow), inset 0 -1px 0 rgba(0,0,0,0.08);
+  }
+  .conn-marker.default .conn-inner { background: #c8c8cc; }
+  .conn-label.default { background: rgba(160,161,163,0.12); color: var(--lego-grey); }
+
+  .conn-marker.focused {
+    background: #e0e0e4;
+    box-shadow: 0 2px 4px var(--shadow), 0 0 0 3px var(--lego-blue), 0 0 0 6px rgba(0,85,191,0.15);
+  }
+  .conn-marker.focused .conn-inner { background: #c8c8cc; }
+  .conn-label.focused { background: rgba(0,85,191,0.08); color: var(--lego-blue); }
+
+  .conn-marker.active {
+    background: var(--lego-yellow);
+    box-shadow: 0 3px 8px rgba(245,205,45,0.5), inset 0 -1px 0 rgba(0,0,0,0.1);
+    transform: scale(1.15);
+  }
+  .conn-marker.active .conn-inner { background: var(--lego-yellow-dark); }
+  .conn-marker.active .conn-ring { border-color: var(--lego-yellow-dark); animation: pulse 2s ease-in-out infinite; }
+  .conn-label.active { background: var(--lego-yellow); color: var(--lego-dark); font-weight: 700; }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.5; }
+  }
+
+  .conn-marker.visited {
+    background: var(--lego-green);
+    box-shadow: 0 2px 4px rgba(0,168,80,0.3), inset 0 -1px 0 rgba(0,0,0,0.1);
+  }
+  .conn-marker.visited .conn-inner { background: #008040; }
+  .conn-label.visited { background: rgba(0,168,80,0.1); color: var(--lego-green); }
+
+  /* ══════════════════════════════════════════
+     PROPOSAL 4: Minifig Journey Heads
+     The audience is a minifig learning the plan.
+     Expression evolves: unsure → curious → excited → satisfied.
+     ══════════════════════════════════════════ */
+
+  .head-marker {
+    width: 34px;
+    height: 40px;
+    transition: all 0.3s;
+  }
+  .head-marker svg { width: 100%; height: 100%; }
+  .head-marker.active {
+    transform: scale(1.18);
+    filter: drop-shadow(0 3px 8px rgba(245,205,45,0.5));
+  }
+  .head-marker.focused {
+    filter: drop-shadow(0 0 3px var(--lego-blue)) drop-shadow(0 0 6px rgba(0,85,191,0.3));
+  }
+  .head-marker.visited {
+    filter: drop-shadow(0 2px 4px rgba(0,168,80,0.3));
+  }
+  .head-label.default { background: rgba(160,161,163,0.12); color: var(--lego-grey); }
+  .head-label.focused { background: rgba(0,85,191,0.08); color: var(--lego-blue); }
+  .head-label.active { background: var(--lego-yellow); color: var(--lego-dark); font-weight: 700; }
+  .head-label.visited { background: rgba(0,168,80,0.1); color: var(--lego-green); }
+
+  /* ══════════════════════════════════════════
+     PROPOSAL 5: Road Signs
+     Like actual road signs on a LEGO road —
+     destination markers for each stop.
+     ══════════════════════════════════════════ */
+
+  .sign-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s;
+  }
+  .sign-board {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 11px;
+    white-space: nowrap;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .sign-board::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.3);
+    pointer-events: none;
+  }
+  .sign-pole {
+    width: 3px;
+    height: 18px;
+    border-radius: 1px;
+    transition: all 0.3s;
+  }
+  .sign-foot {
+    width: 12px;
+    height: 4px;
+    border-radius: 1px;
+    transition: all 0.3s;
+  }
+
+  .sign-marker.default .sign-board { background: #b8b8bc; color: #888; }
+  .sign-marker.default .sign-pole { background: #a0a0a4; }
+  .sign-marker.default .sign-foot { background: #a0a0a4; }
+
+  .sign-marker.focused .sign-board { background: #b8b8bc; color: #888; box-shadow: 0 0 0 2px var(--lego-blue), 0 0 0 5px rgba(0,85,191,0.15); }
+  .sign-marker.focused .sign-pole { background: var(--lego-blue); }
+  .sign-marker.focused .sign-foot { background: var(--lego-blue); }
+
+  .sign-marker.active .sign-board { background: var(--lego-yellow); color: var(--lego-dark); box-shadow: 0 2px 8px rgba(245,205,45,0.4); }
+  .sign-marker.active .sign-pole { background: var(--lego-yellow-dark); }
+  .sign-marker.active .sign-foot { background: var(--lego-yellow-dark); }
+  .sign-marker.active { transform: scale(1.12); }
+
+  .sign-marker.visited .sign-board { background: var(--lego-green); color: white; }
+  .sign-marker.visited .sign-pole { background: #008040; }
+  .sign-marker.visited .sign-foot { background: #008040; }
+
+  /* ─── Notes ─── */
+  .notes {
+    padding: 40px;
+    max-width: 640px;
+  }
+  .notes h3 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .notes ul {
+    padding-left: 20px;
+    color: var(--lego-grey);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Stop Marker Proposals</h1>
+  <p>5 story-driven designs for map stop indicators. The presentation is a LEGO instruction booklet: each stop is a build step in the migration journey from rural AngularJS to the React city. Labels flip above/below based on road slope to avoid overlapping the road or car.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot default"></div> Default (unvisited)</div>
+  <div class="legend-item"><div class="legend-dot focused"></div> Focused (keyboard)</div>
+  <div class="legend-item"><div class="legend-dot active"></div> Active (current)</div>
+  <div class="legend-item"><div class="legend-dot visited"></div> Visited (complete)</div>
+</div>
+
+<!-- ═══ PROPOSAL 1: Instruction Step Numbers ═══ -->
+<div class="proposal">
+  <div class="proposal-number">1</div>
+  <h2>Instruction Step Numbers</h2>
+  <p class="subtitle">Each stop is a numbered step in the LEGO instruction booklet — exactly like the circled step numbers in real LEGO manuals. The audience follows along as the plan is built, one step at a time. Visited steps get a checkmark.</p>
+  <div class="narrative">Story: "You're following a LEGO instruction manual. Each numbered step builds the case. Complete all 5 steps to finish the build."</div>
+
+  <div class="road-canvas">
+    <svg width="100%" height="280" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="rgba(0,0,0,0.12)" stroke-width="38" fill="none" stroke-linecap="round" transform="translate(2,4)"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#3B414E" stroke-width="34" fill="none" stroke-linecap="round"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#F0D640" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="16 12"/>
+    </svg>
+
+    <div class="marker-group label-below" style="left: 100px; top: 150px;">
+      <div class="marker-label step-label default">The Case</div>
+      <div class="step-marker default"><span class="num">1</span></div>
+      <div class="state-tag">default</div>
+    </div>
+
+    <div class="marker-group label-below" style="left: 280px; top: 52px;">
+      <div class="marker-label step-label focused">Vision</div>
+      <div class="step-marker focused"><span class="num">2</span></div>
+      <div class="state-tag">focused</div>
+    </div>
+
+    <div class="marker-group label-above" style="left: 505px; top: 130px;">
+      <div class="state-tag">active</div>
+      <div class="step-marker active"><span class="num">3</span></div>
+      <div class="marker-label step-label active">How We Work</div>
+    </div>
+
+    <div class="marker-group label-below" style="left: 760px; top: 24px;">
+      <div class="marker-label step-label visited">Migration</div>
+      <div class="step-marker visited"><span class="num">4</span></div>
+      <div class="state-tag">visited</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROPOSAL 2: Build Progress Bricks ═══ -->
+<div class="proposal">
+  <div class="proposal-number">2</div>
+  <h2>Build Progress Bricks</h2>
+  <p class="subtitle">Each stop is a build step — literally. Unvisited stops show a single grey placeholder brick on a baseplate. The active stop shows bricks being stacked in primary LEGO colors. Visited stops become a completed green tower.</p>
+  <div class="narrative">Story: "Each stop adds to the build. By the end, you've assembled the complete migration plan, brick by brick."</div>
+
+  <div class="road-canvas">
+    <svg width="100%" height="280" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="rgba(0,0,0,0.12)" stroke-width="38" fill="none" stroke-linecap="round" transform="translate(2,4)"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#3B414E" stroke-width="34" fill="none" stroke-linecap="round"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#F0D640" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="16 12"/>
+    </svg>
+
+    <!-- Default — single muted brick -->
+    <div class="marker-group label-below" style="left: 100px; top: 152px;">
+      <div class="marker-label build-label default">The Case</div>
+      <div class="build-marker default">
+        <div class="build-brick"></div>
+        <div class="build-baseplate"></div>
+      </div>
+      <div class="state-tag">default</div>
+    </div>
+
+    <!-- Focused — brick with glow -->
+    <div class="marker-group label-below" style="left: 280px; top: 52px;">
+      <div class="marker-label build-label focused">Vision</div>
+      <div class="build-marker focused">
+        <div class="build-brick"></div>
+        <div class="build-baseplate"></div>
+      </div>
+      <div class="state-tag">focused</div>
+    </div>
+
+    <!-- Active — stacking colorful bricks -->
+    <div class="marker-group label-above" style="left: 505px; top: 118px;">
+      <div class="state-tag">active</div>
+      <div class="build-marker active">
+        <div class="build-brick"></div>
+        <div class="build-brick"></div>
+        <div class="build-baseplate"></div>
+      </div>
+      <div class="marker-label build-label active">How We Work</div>
+    </div>
+
+    <!-- Visited — green complete stack -->
+    <div class="marker-group label-below" style="left: 760px; top: 18px;">
+      <div class="marker-label build-label visited">Migration</div>
+      <div class="build-marker visited">
+        <div class="build-brick"></div>
+        <div class="build-brick"></div>
+        <div class="build-baseplate"></div>
+      </div>
+      <div class="state-tag">visited</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROPOSAL 3: LEGO Stud Connectors ═══ -->
+<div class="proposal">
+  <div class="proposal-number">3</div>
+  <h2>LEGO Stud Connectors</h2>
+  <p class="subtitle">Classic LEGO studs viewed from above — the most universal LEGO shape. Each stud is a connection point on the journey. Unvisited studs are empty grey. The active stud glows yellow with a pulsing ring. Visited studs snap green.</p>
+  <div class="narrative">Story: "Each stop is a connection — clicking ideas together, one stud at a time, until the whole plan holds."</div>
+
+  <div class="road-canvas">
+    <svg width="100%" height="280" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="rgba(0,0,0,0.12)" stroke-width="38" fill="none" stroke-linecap="round" transform="translate(2,4)"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#3B414E" stroke-width="34" fill="none" stroke-linecap="round"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#F0D640" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="16 12"/>
+    </svg>
+
+    <div class="marker-group label-below" style="left: 100px; top: 150px;">
+      <div class="marker-label conn-label default">The Case</div>
+      <div class="conn-marker default"><div class="conn-inner"></div><div class="conn-ring"></div></div>
+      <div class="state-tag">default</div>
+    </div>
+
+    <div class="marker-group label-below" style="left: 280px; top: 52px;">
+      <div class="marker-label conn-label focused">Vision</div>
+      <div class="conn-marker focused"><div class="conn-inner"></div><div class="conn-ring"></div></div>
+      <div class="state-tag">focused</div>
+    </div>
+
+    <div class="marker-group label-above" style="left: 505px; top: 130px;">
+      <div class="state-tag">active</div>
+      <div class="conn-marker active"><div class="conn-inner"></div><div class="conn-ring"></div></div>
+      <div class="marker-label conn-label active">How We Work</div>
+    </div>
+
+    <div class="marker-group label-below" style="left: 760px; top: 24px;">
+      <div class="marker-label conn-label visited">Migration</div>
+      <div class="conn-marker visited"><div class="conn-inner"></div><div class="conn-ring"></div></div>
+      <div class="state-tag">visited</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROPOSAL 4: Minifig Journey Heads ═══ -->
+<div class="proposal">
+  <div class="proposal-number">4</div>
+  <h2>Minifig Journey Heads</h2>
+  <p class="subtitle">The audience IS the minifig. Their expression evolves as they progress through the journey: uncertain at unvisited stops, curious when focused, excited at the active stop, satisfied when visited. The most emotionally resonant option.</p>
+  <div class="narrative">Story: "You're the minifig on this journey. Confused at first, then curious, then excited as it clicks, and satisfied when you've seen the plan."</div>
+
+  <div class="road-canvas">
+    <svg width="100%" height="280" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="rgba(0,0,0,0.12)" stroke-width="38" fill="none" stroke-linecap="round" transform="translate(2,4)"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#3B414E" stroke-width="34" fill="none" stroke-linecap="round"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#F0D640" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="16 12"/>
+    </svg>
+
+    <!-- Default — grey, uncertain/neutral expression -->
+    <div class="marker-group label-below" style="left: 96px; top: 142px;">
+      <div class="marker-label head-label default">The Case</div>
+      <div class="head-marker default">
+        <svg viewBox="0 0 34 40" fill="none">
+          <rect x="12" y="32" width="10" height="8" rx="2" fill="#A0A1A3"/>
+          <rect x="3" y="6" width="28" height="26" rx="8" fill="#C4C4C4"/>
+          <rect x="11" y="2" width="12" height="6" rx="3" fill="#B0B0B4"/>
+          <circle cx="12" cy="18" r="2" fill="#6D6E70"/>
+          <circle cx="22" cy="18" r="2" fill="#6D6E70"/>
+          <line x1="11" y1="25" x2="23" y2="25" stroke="#6D6E70" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="state-tag">default</div>
+    </div>
+
+    <!-- Focused — yellow, curious wide eyes -->
+    <div class="marker-group label-below" style="left: 276px; top: 44px;">
+      <div class="marker-label head-label focused">Vision</div>
+      <div class="head-marker focused">
+        <svg viewBox="0 0 34 40" fill="none">
+          <rect x="12" y="32" width="10" height="8" rx="2" fill="#D4A800"/>
+          <rect x="3" y="6" width="28" height="26" rx="8" fill="#F5CD2D"/>
+          <rect x="11" y="2" width="12" height="6" rx="3" fill="#E8C020"/>
+          <circle cx="12" cy="17" r="2.5" fill="#2C2C2C"/>
+          <circle cx="22" cy="17" r="2.5" fill="#2C2C2C"/>
+          <circle cx="12.8" cy="16.3" r="0.8" fill="white"/>
+          <circle cx="22.8" cy="16.3" r="0.8" fill="white"/>
+          <circle cx="17" cy="25" r="2.5" fill="none" stroke="#2C2C2C" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="state-tag">focused</div>
+    </div>
+
+    <!-- Active — bright yellow, big excited smile -->
+    <div class="marker-group label-above" style="left: 501px; top: 122px;">
+      <div class="state-tag">active</div>
+      <div class="head-marker active">
+        <svg viewBox="0 0 34 40" fill="none">
+          <rect x="12" y="32" width="10" height="8" rx="2" fill="#D4A800"/>
+          <rect x="3" y="6" width="28" height="26" rx="8" fill="#F5CD2D"/>
+          <rect x="11" y="2" width="12" height="6" rx="3" fill="#E8C020"/>
+          <circle cx="12" cy="17" r="2.5" fill="#2C2C2C"/>
+          <circle cx="22" cy="17" r="2.5" fill="#2C2C2C"/>
+          <circle cx="13" cy="16.5" r="0.9" fill="white"/>
+          <circle cx="23" cy="16.5" r="0.9" fill="white"/>
+          <path d="M 10,23 Q 17,30 24,23" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="marker-label head-label active">How We Work</div>
+    </div>
+
+    <!-- Visited — green, satisfied wink + checkmark -->
+    <div class="marker-group label-below" style="left: 756px; top: 18px;">
+      <div class="marker-label head-label visited">Migration</div>
+      <div class="head-marker visited">
+        <svg viewBox="0 0 34 40" fill="none">
+          <rect x="12" y="32" width="10" height="8" rx="2" fill="#008040"/>
+          <rect x="3" y="6" width="28" height="26" rx="8" fill="#00A850"/>
+          <rect x="11" y="2" width="12" height="6" rx="3" fill="#008D40"/>
+          <circle cx="12" cy="17" r="2" fill="white"/>
+          <path d="M 19,17 Q 22,14.5 25,17" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M 11,24 Q 15,27 22,24" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M 13,10 L 16,13 L 22,8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="state-tag">visited</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROPOSAL 5: LEGO Road Signs ═══ -->
+<div class="proposal">
+  <div class="proposal-number">5</div>
+  <h2>LEGO Road Signs</h2>
+  <p class="subtitle">Miniature road signs planted alongside the road — like the sign accessories in LEGO City sets. The label IS the marker (no separate indicator + label). Clean, self-contained, fits the road-trip metaphor perfectly.</p>
+  <div class="narrative">Story: "You're on a road trip. Each sign marks a destination on the route. Grey signs are ahead, yellow is where you are now, green signs are behind you."</div>
+
+  <div class="road-canvas">
+    <svg width="100%" height="280" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="rgba(0,0,0,0.12)" stroke-width="38" fill="none" stroke-linecap="round" transform="translate(2,4)"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#3B414E" stroke-width="34" fill="none" stroke-linecap="round"/>
+      <path d="M 40,210 C 160,210 200,80 340,100 C 480,120 480,220 580,190 C 680,160 740,60 860,80" stroke="#F0D640" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="16 12"/>
+    </svg>
+
+    <!-- Default -->
+    <div class="marker-group label-below" style="left: 100px; top: 148px;">
+      <div class="sign-marker default">
+        <div class="sign-board">The Case</div>
+        <div class="sign-pole"></div>
+        <div class="sign-foot"></div>
+      </div>
+      <div class="state-tag">default</div>
+    </div>
+
+    <!-- Focused -->
+    <div class="marker-group label-below" style="left: 280px; top: 48px;">
+      <div class="sign-marker focused">
+        <div class="sign-board">Vision</div>
+        <div class="sign-pole"></div>
+        <div class="sign-foot"></div>
+      </div>
+      <div class="state-tag">focused</div>
+    </div>
+
+    <!-- Active -->
+    <div class="marker-group label-above" style="left: 505px; top: 130px;">
+      <div class="state-tag">active</div>
+      <div class="sign-marker active">
+        <div class="sign-board">How We Work</div>
+        <div class="sign-pole"></div>
+        <div class="sign-foot"></div>
+      </div>
+    </div>
+
+    <!-- Visited -->
+    <div class="marker-group label-below" style="left: 760px; top: 20px;">
+      <div class="sign-marker visited">
+        <div class="sign-board">Migration &#10003;</div>
+        <div class="sign-pole"></div>
+        <div class="sign-foot"></div>
+      </div>
+      <div class="state-tag">visited</div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <h3>Label Positioning Rule</h3>
+  <ul>
+    <li><strong>Road going uphill</strong> (ascending left-to-right) — label below the marker to avoid overlapping the road/car ahead</li>
+    <li><strong>Road going downhill</strong> (descending left-to-right) — label above the marker to stay clear of the road below</li>
+    <li>Computed per-stop from the road path derivative at that offset position</li>
+    <li>Proposal 5 (Road Signs) integrates label into the marker itself, so the rule applies to the whole sign placement</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEGO Case — Design System v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════
+     DESIGN TOKENS
+     ═══════════════════════════════════════════════════ */
+  :root {
+    /* ── Primary LEGO palette ── */
+    --lego-red:            #E3000B;
+    --lego-red-dark:       #A00008;
+    --lego-red-light:      #FF4D4D;
+    --lego-red-tint:       rgba(227, 0, 11, 0.08);
+    --lego-red-tint-md:    rgba(227, 0, 11, 0.10);
+
+    --lego-yellow:         #F5CD2D;
+    --lego-yellow-dark:    #D4A800;
+    --lego-yellow-light:   #FFE066;
+    --lego-yellow-tint:    rgba(245, 205, 45, 0.12);
+    --lego-yellow-tint-md: rgba(245, 205, 45, 0.18);
+
+    --lego-blue:           #0055BF;
+    --lego-blue-light:     #4DA6FF;
+
+    --lego-green:          #00A850;
+    --lego-green-dark:     #007038;
+
+    /* ── Neutrals ── */
+    --lego-dark:           #2C2C2C;
+    --lego-grey:           #6D6E70;
+    --lego-grey-light:     #A0A1A3;  /* ⚠ decorative only — fails WCAG text contrast */
+    --lego-grey-pale:      #D4D4D8;
+    --lego-grey-wash:      #F0EEE8;
+    --lego-cream:          #FAF8F2;
+    --white:               #FFFFFF;
+
+    /* ── Semantic ── */
+    --accent:              var(--lego-red);
+    --accent-dark:         var(--lego-red-dark);
+    --accent-tint:         var(--lego-red-tint);
+    --accent-tint-md:      var(--lego-red-tint-md);
+
+    /* ── Typography ── */
+    --font-display:        'Baloo 2', cursive;
+    --font-body:           'DM Sans', sans-serif;
+
+    /* ── Borders ── */
+    --border-thin:         1.5px;   /* internal dividers, table rows */
+    --border-default:      3px;     /* card outlines, content block borders */
+    --border-depth:        4px;     /* bottom-border depth effect (button/card) */
+
+    /* ── Radii ── */
+    --radius-sm:   6px;
+    --radius-md:   10px;
+    --radius-lg:   12px;
+    --radius-xl:   16px;
+    --radius-pill:  999px;
+
+    /* ── Shadows ── */
+    --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md:   0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg:   0 8px 24px rgba(0,0,0,0.12);
+
+    /* ── Depth shadows (hard, zero-blur — LEGO plate under brick) ── */
+    --depth-default: 0 6px 0 0 var(--lego-grey-pale);
+    --depth-red:     0 6px 0 0 rgba(227, 0, 11, 0.18);
+    --depth-yellow:  0 6px 0 0 rgba(245, 205, 45, 0.35);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     RESET & BASE
+     ═══════════════════════════════════════════════════ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--lego-cream);
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--lego-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     STUD DOT PATTERN
+     ═══════════════════════════════════════════════════ */
+  .stud-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(255,255,255,0.06) 6px, transparent 6px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PAGE HEADER
+     ═══════════════════════════════════════════════════ */
+  .page-header {
+    background: var(--lego-red);
+    padding: 56px 48px 52px;
+    overflow: hidden;
+    position: relative;
+  }
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 44px;
+    color: white;
+    position: relative;
+  }
+  .page-header p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 10px;
+    position: relative;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     STICKY NAV
+     ═══════════════════════════════════════════════════ */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: var(--border-default) solid var(--lego-grey-wash);
+    display: flex;
+    gap: 4px;
+    padding: 0 48px;
+    overflow-x: auto;
+  }
+  .sticky-nav a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--lego-grey);
+    text-decoration: none;
+    padding: 14px 16px;
+    white-space: nowrap;
+    border-bottom: var(--border-default) solid transparent;
+    transition: all 0.2s;
+  }
+  .sticky-nav a:hover {
+    color: var(--lego-dark);
+    border-bottom-color: var(--lego-grey-pale);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SECTION CONTAINERS
+     ═══════════════════════════════════════════════════ */
+  .section {
+    padding: 56px 48px 64px;
+    border-bottom: var(--border-default) solid var(--lego-grey-wash);
+  }
+  .section:nth-child(odd) { background: white; }
+  .section-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    color: white;
+    background: var(--lego-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--lego-dark);
+    margin-bottom: 6px;
+  }
+  .section .subtitle {
+    font-size: 16px;
+    color: var(--lego-grey);
+    margin-bottom: 36px;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  .sub-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--lego-dark);
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: var(--border-default) solid var(--lego-grey-wash);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SWATCH GRID
+     ═══════════════════════════════════════════════════ */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    max-width: 960px;
+  }
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background: white;
+    border: var(--border-default) solid var(--lego-grey-wash);
+  }
+  .swatch-color {
+    height: 72px;
+    position: relative;
+  }
+  .swatch-color.has-stud::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(255,255,255,0.12) 5px, transparent 5px);
+    background-size: 24px 24px;
+  }
+  .swatch-info { padding: 10px 12px; }
+  .swatch-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--lego-dark);
+  }
+  .swatch-hex {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-top: 2px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .swatch-role {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     TYPOGRAPHY SPECIMENS
+     ═══════════════════════════════════════════════════ */
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: var(--border-thin) solid var(--lego-grey-wash);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+  .type-meta .name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--lego-red);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .type-meta .spec {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-top: 2px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     BUTTONS
+     ═══════════════════════════════════════════════════ */
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .btn-label {
+    min-width: 140px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--lego-grey);
+  }
+  .btn {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .btn:active:not(:disabled) { transform: translateY(2px); }
+  .btn-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+  }
+  .btn-wide {
+    height: 48px;
+    padding: 0 22px;
+    border-radius: var(--radius-lg);
+  }
+  .btn-yellow {
+    background: var(--lego-yellow);
+    color: var(--lego-dark);
+    border-bottom: var(--border-depth) solid var(--lego-yellow-dark);
+  }
+  .btn-yellow:hover:not(:disabled) { background: #F7D74A; }
+  .btn-yellow:active:not(:disabled) { border-bottom-width: 2px; }
+  .btn-red {
+    background: var(--lego-red);
+    color: white;
+    border-bottom: var(--border-depth) solid var(--lego-red-dark);
+  }
+  .btn-red:hover:not(:disabled) { background: #F01020; }
+  .btn-red:active:not(:disabled) { border-bottom-width: 2px; }
+  .btn-grey {
+    background: #F0EEE8;
+    color: var(--lego-grey);
+    border-bottom: var(--border-depth) solid var(--lego-grey-pale);
+  }
+  .btn-grey:hover:not(:disabled) { background: #E8E6E0; }
+  .btn-grey:active:not(:disabled) { border-bottom-width: 2px; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SLIDE CHROME
+     ═══════════════════════════════════════════════════ */
+  .slide-demo {
+    background: var(--lego-grey-wash);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    max-width: 820px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+  .slide-inner {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 36px 40px 48px;
+    box-shadow: var(--shadow-sm);
+    min-height: 380px;
+  }
+  .stop-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--lego-red);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 5px 16px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .progress-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    transition: all 0.3s;
+  }
+  .dot.visited { background: var(--lego-red); opacity: 0.45; }
+  .dot.current { width: 22px; background: var(--lego-red); }
+  .dot.upcoming { background: var(--lego-grey-pale); }
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: rgba(0,0,0,0.06);
+    color: var(--lego-grey);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 20px;
+  }
+  .close-btn:hover { background: rgba(0,0,0,0.10); color: var(--lego-dark); }
+
+  /* ═══════════════════════════════════════════════════
+     CONTENT TYPE BLOCKS — BASE
+     ═══════════════════════════════════════════════════ */
+  .type-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--lego-red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    background: var(--lego-red-tint);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .variant-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--lego-grey);
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .variant-label:first-of-type { margin-top: 0; }
+
+  /* ═══════════════════════════════════════════════════
+     1. BULLET LIST
+     ═══════════════════════════════════════════════════ */
+  .content-bullets h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--lego-dark);
+    margin-bottom: 12px;
+  }
+  .content-bullets ul { list-style: none; padding: 0; }
+  .content-bullets li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--lego-dark);
+    line-height: 1.6;
+  }
+  .content-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  /* Bullet variants */
+  .content-bullets.v-default li::before { background: var(--lego-grey-pale); }
+  .content-bullets.v-red li::before    { background: var(--lego-red); opacity: 0.6; }
+  .content-bullets.v-yellow li::before { background: var(--lego-yellow-dark); }
+
+  /* ═══════════════════════════════════════════════════
+     2. TWO-COLUMN CARDS
+     ═══════════════════════════════════════════════════ */
+  .content-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .content-card {
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    transition: all 0.15s;
+  }
+  .content-card h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--lego-dark);
+    margin-bottom: 10px;
+  }
+  .content-card ul { list-style: none; padding: 0; }
+  .content-card li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: var(--lego-grey);
+    line-height: 1.5;
+  }
+  .content-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+  }
+  /* Card variants */
+  .content-card.v-default {
+    border: var(--border-default) solid var(--lego-grey-pale);
+    box-shadow: var(--depth-default);
+  }
+  .content-card.v-default li::before { color: var(--lego-grey-pale); }
+  .content-card.v-red {
+    border: var(--border-default) solid var(--lego-red-tint-md);
+    background: var(--lego-red-tint);
+    box-shadow: var(--depth-red);
+  }
+  .content-card.v-red li::before { color: var(--lego-red); }
+  .content-card.v-yellow {
+    border: var(--border-default) solid var(--lego-yellow-tint-md);
+    background: var(--lego-yellow-tint);
+    box-shadow: var(--depth-yellow);
+  }
+  .content-card.v-yellow li::before { color: var(--lego-yellow-dark); }
+
+  /* ═══════════════════════════════════════════════════
+     3. ENTITY CARDS — redesigned: badge-left, tint bg, depth border
+     ═══════════════════════════════════════════════════ */
+  .entity-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    transition: all 0.15s;
+  }
+  .entity-card:last-child { margin-bottom: 0; }
+  .entity-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .entity-body h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--lego-dark);
+    margin-bottom: 4px;
+  }
+  .entity-body p {
+    font-size: 16px;
+    color: var(--lego-grey);
+    line-height: 1.5;
+  }
+  /* Entity variants */
+  .entity-card.v-default {
+    border: var(--border-default) solid var(--lego-grey-pale);
+    background: white;
+    box-shadow: var(--depth-default);
+  }
+  .entity-card.v-default .entity-badge { background: var(--lego-grey); }
+  .entity-card.v-red {
+    border: var(--border-default) solid var(--lego-red-tint-md);
+    background: var(--lego-red-tint);
+    box-shadow: var(--depth-red);
+  }
+  .entity-card.v-red .entity-badge { background: var(--lego-red); }
+  .entity-card.v-yellow {
+    border: var(--border-default) solid var(--lego-yellow-tint-md);
+    background: var(--lego-yellow-tint);
+    box-shadow: var(--depth-yellow);
+  }
+  .entity-card.v-yellow .entity-badge { background: var(--lego-yellow); color: var(--lego-dark); }
+
+  /* ═══════════════════════════════════════════════════
+     4. NUMBERED STEPS
+     ═══════════════════════════════════════════════════ */
+  .numbered-step {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 22px;
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+  }
+  .step-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 24px;
+    min-width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .step-text {
+    font-size: 16px;
+    color: var(--lego-dark);
+    line-height: 1.5;
+  }
+  /* Step variants */
+  .numbered-step.v-default {
+    background: var(--lego-grey-wash);
+    border: var(--border-default) solid var(--lego-grey-pale);
+    box-shadow: var(--depth-default);
+  }
+  .numbered-step.v-default .step-num { color: var(--lego-grey); }
+  .numbered-step.v-red {
+    background: var(--lego-red-tint);
+    border: var(--border-default) solid var(--lego-red-tint-md);
+    box-shadow: var(--depth-red);
+  }
+  .numbered-step.v-red .step-num { color: var(--lego-red); }
+  .numbered-step.v-yellow {
+    background: var(--lego-yellow-tint);
+    border: var(--border-default) solid var(--lego-yellow-tint-md);
+    box-shadow: var(--depth-yellow);
+  }
+  .numbered-step.v-yellow .step-num { color: var(--lego-yellow-dark); }
+
+  /* ═══════════════════════════════════════════════════
+     5. CALLOUT BOX
+     ═══════════════════════════════════════════════════ */
+  .callout-box {
+    border: var(--border-default) solid var(--lego-yellow-tint-md);
+    border-radius: var(--radius-md);
+    padding: 22px 26px;
+    background: var(--lego-yellow-tint);
+    box-shadow: var(--depth-yellow);
+  }
+  .callout-box ul { list-style: none; padding: 0; }
+  .callout-box li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--lego-dark);
+    line-height: 1.6;
+  }
+  .callout-box li:last-child { margin-bottom: 0; }
+
+  /* ═══════════════════════════════════════════════════
+     6. DATA TABLE
+     ═══════════════════════════════════════════════════ */
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .data-table th {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--lego-dark);
+    text-align: left;
+    padding: 14px 20px;
+  }
+  .data-table td {
+    font-size: 16px;
+    color: var(--lego-dark);
+    padding: 14px 20px;
+    line-height: 1.5;
+  }
+  .data-table td:first-child {
+    font-weight: 600;
+    min-width: 160px;
+  }
+  /* Table variants */
+  .data-table.v-default {
+    border: var(--border-default) solid var(--lego-grey-pale);
+    box-shadow: var(--depth-default);
+  }
+  .data-table.v-default th { background: var(--lego-grey-wash); }
+  .data-table.v-default td { border-top: var(--border-thin) solid var(--lego-grey-wash); }
+
+  .data-table.v-red {
+    border: var(--border-default) solid var(--lego-red-tint-md);
+    background: var(--lego-red-tint);
+    box-shadow: var(--depth-red);
+  }
+  .data-table.v-red th { background: rgba(227, 0, 11, 0.12); }
+  .data-table.v-red td { border-top: var(--border-thin) solid rgba(227, 0, 11, 0.06); }
+
+  .data-table.v-yellow {
+    border: var(--border-default) solid var(--lego-yellow-tint-md);
+    background: var(--lego-yellow-tint);
+    box-shadow: var(--depth-yellow);
+  }
+  .data-table.v-yellow th { background: rgba(245, 205, 45, 0.20); }
+  .data-table.v-yellow td { border-top: var(--border-thin) solid rgba(245, 205, 45, 0.08); }
+
+  /* ═══════════════════════════════════════════════════
+     FOOTER NAV DEMO
+     ═══════════════════════════════════════════════════ */
+  .footer-demo {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: var(--shadow-md);
+    max-width: 400px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     WCAG BADGE
+     ═══════════════════════════════════════════════════ */
+  .wcag-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 100px 100px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: var(--border-thin) solid var(--lego-grey-wash);
+    font-size: 16px;
+  }
+  .wcag-row:last-child { border-bottom: none; }
+  .wcag-row .pair { display: flex; align-items: center; gap: 8px; }
+  .wcag-sample {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .wcag-pass {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 2px 10px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+  .wcag-pass.pass { background: rgba(0,168,80,0.12); color: var(--lego-green); }
+  .wcag-pass.fail { background: var(--lego-red-tint); color: var(--lego-red); }
+
+  /* ═══════════════════════════════════════════════════
+     DESIGN NOTE
+     ═══════════════════════════════════════════════════ */
+  .design-note {
+    font-size: 16px;
+    color: var(--lego-blue);
+    font-style: italic;
+    padding: 14px 20px;
+    background: rgba(0,85,191,0.05);
+    border-left: var(--border-default) solid var(--lego-blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    background: var(--lego-grey-wash);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--lego-red);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     UTILITIES
+     ═══════════════════════════════════════════════════ */
+  .mt-32 { margin-top: 32px; }
+  .mt-24 { margin-top: 24px; }
+  .mt-16 { margin-top: 16px; }
+  .mb-16 { margin-bottom: 16px; }
+  .max-w { max-width: 700px; }
+  .flex-col-center { display: flex; flex-direction: column; align-items: center; }
+  .demo-row { display: flex; flex-direction: column; gap: 16px; max-width: 700px; }
+  .slide-bg { background: white; border-radius: var(--radius-lg); padding: 28px 32px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="page-header stud-pattern">
+  <h1>LEGO Case — Design System</h1>
+  <p>Visual language for the kids.lego.com frontend architecture presentation. LEGO instruction booklet aesthetic: playful, bold, professional. Baloo 2 headings, DM Sans body, single red accent, LEGO brick depth on every interactive element.</p>
+</div>
+
+<nav class="sticky-nav">
+  <a href="#colors">Colors</a>
+  <a href="#typography">Typography</a>
+  <a href="#borders">Borders</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#slide-chrome">Slide Chrome</a>
+  <a href="#content-types">Content Types</a>
+  <a href="#footer-nav">Footer Nav</a>
+  <a href="#accessibility">Accessibility</a>
+  <a href="#principles">Principles</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     1. COLORS
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="colors">
+  <div class="section-number">1</div>
+  <h2>Color Palette</h2>
+  <p class="subtitle">Built from the official LEGO primary palette. Red is the single accent — used for stop badges, progress indicators, active states. Yellow reserved for the primary action button. All text color pairings validated for WCAG 2.2 AA contrast.</p>
+
+  <h3 class="sub-heading">Primary</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color has-stud" style="background: var(--lego-red);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">LEGO Red</div>
+        <div class="swatch-hex">#E3000B</div>
+        <div class="swatch-role">Accent, chrome, badges</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-red-dark);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Red Dark</div>
+        <div class="swatch-hex">#A00008</div>
+        <div class="swatch-role">Button/card depth borders</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-yellow);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">LEGO Yellow</div>
+        <div class="swatch-hex">#F5CD2D</div>
+        <div class="swatch-role">Primary action button</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-yellow-dark);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Yellow Dark</div>
+        <div class="swatch-hex">#D4A800</div>
+        <div class="swatch-role">Yellow depth borders</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-blue);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">LEGO Blue</div>
+        <div class="swatch-hex">#0055BF</div>
+        <div class="swatch-role">Links, focus rings, info</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-green);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">LEGO Green</div>
+        <div class="swatch-hex">#00A850</div>
+        <div class="swatch-role">Visited, success, complete</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Neutrals</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-dark);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Dark</div>
+        <div class="swatch-hex">#2C2C2C</div>
+        <div class="swatch-role">Headings, primary text</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-grey);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Grey</div>
+        <div class="swatch-hex">#6D6E70</div>
+        <div class="swatch-role">Body secondary, labels</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-grey-light);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Grey Light</div>
+        <div class="swatch-hex">#A0A1A3</div>
+        <div class="swatch-role">Decorative ONLY (fails text contrast)</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-grey-pale);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Grey Pale</div>
+        <div class="swatch-hex">#D4D4D8</div>
+        <div class="swatch-role">Default borders, disabled dots</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-grey-wash);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Grey Wash</div>
+        <div class="swatch-hex">#F0EEE8</div>
+        <div class="swatch-role">Card bg, section bg, dividers</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: var(--lego-cream);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cream</div>
+        <div class="swatch-hex">#FAF8F2</div>
+        <div class="swatch-role">Page background</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Tints</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background: rgba(227,0,11,0.08);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Red Tint</div>
+        <div class="swatch-hex">rgba(227,0,11, 0.08)</div>
+        <div class="swatch-role">Red variant backgrounds</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: rgba(227,0,11,0.10);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Red Tint Medium</div>
+        <div class="swatch-hex">rgba(227,0,11, 0.10)</div>
+        <div class="swatch-role">Red variant borders</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: rgba(245,205,45,0.12);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Yellow Tint</div>
+        <div class="swatch-hex">rgba(245,205,45, 0.12)</div>
+        <div class="swatch-role">Yellow variant backgrounds</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background: rgba(245,205,45,0.18);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Yellow Tint Medium</div>
+        <div class="swatch-hex">rgba(245,205,45, 0.18)</div>
+        <div class="swatch-role">Yellow variant borders</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     2. TYPOGRAPHY
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="typography">
+  <div class="section-number">2</div>
+  <h2>Typography</h2>
+  <p class="subtitle">Two fonts. Baloo 2 for headings, labels, and UI chrome. DM Sans for body text. Minimum content font size is 16px — smaller sizes only for UI chrome (badges, progress counters) where the context makes them readable.</p>
+
+  <h3 class="sub-heading">Baloo 2 — Display</h3>
+  <div class="max-w">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Page Title</div>
+        <div class="spec">Baloo 2 · 800 · 40px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 800; font-size: 40px; color: var(--lego-dark);">Architecture</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Slide Heading</div>
+        <div class="spec">Baloo 2 · 700 · 30px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 700; font-size: 30px; color: var(--lego-dark);">Migration Strategy</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Section Heading</div>
+        <div class="spec">Baloo 2 · 700 · 22px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--lego-dark);">Core Approach</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Card Title</div>
+        <div class="spec">Baloo 2 · 700 · 18px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--lego-dark);">Monorepo Advantages</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Step Number</div>
+        <div class="spec">Baloo 2 · 800 · 24px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--lego-red);">01</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Button Text</div>
+        <div class="spec">Baloo 2 · 800 · 16px</div>
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 800; font-size: 16px; color: var(--lego-dark);">Zoom In</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Badge / Label</div>
+        <div class="spec">Baloo 2 · 700 · 14px · uppercase</div>
+      </div>
+      <div><span class="stop-badge">Stop 2 · Vision</span></div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">DM Sans — Body</h3>
+  <div class="max-w">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Body</div>
+        <div class="spec">DM Sans · 400 · 16px</div>
+      </div>
+      <div style="font-family: var(--font-body); font-weight: 400; font-size: 16px; color: var(--lego-dark); line-height: 1.6;">The platform will use a modular frontend architecture within a monorepo. This is especially beneficial because only a small number of teams contribute frontend code.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Body Emphasis</div>
+        <div class="spec">DM Sans · 600 · 16px</div>
+      </div>
+      <div style="font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--lego-dark);">Privacy-First Analytics</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="name">Body Secondary</div>
+        <div class="spec">DM Sans · 400 · 16px · grey</div>
+      </div>
+      <div style="font-family: var(--font-body); font-weight: 400; font-size: 16px; color: var(--lego-grey);">Campaigns, content pages, interactive experiences, seasonal features.</div>
+    </div>
+  </div>
+
+  <div class="design-note mt-32">
+    <strong>16px minimum rule:</strong> All content text is 16px or above. The only exceptions are UI chrome elements — stop badges (14px uppercase in high-contrast pills) and inline code snippets (14px monospace). These are not paragraph text and remain legible at their sizes.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     3. BORDERS
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="borders">
+  <div class="section-number">3</div>
+  <h2>Border Widths</h2>
+  <p class="subtitle">Three border tiers. The default 3px border gives cards and blocks a sturdy, tactile feel consistent with the LEGO brick aesthetic. The 4px depth border on buttons creates the "physical press" effect. Content blocks get their depth from a hard box-shadow underneath — like a LEGO plate sitting below the brick.</p>
+
+  <div class="max-w">
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="width: 200px; height: 60px; border: 1.5px solid var(--lego-grey-pale); border-radius: var(--radius-md);"></div>
+        <div>
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 18px;">Thin — 1.5px</div>
+          <div style="color: var(--lego-grey);">Internal dividers, table row separators</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="width: 200px; height: 60px; border: 3px solid var(--lego-grey-pale); border-radius: var(--radius-md);"></div>
+        <div>
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 18px;">Default — 3px</div>
+          <div style="color: var(--lego-grey);">Card outlines, content block borders, section dividers</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="width: 200px; height: 60px; border: 3px solid var(--lego-grey-pale); border-bottom: 4px solid var(--lego-grey-light); border-radius: var(--radius-md);"></div>
+        <div>
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 18px;">Depth — 4px bottom</div>
+          <div style="color: var(--lego-grey);">Buttons only — the LEGO brick press depth effect</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Depth in Context</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Buttons use <code>border-bottom: 4px</code> for press depth. Content blocks use a hard <code>box-shadow</code> (zero blur) — like a LEGO plate sitting underneath the brick. Both approaches create physical depth while preserving clean rounded corners.</p>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+      <button class="btn btn-wide btn-yellow" style="pointer-events:none;">Button</button>
+      <span style="font-size: 14px; color: var(--lego-grey);">border-bottom</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+      <div class="content-card v-default" style="margin: 0; min-width: 140px;"><h4 style="font-family: var(--font-display); font-weight: 700; font-size: 16px; margin: 0;">Card</h4></div>
+      <span style="font-size: 14px; color: var(--lego-grey);">box-shadow</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     4. BUTTONS
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="buttons">
+  <div class="section-number">4</div>
+  <h2>Buttons</h2>
+  <p class="subtitle">LEGO brick buttons — the 4px bottom border creates physical depth. Three variants: Yellow (primary action), Red (forward), Grey (back). Active press pushes down 2px and shrinks border to 2px — like pressing a real brick.</p>
+
+  <h3 class="sub-heading">Icon Buttons</h3>
+  <div class="btn-row">
+    <span class="btn-label">Grey / Back</span>
+    <button class="btn btn-icon btn-grey">
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="btn btn-icon btn-grey" disabled>
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+  </div>
+  <div class="btn-row">
+    <span class="btn-label">Red / Forward</span>
+    <button class="btn btn-icon btn-red">
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <button class="btn btn-icon btn-red" disabled>
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <h3 class="sub-heading">Label Buttons</h3>
+  <div class="btn-row">
+    <span class="btn-label">Yellow / Primary</span>
+    <button class="btn btn-wide btn-yellow">
+      <svg viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      Zoom In
+    </button>
+    <button class="btn btn-wide btn-yellow" disabled>Zoom In</button>
+  </div>
+  <div class="btn-row">
+    <span class="btn-label">Red / Action</span>
+    <button class="btn btn-wide btn-red">Next Stop</button>
+    <button class="btn btn-wide btn-red" disabled>Next Stop</button>
+  </div>
+  <div class="btn-row">
+    <span class="btn-label">Grey / Secondary</span>
+    <button class="btn btn-wide btn-grey">Map View</button>
+  </div>
+
+  <h3 class="sub-heading">Footer Assembly</h3>
+  <div class="footer-demo">
+    <button class="btn btn-icon btn-grey" disabled>
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="btn btn-wide btn-yellow">
+      <svg viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      Zoom In
+    </button>
+    <button class="btn btn-icon btn-red">
+      <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     5. SLIDE CHROME
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="slide-chrome">
+  <div class="section-number">5</div>
+  <h2>Slide Chrome</h2>
+  <p class="subtitle">Stop badge at top-centre, sub-slide progress dots (current dot wider), close button top-right. No back arrow. Light backgrounds throughout. Single red accent for ALL stops.</p>
+
+  <h3 class="sub-heading">Stop Badges</h3>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <span class="stop-badge">Stop 1 · The Case</span>
+    <span class="stop-badge">Stop 2 · Vision</span>
+    <span class="stop-badge">Stop 3 · How We Work</span>
+    <span class="stop-badge">Stop 4 · Migration</span>
+    <span class="stop-badge">Stop 5 · Summary</span>
+  </div>
+
+  <h3 class="sub-heading">Sub-Slide Progress</h3>
+  <div style="display: flex; flex-direction: column; gap: 20px; max-width: 400px;">
+    <div>
+      <div style="color: var(--lego-grey); margin-bottom: 8px;">At sub-slide 1 of 4:</div>
+      <div class="progress-dots" style="justify-content: flex-start;">
+        <div class="dot current"></div>
+        <div class="dot upcoming"></div>
+        <div class="dot upcoming"></div>
+        <div class="dot upcoming"></div>
+      </div>
+    </div>
+    <div>
+      <div style="color: var(--lego-grey); margin-bottom: 8px;">At sub-slide 3 of 6:</div>
+      <div class="progress-dots" style="justify-content: flex-start;">
+        <div class="dot visited"></div>
+        <div class="dot visited"></div>
+        <div class="dot current"></div>
+        <div class="dot upcoming"></div>
+        <div class="dot upcoming"></div>
+        <div class="dot upcoming"></div>
+      </div>
+    </div>
+    <div>
+      <div style="color: var(--lego-grey); margin-bottom: 8px;">At sub-slide 4 of 4 (last):</div>
+      <div class="progress-dots" style="justify-content: flex-start;">
+        <div class="dot visited"></div>
+        <div class="dot visited"></div>
+        <div class="dot visited"></div>
+        <div class="dot current"></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Full Slide Layout</h3>
+  <div class="slide-demo">
+    <button class="close-btn" aria-label="Close">&times;</button>
+    <div class="slide-inner">
+      <div class="flex-col-center" style="margin-bottom: 28px;">
+        <span class="stop-badge">Stop 2 · Vision</span>
+        <div class="progress-dots">
+          <div class="dot visited"></div>
+          <div class="dot current"></div>
+          <div class="dot upcoming"></div>
+        </div>
+      </div>
+      <h2 style="font-family: var(--font-display); font-weight: 800; font-size: 30px; color: var(--lego-dark); text-align: center; margin-bottom: 24px;">Frontend Architecture</h2>
+      <p style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--lego-dark); margin-bottom: 8px;">Core Approach</p>
+      <p style="font-size: 16px; color: var(--lego-dark); margin-bottom: 20px;">The platform will use a <strong>modular frontend architecture within a monorepo.</strong></p>
+      <div class="content-two-col">
+        <div class="content-card v-default">
+          <h4>Goals</h4>
+          <ul>
+            <li>Shared tooling and standards</li>
+            <li>Easy cross-team collaboration</li>
+            <li>Simplified dependency management</li>
+          </ul>
+        </div>
+        <div class="content-card v-default">
+          <h4>Monorepo Advantages</h4>
+          <ul>
+            <li>Easier sharing of UI components</li>
+            <li>Consistent CI/CD pipeline</li>
+            <li>Unified dependency management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     6. CONTENT TYPES
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="content-types">
+  <div class="section-number">6</div>
+  <h2>Content Types</h2>
+  <p class="subtitle">Six standardized content block patterns for slide bodies. Most blocks support three color variants: <strong>default</strong> (grey), <strong>red</strong>, and <strong>yellow</strong>. The variant prop controls tint backgrounds, border colors, and accent elements in one shot.</p>
+
+  <!-- ── 1. Bullet List ── -->
+  <h3 class="sub-heading">1. Bullet List</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Heading + bullet points. Variant controls bullet dot color. Used for goals, key points, requirements.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="variant-label">Default variant</div>
+    <div class="content-bullets v-default">
+      <h3>Goals</h3>
+      <ul>
+        <li>Deliver <strong>fast, engaging experiences</strong> for children aged 6–12</li>
+        <li>Support multiple teams working in parallel</li>
+        <li>Ensure <strong>privacy-first analytics</strong> compliant with COPPA and GDPR</li>
+      </ul>
+    </div>
+    <div class="variant-label">Red variant</div>
+    <div class="content-bullets v-red">
+      <h3>Goals</h3>
+      <ul>
+        <li>Deliver <strong>fast, engaging experiences</strong> for children aged 6–12</li>
+        <li>Support multiple teams working in parallel</li>
+        <li>Ensure <strong>privacy-first analytics</strong> compliant with COPPA and GDPR</li>
+      </ul>
+    </div>
+    <div class="variant-label">Yellow variant</div>
+    <div class="content-bullets v-yellow">
+      <h3>Goals</h3>
+      <ul>
+        <li>Deliver <strong>fast, engaging experiences</strong> for children aged 6–12</li>
+        <li>Support multiple teams working in parallel</li>
+        <li>Ensure <strong>privacy-first analytics</strong> compliant with COPPA and GDPR</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── 2. Two-Column Cards ── -->
+  <h3 class="sub-heading">2. Two-Column Cards</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Side-by-side cards with LEGO brick depth shadow. Variant controls border color, tint, and shadow. Used for comparisons, parallel concepts.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="variant-label">Default variant</div>
+    <div class="content-two-col">
+      <div class="content-card v-default">
+        <h4>Goals</h4>
+        <ul><li>Shared tooling and standards</li><li>Easy cross-team collaboration</li><li>Clear ownership boundaries</li></ul>
+      </div>
+      <div class="content-card v-default">
+        <h4>Monorepo Advantages</h4>
+        <ul><li>Easier sharing of UI components</li><li>Consistent CI/CD pipeline</li><li>Unified dependency management</li></ul>
+      </div>
+    </div>
+    <div class="variant-label">Red variant</div>
+    <div class="content-two-col">
+      <div class="content-card v-red">
+        <h4>Goals</h4>
+        <ul><li>Shared tooling and standards</li><li>Easy cross-team collaboration</li><li>Clear ownership boundaries</li></ul>
+      </div>
+      <div class="content-card v-red">
+        <h4>Monorepo Advantages</h4>
+        <ul><li>Easier sharing of UI components</li><li>Consistent CI/CD pipeline</li><li>Unified dependency management</li></ul>
+      </div>
+    </div>
+    <div class="variant-label">Yellow variant</div>
+    <div class="content-two-col">
+      <div class="content-card v-yellow">
+        <h4>Goals</h4>
+        <ul><li>Shared tooling and standards</li><li>Easy cross-team collaboration</li><li>Clear ownership boundaries</li></ul>
+      </div>
+      <div class="content-card v-yellow">
+        <h4>Monorepo Advantages</h4>
+        <ul><li>Easier sharing of UI components</li><li>Consistent CI/CD pipeline</li><li>Unified dependency management</li></ul>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── 3. Entity Cards ── -->
+  <h3 class="sub-heading">3. Entity Cards</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Full-width stacked cards with rounded badge, tinted background, and depth shadow. Badge initials + title + description. Variant controls badge color, background tint, border, and shadow.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="variant-label">Yellow variant (recommended for entities)</div>
+    <div>
+      <div class="entity-card v-yellow">
+        <div class="entity-badge">PT</div>
+        <div class="entity-body">
+          <h4>Platform Team</h4>
+          <p>Core app shell, routing, performance, infrastructure, shared libs, CI/CD, developer tooling.</p>
+        </div>
+      </div>
+      <div class="entity-card v-yellow">
+        <div class="entity-badge">CT</div>
+        <div class="entity-body">
+          <h4>Content / Campaign Team</h4>
+          <p>Campaigns, content pages, interactive experiences, seasonal features.</p>
+        </div>
+      </div>
+      <div class="entity-card v-yellow">
+        <div class="entity-badge">SP</div>
+        <div class="entity-body">
+          <h4>Safety &amp; Privacy Oversight</h4>
+          <p>Must review features involving user data, interaction mechanics, community or social features.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Red variant</div>
+    <div>
+      <div class="entity-card v-red">
+        <div class="entity-badge">PT</div>
+        <div class="entity-body">
+          <h4>Platform Team</h4>
+          <p>Core app shell, routing, performance, infrastructure, shared libs, CI/CD, developer tooling.</p>
+        </div>
+      </div>
+      <div class="entity-card v-red">
+        <div class="entity-badge">CT</div>
+        <div class="entity-body">
+          <h4>Content / Campaign Team</h4>
+          <p>Campaigns, content pages, interactive experiences, seasonal features.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-label">Default variant</div>
+    <div>
+      <div class="entity-card v-default">
+        <div class="entity-badge">PT</div>
+        <div class="entity-body">
+          <h4>Platform Team</h4>
+          <p>Core app shell, routing, performance, infrastructure, shared libs, CI/CD, developer tooling.</p>
+        </div>
+      </div>
+      <div class="entity-card v-default">
+        <div class="entity-badge">CT</div>
+        <div class="entity-body">
+          <h4>Content / Campaign Team</h4>
+          <p>Campaigns, content pages, interactive experiences, seasonal features.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── 4. Numbered Steps ── -->
+  <h3 class="sub-heading">4. Numbered Steps</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Ordered items with prominent step numbers and depth shadow. Variant controls number color, background tint, border, and shadow.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="variant-label">Red variant</div>
+    <div>
+      <div class="numbered-step v-red"><div class="step-num">01</div><div class="step-text">Setup Monorepo, CI/CD, and foundational UI components.</div></div>
+      <div class="numbered-step v-red"><div class="step-num">02</div><div class="step-text">Implement hybrid routing at the edge (CDN/Gateway level).</div></div>
+      <div class="numbered-step v-red"><div class="step-num">03</div><div class="step-text">Migrate low-risk, high-impact pages (e.g., Campaigns).</div></div>
+      <div class="numbered-step v-red"><div class="step-num">04</div><div class="step-text">Decommission legacy services gradually.</div></div>
+    </div>
+
+    <div class="variant-label">Yellow variant</div>
+    <div>
+      <div class="numbered-step v-yellow"><div class="step-num">01</div><div class="step-text">Setup Monorepo, CI/CD, and foundational UI components.</div></div>
+      <div class="numbered-step v-yellow"><div class="step-num">02</div><div class="step-text">Implement hybrid routing at the edge (CDN/Gateway level).</div></div>
+      <div class="numbered-step v-yellow"><div class="step-num">03</div><div class="step-text">Migrate low-risk, high-impact pages (e.g., Campaigns).</div></div>
+    </div>
+
+    <div class="variant-label">Default variant</div>
+    <div>
+      <div class="numbered-step v-default"><div class="step-num">01</div><div class="step-text">Setup Monorepo, CI/CD, and foundational UI components.</div></div>
+      <div class="numbered-step v-default"><div class="step-num">02</div><div class="step-text">Implement hybrid routing at the edge (CDN/Gateway level).</div></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── 5. Callout Box ── -->
+  <h3 class="sub-heading">5. Callout Box</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Bordered emphasis box with yellow tint background and depth shadow. Used for important notes, key principles, constraints.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="callout-box">
+      <ul>
+        <li><strong>Anonymous Event Tracking:</strong> Button clicks, video plays, scroll depth.</li>
+        <li><strong>Performance Telemetry:</strong> Core Web Vitals (LCP, FID, CLS) monitored globally.</li>
+        <li><strong>Error Tracking:</strong> Sanitized error reporting to catch issues fast.</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+  <!-- ── 6. Data Table ── -->
+  <h3 class="sub-heading">6. Data Table</h3>
+  <p style="color: var(--lego-grey); margin-bottom: 16px;">Tabular data with tinted header and depth shadow. Variant controls header background, border color, and shadow.</p>
+
+  <div class="slide-bg">
+  <div class="demo-row">
+    <div class="variant-label">Red variant</div>
+    <table class="data-table v-red">
+      <thead><tr><th>Risk</th><th>Mitigation Strategy</th></tr></thead>
+      <tbody>
+        <tr><td>SEO/Traffic Drops</td><td>A/B test migrations, 1-to-1 URL parity, automated SEO checks.</td></tr>
+        <tr><td>Performance Regression</td><td>Performance budgets in CI, global CDN caching, lazy loading.</td></tr>
+        <tr><td>Scope Creep</td><td>Strict adherence to MVP features. No new product features during migration.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="variant-label">Yellow variant</div>
+    <table class="data-table v-yellow">
+      <thead><tr><th>Risk</th><th>Mitigation Strategy</th></tr></thead>
+      <tbody>
+        <tr><td>SEO/Traffic Drops</td><td>A/B test migrations, 1-to-1 URL parity, automated SEO checks.</td></tr>
+        <tr><td>Performance Regression</td><td>Performance budgets in CI, global CDN caching, lazy loading.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="variant-label">Default variant</div>
+    <table class="data-table v-default">
+      <thead><tr><th>Risk</th><th>Mitigation Strategy</th></tr></thead>
+      <tbody>
+        <tr><td>SEO/Traffic Drops</td><td>A/B test migrations, 1-to-1 URL parity, automated SEO checks.</td></tr>
+        <tr><td>Performance Regression</td><td>Performance budgets in CI, global CDN caching, lazy loading.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     7. FOOTER NAV
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="footer-nav">
+  <div class="section-number">7</div>
+  <h2>Footer Navigation</h2>
+  <p class="subtitle">Persistent bar below both map and slide views. Color hierarchy guides the user: grey = back, yellow = view toggle, red = forward.</p>
+
+  <h3 class="sub-heading">Map Mode</h3>
+  <div class="footer-demo">
+    <button class="btn btn-icon btn-grey" disabled><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="btn btn-wide btn-yellow"><svg viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>Zoom In</button>
+    <button class="btn btn-icon btn-red"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+  <h3 class="sub-heading">Slide Mode</h3>
+  <div class="footer-demo">
+    <button class="btn btn-icon btn-grey"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="btn btn-wide btn-yellow"><svg viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path d="M9 3H3v6M15 21h6v-6M3 3l7 7M21 21l-7-7"/></svg>Map</button>
+    <button class="btn btn-icon btn-red"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+  <h3 class="sub-heading">End of Journey</h3>
+  <div class="footer-demo">
+    <button class="btn btn-icon btn-grey"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="btn btn-wide btn-yellow"><svg viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path d="M9 3H3v6M15 21h6v-6M3 3l7 7M21 21l-7-7"/></svg>Map</button>
+    <button class="btn btn-icon btn-red" disabled><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     8. ACCESSIBILITY
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="accessibility">
+  <div class="section-number">8</div>
+  <h2>Accessibility — WCAG 2.2 AA</h2>
+  <p class="subtitle">Every text-on-background pairing validated for contrast. Typography minimum 16px for content. Focus indicators, state changes, and interactive elements tested against WCAG 2.2 Level AA success criteria.</p>
+
+  <h3 class="sub-heading">Color Contrast Audit</h3>
+  <div class="max-w">
+    <div class="wcag-row" style="font-weight: 600; border-bottom: var(--border-default) solid var(--lego-grey-wash);">
+      <div>Foreground</div>
+      <div>Background</div>
+      <div>Ratio</div>
+      <div>AA</div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-dark);"></span> Dark #2C2C2C</div>
+      <div class="pair"><span class="wcag-sample" style="background: white; border: 1px solid #eee;"></span> White</div>
+      <div>14.5 : 1</div>
+      <div><span class="wcag-pass pass">AAA</span></div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-grey);"></span> Grey #6D6E70</div>
+      <div class="pair"><span class="wcag-sample" style="background: white; border: 1px solid #eee;"></span> White</div>
+      <div>5.3 : 1</div>
+      <div><span class="wcag-pass pass">AA</span></div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: white; border: 1px solid #eee;"></span> White</div>
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-red);"></span> Red #E3000B</div>
+      <div>5.0 : 1</div>
+      <div><span class="wcag-pass pass">AA</span></div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-red);"></span> Red #E3000B</div>
+      <div class="pair"><span class="wcag-sample" style="background: white; border: 1px solid #eee;"></span> White</div>
+      <div>5.0 : 1</div>
+      <div><span class="wcag-pass pass">AA</span></div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-dark);"></span> Dark #2C2C2C</div>
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-yellow);"></span> Yellow #F5CD2D</div>
+      <div>9.3 : 1</div>
+      <div><span class="wcag-pass pass">AAA</span></div>
+    </div>
+    <div class="wcag-row">
+      <div class="pair"><span class="wcag-sample" style="background: var(--lego-grey-light);"></span> Grey Light #A0A1A3</div>
+      <div class="pair"><span class="wcag-sample" style="background: white; border: 1px solid #eee;"></span> White</div>
+      <div>2.6 : 1</div>
+      <div><span class="wcag-pass fail">FAIL</span></div>
+    </div>
+  </div>
+
+  <div class="design-note mt-24">
+    <strong>Grey Light (#A0A1A3) fails text contrast at 2.6:1.</strong> It is restricted to decorative use only: borders, disabled dots, card depth shadows. Never used for readable text. The lightest permissible text color is Grey (#6D6E70) at 5.3:1.
+  </div>
+
+  <h3 class="sub-heading">WCAG 2.2 Checklist</h3>
+  <div class="max-w">
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">1.4.3</div>
+      <div class="step-text"><strong>Contrast (Minimum)</strong> — All text-on-background pairs meet 4.5:1 (normal) or 3:1 (large). Grey Light restricted to decorative.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">1.4.4</div>
+      <div class="step-text"><strong>Resize Text</strong> — 16px body minimum. All content text uses relative units (rem/em) in React implementation. No clipping at 200% zoom.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">1.4.11</div>
+      <div class="step-text"><strong>Non-text Contrast</strong> — Focus indicators, button borders, and progress dots all meet 3:1 against adjacent colors.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">1.4.12</div>
+      <div class="step-text"><strong>Text Spacing</strong> — No fixed-height containers for text. Custom letter/word spacing won't break layouts.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">2.4.7</div>
+      <div class="step-text"><strong>Focus Visible</strong> — All interactive elements have visible focus rings (2px solid, offset-2). Blue ring on default, red on active buttons.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">2.4.11</div>
+      <div class="step-text"><strong>Focus Not Obscured</strong> — Focus indicators are never covered by overlapping elements. Z-index stacking ensures visibility.</div>
+    </div>
+    <div class="numbered-step v-default">
+      <div class="step-num" style="font-size: 18px;">2.5.8</div>
+      <div class="step-text"><strong>Target Size</strong> — Minimum 44×44px for all interactive targets (buttons, stop nodes). Badge/dot progress elements are non-interactive indicators.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     9. PRINCIPLES
+     ═══════════════════════════════════════════════════ -->
+<div class="section" id="principles">
+  <div class="section-number">9</div>
+  <h2>Design Principles</h2>
+  <p class="subtitle">The guiding rules that keep every component feeling like it belongs in the same LEGO instruction booklet.</p>
+
+  <div class="demo-row">
+    <div class="entity-card v-red">
+      <div class="entity-badge" style="background: var(--lego-red);">01</div>
+      <div class="entity-body">
+        <h4>Instruction Booklet, Not Software UI</h4>
+        <p>Every element should feel like a LEGO instruction manual. Rounded corners, bold colors, physical depth. The metaphor is the medium.</p>
+      </div>
+    </div>
+    <div class="entity-card v-yellow">
+      <div class="entity-badge">02</div>
+      <div class="entity-body">
+        <h4>Light &amp; Warm, Not Dark &amp; Techy</h4>
+        <p>Cream and white backgrounds. Warm neutrals. Approachable and inviting — for engineers and business stakeholders alike.</p>
+      </div>
+    </div>
+    <div class="entity-card v-default">
+      <div class="entity-badge" style="background: var(--lego-blue);">03</div>
+      <div class="entity-body">
+        <h4>Physical Depth on Everything Interactive</h4>
+        <p>Buttons and cards have border-bottom depth. Stud dot patterns add texture. Everything feels tactile — you want to press the buttons.</p>
+      </div>
+    </div>
+    <div class="entity-card v-red">
+      <div class="entity-badge" style="background: var(--lego-red);">04</div>
+      <div class="entity-body">
+        <h4>One Accent, Used Consistently</h4>
+        <p>LEGO Red for all chrome. No rainbow per-stop colors. Yellow exclusively for primary action buttons. The hierarchy: red = where you are, yellow = what to do next, green = where you've been.</p>
+      </div>
+    </div>
+    <div class="entity-card v-default">
+      <div class="entity-badge" style="background: var(--lego-green);">05</div>
+      <div class="entity-body">
+        <h4>Content-First Slides</h4>
+        <p>White slide backgrounds. Structured content blocks. No decorative clutter competing with information. The LEGO personality comes from typography, chrome, and buttons.</p>
+      </div>
+    </div>
+    <div class="entity-card v-yellow">
+      <div class="entity-badge">06</div>
+      <div class="entity-body">
+        <h4>Accessible by Default</h4>
+        <p>WCAG 2.2 AA minimum. 16px content text. 44px touch targets. Visible focus rings. No color-only state indicators. Performance budgeted. <code>prefers-reduced-motion</code> respected.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="design-note mt-32">
+    <strong>The stud dot pattern</strong> is the signature LEGO texture. Used sparingly on headers and hero areas: <code>radial-gradient(circle at 12px 12px, rgba(255,255,255,0.06) 6px, transparent 6px)</code> at <code>32px 32px</code>. Low opacity adds texture without competing with content.
+  </div>
+</div>
+
+</body>
+</html>
