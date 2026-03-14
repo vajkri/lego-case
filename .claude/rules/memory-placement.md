@@ -29,7 +29,7 @@ Each memory is a separate `.md` file with frontmatter (`name`, `description`, `t
 
 ### `.serena/memories/` — Descriptive project knowledge
 Key files, architecture, discovered patterns. Not rules — descriptions of what the project is or has.
-Available once Serena is configured (planned after phase 3.1).
+Available once Serena is configured.
 
 ### `.planning/` — Project state & planning
 GSD-managed: roadmap, phases, research, assets, todos, state tracking.

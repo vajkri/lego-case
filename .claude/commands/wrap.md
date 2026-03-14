@@ -28,44 +28,15 @@ Then continue to Phase 2 regardless.
 Review what was learned during the session. Place each piece of knowledge
 in the right location — do not duplicate across locations.
 
-**Memory placement guide:**
-
-The core test — ask this before every write:
-
-- **Prescriptive** ("Claude must do X") → `CLAUDE.md` or `.claude/rules/`
-- **Behavioral** ("Claude got corrected / user prefers X / here's where to find Y") → `.claude/memory/`
-- **Descriptive** ("the project has/is X") → `.serena/memories/` (when configured)
-- **Planning** ("phase state, roadmap, research") → `.planning/`
+See `.claude/rules/memory-placement.md` for the full placement guide and decision framework.
 
 Never write the same fact in two places. Use `@import` if a memory needs to be always-available in Claude Code.
-
-**Location details:**
-
-- **CLAUDE.md** — Rules and conventions Claude must follow every session. Keep under 150 lines — instruction-following drops significantly above 200.
-- **`.claude/rules/`** — Prescriptive rules scoped to specific files or areas. Use `paths:` frontmatter (e.g. `tests/**` for test rules).
-- **`.claude/memory/`** — Behavioral corrections, user preferences, reference pointers. Things the user told Claude to do differently. Update `MEMORY.md` index when adding/removing files.
-- **`.serena/memories/`** — Descriptive project knowledge: key files, architecture, discovered patterns. Not rules. (Available once Serena is configured.)
-- **`CLAUDE.local.md`** — Personal/ephemeral context: local URLs, sandbox credentials, current WIP focus. Not committed.
-- **`.planning/`** — GSD-managed project state, phases, roadmap. Don't duplicate planning info into memory.
-
-**Decision framework:**
-
-- "Must Claude follow this every session?" → `CLAUDE.md` or `.claude/rules/`
-- "Did the user correct Claude or express a preference?" → `.claude/memory/`
-- "Does this describe what the project is or has?" → `.serena/memories/`
-- Scoped to specific file types → `.claude/rules/` with `paths:` frontmatter
-- Personal or ephemeral context → `CLAUDE.local.md`
-- Would duplicate existing content → `@import` instead
 
 Apply all memory writes now.
 
 **Before committing — placement self-check:**
 
-Re-read each item written this phase:
-
-- Each `CLAUDE.md` or `.claude/rules/` addition: is it prescriptive (a rule Claude must always follow)?
-- Each `.claude/memory/` addition: is it behavioral (a correction, preference, or reference)?
-- Each `.serena/memories/` addition: is it descriptive (what the project is or has)?
+Re-read each item written this phase against the placement test in `.claude/rules/memory-placement.md`.
 
 Anything in the wrong place — move it now, before the commit.
 
