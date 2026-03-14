@@ -6,7 +6,7 @@ export const stopMigration: Stop = {
   label: 'Migration',
   // Coordinates updated in Phase 3 to match actual SVG road positions.
   // Update together with ROAD_PATH_D and STOP_OFFSETS in RoadPath.tsx if road geometry changes.
-  coordinates: { x: 55, y: 57 },
+  coordinates: { x: 58, y: 56 },
   labelPosition: 'above',
   slides: [
     {

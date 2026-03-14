@@ -58,12 +58,16 @@ export function CarElement({ targetOffset, isMovingBackward, onArrival, style: e
         position: 'absolute',
         // CSS motion path — GPU composited, does NOT trigger layout/paint per frame (CAR-03)
         offsetPath: `path("${ROAD_PATH_D}")`,
-        offsetRotate: isMovingBackward ? 'reverse' : 'auto',
+        offsetRotate: 'auto',
         willChange: 'transform',  // GPU compositor hint
         width: 60,
         height: 40,
-        // Center the car on the path point using CSS transform (not top/left positioning)
-        transform: 'translate(-50%, -50%)',
+        // Right-side driving: Y offset shifts car perpendicular to path direction.
+        // -10% = right side (forward), -90% = left side (backward).
+        // scaleX(-1) flips car to face backward direction.
+        transform: isMovingBackward
+          ? 'translate(-50%, -90%) scaleX(-1)'
+          : 'translate(-50%, -10%)',
         ...extraStyle,
       }}
       animate={{ offsetDistance: targetOffset }}

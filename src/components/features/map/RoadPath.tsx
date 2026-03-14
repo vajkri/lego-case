@@ -10,20 +10,20 @@
 // Rural idyll lower-left → winding S-curve → city entrance upper-right
 // Path has two natural "dips" creating the winding quality of the inspiration screenshots.
 export const ROAD_PATH_D =
-  'M 85,715 C 160,655 230,585 325,560 C 420,535 450,645 540,630 C 630,615 675,490 770,470 C 865,450 905,570 1000,555 C 1080,540 1150,425 1205,380'
+  'M 85,715 C 160,655 230,585 325,560 C 455,540 475,645 540,630 C 630,615 675,490 770,470 C 920,458 950,570 1000,555 C 1080,540 1150,425 1205,380'
 
 // Car starts here before any stop is visited — the very beginning of the road.
-export const CAR_START_OFFSET = '0%'
+export const CAR_START_OFFSET = '3%'
 
 // Approximate offsetDistance % for each stop index 0–4.
 // Computed to match the path inflection points visually.
 // These are design-time constants — update together with ROAD_PATH_D if path changes.
 export const STOP_OFFSETS: readonly string[] = [
   '10%',  // Stop 0 — slightly ahead of road start so car visibly drives there
-  '22%',  // Stop 1 — first rise (≈325, 560)
+  '25%',  // Stop 1 — first rise peak (≈325, 560)
   '44%',  // Stop 2 — first dip (≈540, 630)
-  '65%',  // Stop 3 — second rise (≈770, 470)
-  '97%',  // Stop 4 — city entrance (≈1205, 380)
+  '64%',  // Stop 3 — second rise (≈770, 470)
+  '100%',  // Stop 4 — city entrance (≈1205, 380)
 ] as const
 
 export function RoadPath() {
