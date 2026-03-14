@@ -98,7 +98,7 @@ Plans:
 **Goal:** The StopNode map markers are replaced with Build Progress Bricks (Proposal #2) — favicon-proportioned SVG brick stacks where brick count grows per stop (1-5), with 5 visual states (default/hover/focus/active/visited), smart label positioning (above/below per stop), and CSS-driven animations (brick-drop entrance, color sweep transition).
 **Requirements**: MAP-02, MAP-03, A11Y-03
 **Depends on:** Phase 03.1
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 03.2-01-PLAN.md — Stop type extension with labelPosition + data files + test scaffolds
