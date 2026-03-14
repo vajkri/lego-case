@@ -102,7 +102,7 @@ export function MapCanvas() {
               key={stop.slug}
               stop={stop}
               index={index}
-              isActive={state.currentStop === index}
+              isActive={state.currentStop === index && (state.visitedStops.length > 0 || state.isCarTraveling)}
               isVisited={state.visitedStops.includes(index)}
               isCarTraveling={state.isCarTraveling}
             />
