@@ -6,7 +6,7 @@ export const stopSummary: Stop = {
   label: 'Summary',
   // Coordinates updated in Phase 3 to match actual SVG road positions.
   // Update together with ROAD_PATH_D and STOP_OFFSETS in RoadPath.tsx if road geometry changes.
-  coordinates: { x: 86, y: 44 },
+  coordinates: { x: 85, y: 43 },
   labelPosition: 'above',
   slides: [
     {

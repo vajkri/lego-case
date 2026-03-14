@@ -131,6 +131,22 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
   // Active state = animate the topmost brick group
   const topGroupClass = state === 'active' ? 'brick-drop-in' : undefined
 
+  // Compute stud arrays — studs are visible when not covered by a brick above
+  const level1Studs: number[] = []
+  if (!hasLevel2) {
+    level1Studs.push(STUD_X.left, STUD_X.right)
+  } else if (layout.level2 === 'left') {
+    level1Studs.push(STUD_X.right) // right side uncovered by half brick
+  }
+
+  const level2LeftStuds = !hasLevel3 ? [STUD_X.left] : []
+  const level2RightStuds: number[] = []
+  if (!hasLevel3) {
+    level2RightStuds.push(STUD_X.right)
+  } else if (layout.level3 === 'left') {
+    level2RightStuds.push(STUD_X.right) // right side uncovered by half brick
+  }
+
   return (
     <svg
       width={VB_W}
@@ -155,7 +171,7 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
         {renderBrick(
           POS.level1.x, POS.level1.y, POS.level1.w, POS.level1.h, POS.level1.sy,
           getColorKey('level1'),
-          !hasLevel2 ? [STUD_X.left, STUD_X.right] : []
+          level1Studs
         )}
       </g>
 
@@ -166,13 +182,13 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
           {renderBrick(
             POS.halfL.x, POS.level2.y, POS.halfL.w, POS.level2.h, POS.level2.sy,
             getColorKey('level2Left'),
-            !hasLevel3 ? [STUD_X.left] : []
+            level2LeftStuds
           )}
           {/* Right half brick (present if level2 === 'both') */}
           {layout.level2 === 'both' && renderBrick(
             POS.halfR.x, POS.level2.y, POS.halfR.w, POS.level2.h, POS.level2.sy,
             getColorKey('level2Right'),
-            !hasLevel3 ? [STUD_X.right] : []
+            level2RightStuds
           )}
         </g>
       )}
@@ -262,13 +278,13 @@ function getLabelStyle(variant: BrickState): React.CSSProperties {
   }
   if (variant === 'visited') return {
     ...base,
-    background: 'rgba(0,168,80,0.12)',
+    background: 'transparent',
     color: '#00A850',
   }
   // default
   return {
     ...base,
-    background: 'rgba(160,161,163,0.15)',
+    background: 'transparent',
     color: '#6D6E70',
   }
 }
@@ -299,6 +315,9 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
   // Label below: flex-col-reverse puts label last (below marker, rendered first in DOM)
   const flexDirection = stop.labelPosition === 'above' ? 'column' : 'column-reverse'
 
+  // Road-side placement: labels above → left of road, labels below → right of road
+  const sideOffset = stop.labelPosition === 'above' ? -25 : 25
+
   return (
     <button
       onClick={handleClick}
@@ -312,7 +331,7 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
         position: 'absolute',
         left: `${stop.coordinates.x}%`,
         top: `${stop.coordinates.y}%`,
-        transform: 'translate(-50%, -100%)',
+        transform: `translate(calc(-50% + ${sideOffset}px), -100%)`,
         background: 'transparent',
         border: 0,
         padding: '4px',
@@ -333,8 +352,11 @@ export function StopNode({ stop, isActive, isVisited, index }: StopNodeProps) {
           {stop.label}
         </span>
 
-        {/* Marker wrapper — receives transform, shadow, and focus outline */}
-        <div style={getMarkerStyle(variant)}>
+        {/* Marker wrapper — receives transform, shadow, and focus outline; 80% base scale */}
+        <div style={(() => {
+          const ms = getMarkerStyle(variant)
+          return { ...ms, transform: `scale(0.8) ${ms.transform || ''}`.trim() }
+        })()}>
           <BrickMarker stopIndex={index} state={variant} />
         </div>
       </div>
