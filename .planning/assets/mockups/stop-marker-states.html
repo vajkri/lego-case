@@ -199,11 +199,9 @@
     border-radius: 8px;
     transition: all 0.25s ease;
   }
-  .marker-label.default { background: rgba(160,161,163,0.15); color: var(--lego-grey); }
-  .marker-label.hover { background: rgba(160,161,163,0.22); color: var(--lego-grey); font-weight: 700; }
-  .marker-label.focus { background: rgba(0,85,191,0.1); color: var(--lego-blue); font-weight: 700; }
+  .marker-label.default, .marker-label.hover, .marker-label.focus { background: var(--lego-grey-pale); color: var(--lego-dark); font-weight: 700; }
   .marker-label.active { background: var(--lego-yellow); color: var(--lego-dark); font-weight: 700; }
-  .marker-label.visited { background: rgba(0,168,80,0.12); color: var(--lego-green-deep); }
+  .marker-label.visited { background: var(--lego-green-deep); color: white; font-weight: 700; }
 
   .state-tag {
     font-size: 10px;
@@ -641,15 +639,9 @@ html += `
         </tr>
       </thead>
       <tbody>
-        <tr><td><strong>Default</strong> (resting)</td><td><code>#FFFFFF</code></td><td><code>#6D6E70</code></td><td>600</td></tr>
-        <tr><td><strong>Default</strong> (hover)</td><td><code>rgba(160,161,163,0.22)</code></td><td><code>#6D6E70</code></td><td>700</td></tr>
-        <tr><td><strong>Default</strong> (focus)</td><td><code>rgba(0,85,191,0.1)</code></td><td><code>#0055BF</code></td><td>700</td></tr>
-        <tr><td><strong>Active</strong> (resting)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
-        <tr><td><strong>Active</strong> (hover)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
-        <tr><td><strong>Active</strong> (focus)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
-        <tr><td><strong>Visited</strong> (resting)</td><td><code>#FFFFFF</code></td><td><code>#00A850</code></td><td>600</td></tr>
-        <tr><td><strong>Visited</strong> (hover)</td><td><code>rgba(160,161,163,0.22)</code></td><td><code>#6D6E70</code></td><td>700</td></tr>
-        <tr><td><strong>Visited</strong> (focus)</td><td><code>rgba(0,85,191,0.1)</code></td><td><code>#0055BF</code></td><td>700</td></tr>
+        <tr><td><strong>Default</strong> (static)</td><td><code>#D4D4D8</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
+        <tr><td><strong>Active</strong> (static)</td><td><code>#F5CD2D</code></td><td><code>#2C2C2C</code></td><td>700</td></tr>
+        <tr><td><strong>Visited</strong> (static)</td><td><code>#00A850</code></td><td><code>#FFFFFF</code></td><td>700</td></tr>
       </tbody>
     </table>
   </div>`;

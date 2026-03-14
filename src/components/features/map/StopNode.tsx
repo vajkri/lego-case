@@ -258,44 +258,31 @@ function getMarkerStyle(variant: BrickState): React.CSSProperties {
   return base
 }
 
-function getLabelStyle(variant: BrickState): React.CSSProperties {
+// Label styles are static per data state — they do NOT change on hover/focus
+function getLabelStyle(dataState: 'default' | 'active' | 'visited'): React.CSSProperties {
   const base: React.CSSProperties = {
     fontFamily: 'var(--font-display)',
     fontSize: '14px',
-    fontWeight: 600,
+    fontWeight: 700,
     whiteSpace: 'nowrap',
     padding: '3px 12px',
     borderRadius: '8px',
-    transition: 'all 0.25s ease',
   }
-  if (variant === 'hover') return {
-    ...base,
-    background: 'rgba(160,161,163,0.22)',
-    color: '#6D6E70',
-    fontWeight: 700,
-  }
-  if (variant === 'focus') return {
-    ...base,
-    background: 'rgba(0,85,191,0.1)',
-    color: '#0055BF',
-    fontWeight: 700,
-  }
-  if (variant === 'active') return {
+  if (dataState === 'active') return {
     ...base,
     background: '#F5CD2D',
     color: '#2C2C2C',
-    fontWeight: 700,
   }
-  if (variant === 'visited') return {
+  if (dataState === 'visited') return {
     ...base,
-    background: '#FFFFFF',
-    color: '#00A850',
+    background: '#00A850',
+    color: '#FFFFFF',
   }
   // default
   return {
     ...base,
-    background: '#FFFFFF',
-    color: '#6D6E70',
+    background: '#D4D4D8',
+    color: '#2C2C2C',
   }
 }
 
@@ -321,7 +308,7 @@ export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: S
   useEffect(() => {
     if (isActive && isCarTraveling) {
       setBrickActivated(false)
-      const timer = setTimeout(() => setBrickActivated(true), CAR_TRAVEL_MS * 0.9)
+      const timer = setTimeout(() => setBrickActivated(true), CAR_TRAVEL_MS * 0.8)
       return () => clearTimeout(timer)
     }
     if (isActive && !isCarTraveling) {
@@ -335,6 +322,13 @@ export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: S
   const brickColorState: BrickState = (variant === 'active' && !brickActivated)
     ? 'default'
     : variant
+
+  // Label uses data state only — static, unaffected by hover/focus
+  const labelState: 'default' | 'active' | 'visited' = isActive
+    ? 'active'
+    : isVisited
+      ? 'visited'
+      : 'default'
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Store this button as the focus return target when overlay closes (A11Y-04)
@@ -383,7 +377,7 @@ export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: S
         }}
       >
         {/* Always-visible label — MAP-02 requires labels never hidden */}
-        <span style={getLabelStyle(variant)}>
+        <span style={getLabelStyle(labelState)}>
           {stop.label}
         </span>
 
