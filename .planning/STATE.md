@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready for Phase 03.3
-stopped_at: Completed 03.2-02-PLAN.md (BrickMarker visual verification — 4 feedback rounds)
-last_updated: "2026-03-14T14:10:07.383Z"
+stopped_at: Completed 03.3-01-PLAN.md (SubSlideProgress promotion + MinifigHead SVG)
+last_updated: "2026-03-14T14:34:27.044Z"
 last_activity: "2026-03-14 — Phase 03.2 complete: BrickMarker SVG, 5-state stop markers, 4 visual feedback rounds"
 progress:
   total_phases: 8
   completed_phases: 4
-  total_plans: 21
-  completed_plans: 20
+  total_plans: 23
+  completed_plans: 21
   percent: 95
 ---
 
@@ -53,6 +53,7 @@ Progress: [████████░░] 95%
 | Phase 03.2-01 P01 | 8 min | 2 tasks | 8 files |
 | Phase 03.2-stop-marker-redesign P02 | 525671min | 2 tasks | 10 files |
 | Phase 03.2-stop-marker-redesign P02 | 35min | 2 tasks | 10 files |
+| Phase 03.3-progress-track-redesign P01 | 4min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,9 @@ Recent decisions affecting current work:
 - [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Dynamic SVG viewBox crops to content bounds per stop index — eliminates inflated gap above shorter stacks
 - [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Static labels only 3 states (default/active/visited) — no hover/focus label changes after feedback round 4
 - [Phase 03.2-stop-marker-redesign]: [Phase 03.2-02]: Brick color activation at 80% car travel (1.12s into 1.4s) via useEffect+setTimeout for visual anticipation
+- [Phase 03.3-01]: SubSlideProgress size prop uses SIZE_CONFIG object mapping variant names to dimension values — not conditional ternaries
+- [Phase 03.3-01]: MinifigHead face expressions are separate FC components — no transition on face features, only on rect fills (200ms)
+- [Phase 03.3-01]: MinifigHead is a pure Server Component (no 'use client') — no hooks, no event handlers needed
 
 ### Roadmap Evolution
 
@@ -117,6 +121,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T14:02:59.626Z
-Stopped at: Completed 03.2-02-PLAN.md (BrickMarker visual verification — 4 feedback rounds)
+Last session: 2026-03-14T14:34:27.040Z
+Stopped at: Completed 03.3-01-PLAN.md (SubSlideProgress promotion + MinifigHead SVG)
 Resume file: None
