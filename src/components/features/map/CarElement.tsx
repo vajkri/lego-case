@@ -4,6 +4,7 @@
 // Position is driven by offsetPath + offsetDistance — NOT top/left coordinates.
 // onArrival fires via onAnimationComplete when car reaches the target offset.
 
+import { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { ROAD_PATH_D, CAR_START_OFFSET } from './RoadPath'
 
@@ -50,6 +51,16 @@ function CarSvg() {
 }
 
 export function CarElement({ targetOffset, isMovingBackward, onArrival, style: extraStyle }: CarElementProps) {
+  // Skip travel animation when user prefers reduced motion — teleport instead
+  const [reducedMotion, setReducedMotion] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
   return (
     <motion.div
       data-testid="car-element"
@@ -71,11 +82,10 @@ export function CarElement({ targetOffset, isMovingBackward, onArrival, style: e
         ...extraStyle,
       }}
       animate={{ offsetDistance: targetOffset }}
-      transition={{
-        type: 'tween',
-        duration: 1.4,
-        ease: [0.4, 0, 0.2, 1],  // material ease-in-out — smooth acceleration/deceleration
-      }}
+      transition={reducedMotion
+        ? { duration: 0 }
+        : { type: 'tween', duration: 1.4, ease: [0.4, 0, 0.2, 1] }
+      }
       onAnimationComplete={() => {
         onArrival()  // → dispatch({ type: 'ARRIVE' }) in MapCanvas
       }}

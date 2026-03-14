@@ -10,7 +10,7 @@
 // Rural idyll lower-left → winding S-curve → city entrance upper-right
 // Path has two natural "dips" creating the winding quality of the inspiration screenshots.
 export const ROAD_PATH_D =
-  'M 85,715 C 160,655 230,585 325,560 C 455,540 475,645 540,630 C 630,615 675,490 770,470 C 920,458 950,570 1000,555 C 1080,540 1150,425 1205,380'
+  'M 85,715 C 160,655 230,585 325,560 C 455,540 475,645 540,630 C 630,615 675,490 770,470 C 920,458 952,564 1000,555 C 1048,546 1150,425 1205,380'
 
 // Car starts here before any stop is visited — the very beginning of the road.
 export const CAR_START_OFFSET = '3%'

@@ -5,6 +5,7 @@
 // Purely decorative — no interactive elements. Stop nodes and car overlaid by MapCanvas.
 // viewBox: 1400×800. Designed for full-screen desktop presentation.
 
+import { useState, useEffect } from 'react'
 import { RoadPath } from './RoadPath'
 
 // Shared viewBox dimensions — used by MapCanvas for overlay coordinate mapping
@@ -46,7 +47,31 @@ function Cloud({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
   )
 }
 
+// Cloud drift distance — slightly more than viewBox width for seamless wrapping
+const CLOUD_DRIFT = 1600
+
+const CLOUD_CONFIGS = [
+  { x: 235, y: 35, s: 0.8, dur: 190, begin: 0 },
+  { x: 425, y: 115, s: 1.32, dur: 165, begin: -55 },
+  { x: 672, y: 55, s: 0.9, dur: 175, begin: -115 },
+  { x: 940, y: 150, s: 1.05, dur: 155, begin: -85 },
+  { x: 1175, y: 75, s: 0.75, dur: 200, begin: -30 },
+  // Extra clouds for constant sky coverage
+  { x: 100, y: 90, s: 0.95, dur: 185, begin: -130 },
+  { x: 800, y: 130, s: 0.7, dur: 170, begin: -70 },
+] as const
+
 export function MapSvg({ className }: MapSvgProps) {
+  // Respect prefers-reduced-motion — disable all ambient animations
+  const [animate, setAnimate] = useState(true)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setAnimate(!mq.matches)
+    const handler = (e: MediaQueryListEvent) => setAnimate(!e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
   return (
     <svg
       viewBox="0 0 1400 800"
@@ -63,8 +88,12 @@ export function MapSvg({ className }: MapSvgProps) {
       </defs>
 
       {/* ── SUN — upper left, warm glow + studs ── */}
-      <circle cx={128} cy={118} r={76} fill="#FFD830" opacity={0.12} />
-      <circle cx={128} cy={118} r={62} fill="#FFD830" opacity={0.15} />
+      <circle cx={128} cy={118} r={76} fill="#FFD830" opacity={0.25}>
+        {animate && <animate attributeName="opacity" values="0.15;0.45;0.15" dur="4s" repeatCount="indefinite" />}
+      </circle>
+      <circle cx={128} cy={118} r={62} fill="#FFD830" opacity={0.3}>
+        {animate && <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite" begin="0.4s" />}
+      </circle>
       <circle cx={128} cy={118} r={56} fill="#FFD830" />
       {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
         const rad = (deg * Math.PI) / 180
@@ -87,12 +116,24 @@ export function MapSvg({ className }: MapSvgProps) {
       <circle cx={118} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
       <circle cx={138} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
 
-      {/* ── 3. CLOUDS — staggered heights for organic feel ── */}
-      <Cloud x={235} y={35} s={0.8} />
-      <Cloud x={425} y={115} s={1.32} />
-      <Cloud x={672} y={55} s={0.9} />
-      <Cloud x={940} y={150} s={1.05} />
-      <Cloud x={1175} y={75} s={0.75} />
+      {/* ── CLOUDS — drift leftward, seamless wrap via duplicate at +CLOUD_DRIFT ── */}
+      {CLOUD_CONFIGS.map((c, i) => (
+        <g key={`cloud-${i}`}>
+          {animate && (
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              from="0 0"
+              to={`-${CLOUD_DRIFT} 0`}
+              dur={`${c.dur}s`}
+              begin={`${c.begin}s`}
+              repeatCount="indefinite"
+            />
+          )}
+          <Cloud x={c.x} y={c.y} s={c.s} />
+          <Cloud x={c.x + CLOUD_DRIFT} y={c.y} s={c.s} />
+        </g>
+      ))}
 
       {/* ── 4. CITY BUILDINGS — right side, bases at horizon ── */}
 
@@ -219,12 +260,24 @@ export function MapSvg({ className }: MapSvgProps) {
       <path d="M 1186,662 L 1188,740 L 1186,740 Z" fill="#D8C49A" opacity={0.5} />
       {/* Hub */}
       <circle cx={1190} cy={660} r={8} fill="#A08060" />
-      {/* 4 blades — rotated 25° so shape reads clearly as windmill */}
-      <g transform="translate(1190,660) rotate(25)">
-        <rect x={-5} y={-54} width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
-        <rect x={6}  y={-5}  width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
-        <rect x={-5} y={6}   width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
-        <rect x={-54} y={-5} width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
+      {/* 4 blades — counter-clockwise rotation (leftward wind) */}
+      <g transform="translate(1190,660)">
+        <g transform="rotate(25)">
+          {animate && (
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="25"
+              to="-335"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          )}
+          <rect x={-5} y={-54} width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
+          <rect x={6}  y={-5}  width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
+          <rect x={-5} y={6}   width={10} height={48} fill="#D4C4A0" rx={3} opacity={0.96} />
+          <rect x={-54} y={-5} width={48} height={10} fill="#C8B890" rx={3} opacity={0.96} />
+        </g>
         <circle cx={0} cy={0} r={5} fill="#8A6840" />
       </g>
 
