@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: "Phase 3 UAT complete (10/10 passed). Phase 03.1 next."
-last_updated: "2026-03-14T08:20:00Z"
-last_activity: "2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted"
+status: planning
+stopped_at: "Completed 03.1-01-PLAN.md: Design tokens + Button component"
+last_updated: "2026-03-14T08:33:25.232Z"
+last_activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 progress:
   total_phases: 8
-  completed_phases: 3
-  total_plans: 25
+  completed_phases: 2
+  total_plans: 18
   completed_plans: 15
   percent: 37
 ---
@@ -46,6 +46,7 @@ Progress: [████░░░░░░] 37%
 | 01-foundation | 5 | 22 min | 4 min |
 | 02-navigation-and-slides | 5 | 37 min | 7 min |
 | 03-map-and-car-animation | 5 | 15 min | 3 min |
+| Phase 03.1-design-system-integration P01 | 12 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 03]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth
 - [Phase 03]: CarElement: Single motion.div with offsetPath/offsetDistance
 - [Styleguide — 2026-03-14]: Design system v2 finalized — Baloo 2 + DM Sans fonts, LEGO Red accent, depth via hard box-shadow on content blocks, depth via border-bottom on buttons, variant system (default/red/yellow), 14px badge size, tint-md opacity reduced for contrast
+- [Phase 03.1-01]: rgba() values in :root not @theme — Tailwind v4 @theme silently drops rgba color values; tints and depth shadows live in :root
+- [Phase 03.1-01]: Button exports className prop for composition by downstream components (SlideNavArrows, PresentationFooter)
+- [Phase 03.1-01]: border-b-4 active:border-b-2 + active:translate-y-0.5 for Button brick press effect via pure CSS active: pseudo-class
 
 ### Roadmap Evolution
 
@@ -90,6 +94,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T08:20:00Z
-Stopped at: Phase 3 complete. Phase 03.1 awaiting planning.
-Resume file: .planning/phases/03.1-design-system-integration-tailwind-tokens-ui-components-buttons-content-blocks-slide-chrome-claude-md-docs/03.1-CONTEXT.md
+Last session: 2026-03-14T08:33:25.229Z
+Stopped at: Completed 03.1-01-PLAN.md: Design tokens + Button component
+Resume file: None
