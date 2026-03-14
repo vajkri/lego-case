@@ -5,7 +5,63 @@
 @source not "./.serena/**";
 
 @theme {
-  /* LEGO design tokens deferred to Phase 4 — placeholders only */
-  --color-brand: oklch(0.7 0.2 85);
-  --font-display: 'Inter', sans-serif;
+  /* Fonts — CSS variables injected by next/font on <html> element */
+  --font-display: var(--font-baloo2), sans-serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+
+  /* Primary colors */
+  --color-lego-red: #E3000B;
+  --color-lego-red-dark: #A00008;
+  --color-lego-yellow: #F5CD2D;
+  --color-lego-yellow-dark: #D4A800;
+  --color-lego-blue: #0055BF;
+  --color-lego-green: #00A850;
+
+  /* Neutrals */
+  --color-lego-dark: #2C2C2C;
+  --color-lego-grey: #6D6E70;
+  --color-lego-grey-light: #A0A1A3;
+  --color-lego-grey-pale: #D4D4D8;
+  --color-lego-grey-wash: #F0EEE8;
+  --color-lego-cream: #FAF8F2;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* Border widths — informational tokens; components use explicit Tailwind values */
+  --border-thin: 1.5px;
+  --border-default: 3px;
+  --border-depth: 4px;
+}
+
+/* rgba values and depth shadows — NOT in @theme (rgba not supported in @theme color tokens) */
+:root {
+  /* Tints for variant system (used via style prop: var(--lego-red-tint)) */
+  --lego-red-tint: rgba(227,0,11, 0.08);
+  --lego-red-tint-md: rgba(227,0,11, 0.10);
+  --lego-yellow-tint: rgba(245,205,45, 0.12);
+  --lego-yellow-tint-md: rgba(245,205,45, 0.18);
+
+  /* Depth shadows — hard box-shadow plate effect (0 6px 0 0 = zero blur, 6px offset down) */
+  --depth-default: 0 6px 0 0 #D4D4D8;
+  --depth-red: 0 6px 0 0 rgba(227,0,11, 0.18);
+  --depth-yellow: 0 6px 0 0 rgba(245,205,45, 0.35);
+
+  /* Stud dot pattern — applied via .stud-pattern utility class */
+  --stud-pattern: radial-gradient(circle at 12px 12px, rgba(255,255,255,0.06) 6px, transparent 6px);
+}
+
+/* Stud dot pattern utility — apply to header bars only (not slide content area) */
+.stud-pattern {
+  background-image: var(--stud-pattern);
+  background-size: 32px 32px;
 }
