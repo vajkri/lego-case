@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "serve out",
+    "serena": "uvx --from git+https://github.com/oraios/serena serena start-mcp-server --transport streamable-http --port 56667 --context ide --project . --open-web-dashboard false",
     "lint": "next lint",
     "test": "vitest run"
   },
