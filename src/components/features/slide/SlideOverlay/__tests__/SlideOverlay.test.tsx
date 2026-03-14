@@ -78,11 +78,14 @@ describe('SlideOverlay', () => {
     expect(liveRegion?.textContent).toContain(stops[0].label)
   })
 
-  // A11Y-04 — close button with correct id exists
-  it('renders a close button that is the first focusable element', () => {
+  // A11Y-04 — close button exists, advance button gets initial focus
+  it('renders close button and advance button with correct ids for focus management', () => {
     renderWithProvider()
     const closeBtn = screen.getByRole('button', { name: /close/i })
     expect(closeBtn).toBeTruthy()
     expect(closeBtn.id).toBe('slide-close-btn')
+    const advanceBtn = screen.getByRole('button', { name: /next slide/i })
+    expect(advanceBtn).toBeTruthy()
+    expect(advanceBtn.id).toBe('slide-advance-btn')
   })
 })

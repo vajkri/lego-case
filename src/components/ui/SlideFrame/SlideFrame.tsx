@@ -2,9 +2,9 @@
 // Layout only: stud-pattern red header bar, grey-wash outer background, white inner card, nav arrow slots.
 // NOT 'use client' — no hooks here. Parent (SlideOverlay) is 'use client'.
 //
-// CRITICAL: The close button MUST keep id="slide-close-btn".
-// SlideOverlay uses FocusTrap with focusTrapOptions={{ initialFocus: '#slide-close-btn' }}.
-// Changing or removing this id will break keyboard focus management.
+// CRITICAL: The close button MUST keep id="slide-close-btn" — it remains a FocusTrap fallback target.
+// The advance arrow (id="slide-advance-btn") receives initial focus, but the close button id
+// must stay for focus-trap's tabbable element detection.
 
 import { Button } from '@/components/ui'
 

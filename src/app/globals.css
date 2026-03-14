@@ -1,8 +1,8 @@
 @import "tailwindcss";
-@source not "./.planning/**";
-@source not "./CLAUDE.md";
-@source not "./.claude/**";
-@source not "./.serena/**";
+@source not "../../.planning/**";
+@source not "../../CLAUDE.md";
+@source not "../../.claude/**";
+@source not "../../.serena/**";
 
 @theme {
   /* Fonts — CSS variables injected by next/font on <html> element */

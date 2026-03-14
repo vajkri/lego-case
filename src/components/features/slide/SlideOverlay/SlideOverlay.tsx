@@ -58,8 +58,8 @@ export function SlideOverlay() {
   )
 
   return (
-    // FocusTrap is preserved (A11Y-01). initialFocus targets id="slide-close-btn" on SlideFrame's close button.
-    <FocusTrap focusTrapOptions={{ initialFocus: '#slide-close-btn', returnFocusOnDeactivate: false }}>
+    // FocusTrap (A11Y-01). Initial focus on advance arrow — follows user intent (they just clicked "next" to get here).
+    <FocusTrap focusTrapOptions={{ initialFocus: '#slide-advance-btn', returnFocusOnDeactivate: false }}>
       <motion.div
         data-testid="slide-overlay"
         initial={{ opacity: 0, scale: 0.85 }}
@@ -88,6 +88,7 @@ export function SlideOverlay() {
           }
           rightArrow={
             <Button
+              id="slide-advance-btn"
               variant="red"
               size="icon"
               onClick={() => dispatch({ type: 'ADVANCE' })}
