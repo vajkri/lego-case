@@ -10,14 +10,28 @@ export const stopSummary: Stop = {
   labelPosition: 'above',
   slides: [
     {
-      heading: 'Summary',
-      lines: [
-        'This architecture enables scalable multi-team development',
-        'Rapid campaign iteration through a flexible component system',
-        'Privacy-first analytics compliant with COPPA and GDPR',
-        'Modern performance architecture for a global audience of children',
-        'Safe incremental migration from AngularJS with minimal operational risk',
-        'The result is a flexible, maintainable platform designed for engaging digital play experiences for children',
+      heading: 'What We Are Proposing',
+      blocks: [
+        {
+          type: 'bullet-list',
+          variant: 'yellow',
+          items: [
+            'Scalable multi-team development — Platform and Campaign teams ship independently inside a shared monorepo',
+            'Rapid campaign iteration — feature components owned locally, promoted to shared when needed, zero governance bottlenecks',
+            'Privacy-first analytics — anonymous-only event data, no PII, COPPA and GDPR-K compliant from day one',
+            'Modern performance architecture — SSR, Server Components, and image optimization for a global audience of children',
+            'Safe incremental migration — one route at a time, zero business disruption, AngularJS retires gracefully',
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'Questions?',
+      blocks: [
+        {
+          type: 'callout',
+          text: 'We are ready to walk through any part of the proposal in detail.',
+        },
       ],
     },
   ],

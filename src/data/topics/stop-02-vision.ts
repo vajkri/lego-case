@@ -10,34 +10,95 @@ export const stopVision: Stop = {
   labelPosition: 'above',
   slides: [
     {
-      heading: 'Frontend Architecture',
-      lines: [
-        'The platform will use a modular frontend architecture within a monorepo',
-        'Shared tooling and standards across all teams',
-        'Easy cross-team collaboration and simplified dependency management',
-        'Clear ownership boundaries with unified CI/CD pipeline',
-        'Monorepo enables sharing of UI components, utilities, and design tokens',
-        'Especially beneficial because only a small number of teams contribute frontend code',
+      heading: 'Why React + Next.js',
+      blocks: [
+        {
+          type: 'two-column-cards',
+          variant: 'default',
+          cards: [
+            {
+              title: 'SSR, SSG, and ISR Built In',
+              description: 'Next.js ships server-side rendering, static generation, and incremental regeneration out of the box — exactly what a globally distributed kids platform needs for fast first loads.',
+            },
+            {
+              title: 'App Router for Nested Layouts',
+              description: 'The App Router lets Platform and Campaign teams own their layouts independently. Shared chrome wraps feature routes without code coupling.',
+            },
+            {
+              title: 'React Ecosystem + TypeScript',
+              description: 'The largest frontend ecosystem on the planet — battle-tested libraries, rich tooling, first-class TypeScript support. Our teams hire for this stack.',
+            },
+            {
+              title: 'i18n + Image Optimization',
+              description: 'Built-in internationalization and automatic image optimization mean emerging market support is configuration, not custom engineering.',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'Experience-First Architecture',
+      blocks: [
+        {
+          type: 'bullet-list',
+          variant: 'yellow',
+          items: [
+            'Server Components render static content on the server — zero JavaScript sent to the browser for content that never changes',
+            'Client Components add interactivity only where the experience demands it — animations, games, drag interactions',
+            'The split is explicit at the code level: `use client` marks the boundary, not a config file',
+            'Low-end devices on slow networks get full content instantly; rich interactions layer on top progressively',
+          ],
+        },
+        {
+          type: 'callout',
+          text: 'We ship less JavaScript to the browser while keeping every interaction as playful as kids expect.',
+        },
       ],
     },
     {
       heading: 'Component Architecture',
-      lines: [
-        'Teams own their components locally first to avoid bottlenecks',
-        'Team builds component within their feature area',
-        'Component is documented in Storybook',
-        'If reused by multiple teams, it is promoted to a shared component',
-        'This ensures rapid iteration, minimal governance overhead, and organic growth of the design system',
+      blocks: [
+        {
+          type: 'numbered-steps',
+          variant: 'yellow',
+          steps: [
+            {
+              title: 'Build Locally First',
+              description: 'Teams own components within their feature area. No approval gates, no shared-component bottlenecks — move fast and ship.',
+            },
+            {
+              title: 'Document in Storybook',
+              description: 'Every component gets a story. Storybook is the single source of visual truth, searchable by any team, reviewable by design.',
+            },
+            {
+              title: 'Promote When Reused',
+              description: 'If a second team wants the same component, it moves to the shared layer. The design system grows organically from real usage.',
+            },
+          ],
+        },
       ],
     },
     {
       heading: 'Design System Strategy',
-      lines: [
-        'The design system should be lightweight, not restrictive',
-        'Shared layer contains design tokens: colors, spacing, typography',
-        'Core UI primitives include buttons, form elements, layout primitives, and base typography',
-        'Teams create feature-specific components such as avatar cards, activity widgets, quest progress UI, and story interaction panels',
-        'Widely reused feature components are promoted into the shared system',
+      blocks: [
+        {
+          type: 'two-column-cards',
+          variant: 'default',
+          cards: [
+            {
+              title: 'Shared Layer',
+              description: 'Design tokens (colors, spacing, typography), core UI primitives (buttons, form elements, layout). Owned by Platform Team. Stable and versioned.',
+            },
+            {
+              title: 'Feature Layer',
+              description: 'Team-specific components: avatar cards, quest progress UI, campaign widgets, story panels. Owned by the team that builds them.',
+            },
+          ],
+        },
+        {
+          type: 'callout',
+          text: 'Lightweight, not restrictive — teams move fast, the system grows organically.',
+        },
       ],
     },
   ],

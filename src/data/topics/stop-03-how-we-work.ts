@@ -11,51 +11,134 @@ export const stopHowWeWork: Stop = {
   slides: [
     {
       heading: 'Team Structure',
-      lines: [
-        'Two primary engineering teams: Platform Team and Content / Campaign Team',
-        'Platform Team owns the core application shell, routing, performance, infrastructure, shared libraries, CI/CD, and developer tooling',
-        'Content / Campaign Team owns campaigns, content pages, interactive experiences, and seasonal features',
-        'Safety and privacy stakeholders review all features involving user data, interaction mechanics, and community or social features',
+      blocks: [
+        {
+          type: 'entity-cards',
+          variant: 'yellow',
+          entities: [
+            {
+              initials: 'PT',
+              title: 'Platform Team',
+              description: 'Owns the core application shell, routing, performance budgets, shared libraries, CI/CD pipeline, developer tooling, and infrastructure.',
+            },
+            {
+              initials: 'CC',
+              title: 'Content / Campaign Team',
+              description: 'Owns campaigns, content pages, interactive experiences, and seasonal features. Ships fast within the platform boundaries.',
+            },
+            {
+              initials: 'SP',
+              title: 'Safety & Privacy',
+              description: 'Reviews all features involving user data, interaction mechanics, and community or social elements. Defines COPPA/GDPR-K requirements.',
+            },
+          ],
+        },
+        {
+          type: 'callout',
+          text: 'Additional teams (Localization, Accessibility, Game) join the monorepo as the platform scales — same tools, same standards.',
+        },
       ],
     },
     {
       heading: 'Storybook as Component Registry',
-      lines: [
-        'A single global Storybook instance serves as the component catalogue, documentation hub, and discovery tool',
-        'Teams can easily discover existing components to prevent duplication',
-        'Supports visual testing and improves collaboration between teams and designers',
-        'Suggested structure: Foundations, Shared Components, Platform Components, Campaign Components, Feature Components',
+      blocks: [
+        {
+          type: 'bullet-list',
+          variant: 'default',
+          items: [
+            'A single global Storybook instance is the component catalogue, documentation hub, and discovery tool for every team',
+            'Teams search before building — prevents duplication before it starts',
+            'Visual testing catches regressions without writing pixel-diff tests by hand',
+            'Designers review components directly in Storybook — no staging environment needed for visual sign-off',
+          ],
+        },
+        {
+          type: 'data-table',
+          variant: 'default',
+          headers: ['Category', 'Contents'],
+          rows: [
+            ['Foundations', 'Tokens, typography, color palette, spacing scale'],
+            ['Shared', 'Buttons, inputs, cards, layout primitives'],
+            ['Platform', 'App shell, navigation, route wrappers'],
+            ['Campaign', 'Seasonal banners, promo cards, feature flags'],
+            ['Feature', 'Team-specific components not yet promoted to shared'],
+          ],
+        },
       ],
     },
     {
-      heading: 'CI/CD Strategy',
-      lines: [
-        'Start with a single centralized CI/CD pipeline',
-        'Only two primary engineering teams makes simpler governance and easier integration testing viable',
-        'If build times grow too large, introduce a dependency-aware build system such as Turborepo',
-        'Turborepo runs tests only for affected modules, resulting in dramatically faster builds',
+      heading: 'CI/CD & Release Strategy',
+      blocks: [
+        {
+          type: 'numbered-steps',
+          variant: 'red',
+          steps: [
+            {
+              title: 'Start Centralized',
+              description: 'A single pipeline for two teams. Simpler governance, easier integration testing, one place to debug failures.',
+            },
+            {
+              title: 'Monitor Build Times',
+              description: 'Track pipeline duration as the codebase grows. Set a threshold — if median build time exceeds 10 minutes, it is time to act.',
+            },
+            {
+              title: 'Introduce Turborepo If Needed',
+              description: 'Turborepo adds dependency-aware task scheduling to the monorepo. Unchanged packages are cached and skipped automatically.',
+            },
+            {
+              title: 'Run Tests for Affected Modules Only',
+              description: 'With Turborepo, a change to the Campaign Team components triggers only Campaign and Shared tests — not the full suite.',
+            },
+          ],
+        },
       ],
     },
     {
       heading: 'Testing Strategy',
-      lines: [
-        'CI includes unit tests, integration tests, and selective end-to-end tests',
-        'Unit tests cover component rendering logic, props, interactions, and state changes',
-        'Integration tests cover navigation, interaction flows, and CMS data integration',
-        'End-to-end tests used sparingly for critical user journeys, authentication flows, and major feature areas',
-        'Goal: maintain fast pipelines while ensuring reliability',
+      blocks: [
+        {
+          type: 'data-table',
+          variant: 'default',
+          headers: ['Layer', 'Scope', 'Tools'],
+          rows: [
+            ['Unit', 'Component rendering, props, interactions, state changes', 'Vitest + Testing Library'],
+            ['Integration', 'Navigation flows, CMS data integration, route behavior', 'Vitest + MSW'],
+            ['E2E (selective)', 'Critical journeys, auth flows, major feature areas', 'Playwright'],
+          ],
+        },
+        {
+          type: 'callout',
+          text: 'Fast pipelines, high confidence — test what matters, skip what does not.',
+        },
       ],
     },
     {
       heading: 'Privacy-First Analytics',
-      lines: [
-        'The platform measures engagement while respecting child privacy',
-        'Core events tracked: session start, activity start, badge / reward unlock, progress milestones, return visits, and key interactions',
-        'Page view tracking limited to important top-level screens',
-        'Avoid tracking identifiable users — collect anonymous interaction data only',
-        'No persistent identifiers without consent; pre-login analytics track only aggregated event data',
-        'Recommended tooling: privacy-first platforms such as Plausible or an internal analytics pipeline',
-        'Requirements: IP anonymization, no PII, aggregated reporting',
+      blocks: [
+        {
+          type: 'bullet-list',
+          variant: 'red',
+          items: [
+            'Core events tracked: session start, activity start, badge unlock, progress milestones, return visits',
+            'Page view tracking limited to top-level screens only — not every internal navigation',
+            'No personally identifiable information collected at any point',
+            'No persistent identifiers without explicit consent — anonymous session IDs only',
+          ],
+        },
+        {
+          type: 'two-column-cards',
+          variant: 'default',
+          cards: [
+            {
+              title: 'Tooling',
+              description: 'Plausible Analytics or an internal event pipeline. Both support anonymous event collection with no third-party tracking scripts.',
+            },
+            {
+              title: 'Compliance',
+              description: 'IP anonymization on every request. No PII in any event payload. All reporting is aggregated — no individual user trails.',
+            },
+          ],
+        },
       ],
     },
   ],
