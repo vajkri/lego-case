@@ -153,4 +153,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 3.2 Stop marker redesign | 2/2 | Complete   | 2026-03-14 |
 | 3.3 Progress track redesign | 2/2 | Complete | 2026-03-14 |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
-| 4. Content and Polish | 0/2 | Not started | - |
+| 4. Content and Polish | 1/2 | In Progress|  |

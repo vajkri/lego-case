@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready for Phase 4
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-14T21:02:11.822Z"
+stopped_at: Completed 04-content-and-polish-01-PLAN.md
+last_updated: "2026-03-14T21:32:25.742Z"
 last_activity: "2026-03-14 — Phase 03.4 complete: full-bleed backgrounds, ambient animations, shadow system, car alignment"
 progress:
   total_phases: 8
   completed_phases: 5
-  total_plans: 23
-  completed_plans: 22
+  total_plans: 25
+  completed_plans: 23
   percent: 100
 ---
 
@@ -55,6 +55,7 @@ Progress: [██████████] 100% (7 of 8 phases complete; Phase 4
 | Phase 03.2-stop-marker-redesign P02 | 35min | 2 tasks | 10 files |
 | Phase 03.3-progress-track-redesign P01 | 4min | 2 tasks | 7 files |
 | Phase 03.3 P02 | 168 | 2 tasks | 4 files |
+| Phase 04-content-and-polish P01 | 6 | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,9 @@ Recent decisions affecting current work:
 - [Phase 03.4]: Ambient animations via SVG SMIL (not CSS) — native user units avoid viewBox scaling mismatch. prefers-reduced-motion disables all
 - [Phase 03.4]: Cloud wrapping: duplicate cloud at +1600 SVG units, animateTransform translates group by -1600, seamless infinite loop
 - [Phase 03.4]: Shadow system: hard flat shadows (2-3px offset, no blur, rgba 0.06-0.1) matching sun direction (upper-left), applied to trees/buildings/mountains/windmill/stops/car
+- [Phase 04-content-and-polish]: ContentBlock discriminated union (6 members) + switch dispatcher in SlideContent — Slide.lines replaced with Slide.blocks
+- [Phase 04-content-and-polish]: CalloutBox data shape: { type: 'callout', text: string } — no ReactNode in data files, keeps stop data files JSX-free
+- [Phase 04-content-and-polish]: BulletList heading is optional (heading?: string) — single-block slides omit block headings for cleaner slide layout
 
 ### Roadmap Evolution
 
@@ -132,6 +136,6 @@ None
 
 ## Session Continuity
 
-Last session: 2026-03-14T21:02:11.812Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-content-and-polish/04-CONTEXT.md
+Last session: 2026-03-14T21:32:25.739Z
+Stopped at: Completed 04-content-and-polish-01-PLAN.md
+Resume file: None
