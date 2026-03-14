@@ -101,8 +101,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 03.2-01-PLAN.md — Stop type extension with labelPosition + data files + test scaffolds
-- [ ] 03.2-02-PLAN.md — BrickMarker SVG component + StopNode rewrite + visual verification
+- [x] 03.2-01-PLAN.md — Stop type extension with labelPosition + data files + test scaffolds
+- [x] 03.2-02-PLAN.md — BrickMarker SVG component + StopNode rewrite + visual verification
 
 ### Phase 03.3: Progress track redesign - visual states for default, hover, current, visited (INSERTED)
 

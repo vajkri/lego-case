@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-11)
 
 ## Current Position
 
-Phase: 03.1 of 8 (Design System Integration)
-Plan: Not yet planned
-Status: Awaiting planning
-Last activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
+Phase: 03.2 of 8 (Stop Marker Redesign — complete)
+Plan: 02 complete — phase 03.2 done, next: 03.3
+Status: Ready for Phase 03.3
+Last activity: 2026-03-14 — Phase 03.2 complete: BrickMarker SVG, 5-state stop markers, 4 visual feedback rounds
 
-Progress: [████░░░░░░] 37%
+Progress: [████████░░] 95%
 
 ## Performance Metrics
 
