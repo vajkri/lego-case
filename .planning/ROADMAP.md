@@ -80,15 +80,17 @@ Plans:
 - [x] 03-04-PLAN.md — LEGO StopNode redesign (3 states) + CarElement motion path implementation
 - [x] 03-05-PLAN.md — MapCanvas wiring + MapProgressIndicator + stop coordinate update + human verification
 
-### Phase 03.1: Design system integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
+### Phase 03.1: Design System Integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal:** The full LEGO design system is defined as Tailwind v4 tokens, reusable UI primitives (Button, SlideFrame, 6 content blocks) are built and tested, existing slide and footer components consume the new primitives, and CLAUDE.md documents the design system for future phases.
+**Requirements**: DS-TOKENS, DS-FONTS, DS-BUTTON, DS-SLIDEFRAME, DS-CONTENTBLOCKS, DS-REFACTOR, DS-DOCS
 **Depends on:** Phase 3
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 03.1 to break down)
+- [ ] 03.1-01-PLAN.md — Design tokens + next/font + Button component
+- [ ] 03.1-02-PLAN.md — SlideFrame chrome wrapper + SlideOverlay/PresentationFooter refactors
+- [ ] 03.1-03-PLAN.md — 6 content block components + CLAUDE.md documentation
 
 ### Phase 03.2: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
 
@@ -140,7 +142,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 1. Foundation | 5/5 | Complete | 2026-03-12 |
 | 2. Navigation and Slides | 5/5 | Complete | 2026-03-12 |
 | 3. Map and Car Animation | 5/5 | Complete | 2026-03-14 |
-| 3.1 Design system integration | 0/TBD | Not started | - |
+| 3.1 Design system integration | 0/3 | Not started | - |
 | 3.2 Stop marker redesign | 0/TBD | Not started | - |
 | 3.3 Progress track redesign | 0/TBD | Not started | - |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
