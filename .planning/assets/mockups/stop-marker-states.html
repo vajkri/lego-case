@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Marker States — Build Progress Bricks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lego-yellow: #F5CD2D;
+    --lego-yellow-dark: #C4A000;
+    --lego-yellow-stud: #FFD93D;
+    --lego-red: #E3000B;
+    --lego-red-dark: #B8000A;
+    --lego-red-stud: #FF2A33;
+    --lego-blue: #0055BF;
+    --lego-blue-dark: #003F8F;
+    --lego-blue-stud: #3388DD;
+    --lego-green: #58CC3A;
+    --lego-green-dark: #3EA832;
+    --lego-green-deep: #00A850;
+    --lego-green-deep-dark: #008040;
+    --lego-green-deep-stud: #2BC866;
+    --lego-grey: #6D6E70;
+    --lego-grey-light: #A0A1A3;
+    --lego-grey-pale: #D4D4D8;
+    --lego-grey-pale-dark: #B5B5B9;
+    --lego-grey-pale-stud: #DCDCE0;
+    --lego-grey-plate: #B5B5B9;
+    --lego-grey-plate-dark: #9A9A9E;
+    --lego-cream: #FAF8F2;
+    --lego-dark: #2C2C2C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--lego-cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--lego-dark);
+    padding: 0 0 80px;
+  }
+
+  /* ── Page header ── */
+  .page-header {
+    background: var(--lego-red);
+    padding: 48px 40px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 12px 16px, rgba(255,255,255,0.06) 6px, transparent 6px);
+    background-size: 32px 32px;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 36px;
+    color: white;
+    position: relative;
+  }
+  .page-header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.82);
+    margin-top: 8px;
+    position: relative;
+    max-width: 760px;
+    line-height: 1.6;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 28px;
+    padding: 18px 40px;
+    background: white;
+    border-bottom: 2px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lego-grey);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .legend-dot.default { background: var(--lego-grey-pale); border: 2px solid var(--lego-grey-pale-dark); }
+  .legend-dot.hovered { background: var(--lego-grey-pale); border: 2px solid var(--lego-grey); box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+  .legend-dot.focused { background: var(--lego-grey-pale); border: 2px solid var(--lego-blue); box-shadow: 0 0 0 3px rgba(0,85,191,0.2); }
+  .legend-dot.active { background: var(--lego-yellow); border: 2px solid var(--lego-yellow-dark); }
+  .legend-dot.visited { background: var(--lego-green-deep); border: 2px solid var(--lego-green-deep-dark); }
+
+  /* ── Section ── */
+  .section {
+    padding: 48px 40px 56px;
+    border-bottom: 3px solid #E8E6E0;
+  }
+  .section:nth-child(even) { background: white; }
+  .section h2 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--lego-dark);
+    margin-bottom: 6px;
+  }
+  .section .subtitle {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-bottom: 32px;
+    line-height: 1.5;
+    max-width: 760px;
+  }
+  .section-tag {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 11px;
+    color: white;
+    background: var(--lego-green-deep);
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-tag.discuss { background: var(--lego-blue); }
+
+  /* ── Marker display strip ── */
+  .marker-strip {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap: 20px;
+    max-width: 1100px;
+    padding: 24px 20px 0;
+  }
+
+  .marker-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .marker-column.label-above {
+    flex-direction: column;
+  }
+  .marker-column.label-below {
+    flex-direction: column-reverse;
+  }
+
+  /* ── Marker wrapper (for transforms) ── */
+  .marker-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.25s ease;
+  }
+  .marker-wrap svg {
+    display: block;
+    overflow: visible;
+  }
+
+  /* State transforms */
+  .marker-wrap.hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
+  }
+  .marker-wrap.focus {
+    outline: 3px solid var(--lego-blue);
+    outline-offset: 4px;
+    border-radius: 4px;
+    transform: scale(1.08);
+  }
+  .marker-wrap.active {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 5px 12px rgba(0,0,0,0.22));
+  }
+
+  /* ── Labels ── */
+  .marker-label {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 3px 12px;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+  }
+  .marker-label.default { background: rgba(160,161,163,0.15); color: var(--lego-grey); }
+  .marker-label.hover { background: rgba(160,161,163,0.22); color: var(--lego-grey); font-weight: 700; }
+  .marker-label.focus { background: rgba(0,85,191,0.1); color: var(--lego-blue); font-weight: 700; }
+  .marker-label.active { background: var(--lego-yellow); color: var(--lego-dark); font-weight: 700; }
+  .marker-label.visited { background: rgba(0,168,80,0.12); color: var(--lego-green-deep); }
+
+  .state-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--lego-grey-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 6px;
+  }
+
+  /* ── Journey strip with road ── */
+  .journey-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    max-width: 1100px;
+    padding: 40px 50px 0;
+    position: relative;
+  }
+  .journey-strip::before {
+    content: '';
+    position: absolute;
+    bottom: 40px;
+    left: 70px;
+    right: 70px;
+    height: 8px;
+    background: #3B414E;
+    border-radius: 4px;
+    z-index: 0;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  }
+  .journey-strip::after {
+    content: '';
+    position: absolute;
+    bottom: 43px;
+    left: 72px;
+    right: 72px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #F0D640 0px, #F0D640 16px, transparent 16px, transparent 28px);
+    border-radius: 1px;
+    z-index: 0;
+  }
+  .journey-strip .marker-column {
+    z-index: 1;
+  }
+
+  /* ── Label positioning demo ── */
+  .positioning-grid {
+    display: flex;
+    gap: 64px;
+    flex-wrap: wrap;
+  }
+  .positioning-card {
+    border: 2px solid #E8E6E0;
+    border-radius: 12px;
+    padding: 28px 36px 24px;
+    background: white;
+    text-align: center;
+  }
+  .positioning-card h3 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--lego-dark);
+    margin-bottom: 4px;
+  }
+  .positioning-card .desc {
+    font-size: 13px;
+    color: var(--lego-grey);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* ── Spec table ── */
+  .spec-table {
+    width: 100%;
+    max-width: 700px;
+    border-collapse: collapse;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+  .spec-table th {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--lego-grey-pale);
+    color: var(--lego-dark);
+    border-bottom: 2px solid #ccc;
+  }
+  .spec-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+  .spec-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+  .spec-table code {
+    font-size: 12px;
+    background: rgba(0,0,0,0.05);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'DM Sans', monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Stop Marker States — Build Progress Bricks</h1>
+  <p>Visual reference for all 5 states across all 5 stops. Favicon-style SVG bricks with rounded-rect studs. Brick count grows per stop (1→5), height capped at 3 levels + baseplate. All states decided.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot default"></div> Default</div>
+  <div class="legend-item"><div class="legend-dot hovered"></div> Hovered</div>
+  <div class="legend-item"><div class="legend-dot focused"></div> Focused</div>
+  <div class="legend-item"><div class="legend-dot active"></div> Active</div>
+  <div class="legend-item"><div class="legend-dot visited"></div> Visited</div>
+</div>
+
+<div id="app"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// BRICK MARKER GENERATOR
+// Mirrors the favicon (icon.svg) proportions:
+//   brick 48w on 64-wide viewBox, studs 14×8 rx=5
+// Scaled to 48-wide marker SVGs.
+// ══════════════════════════════════════════════════════
+
+const STOP_LABELS = ['The Task', 'Goals', 'Architecture', 'Migration', 'Summary'];
+
+// Color palettes
+const C = {
+  grey:       { face: '#D4D4D8', shadow: '#B5B5B9', studFace: '#DCDCE0', studShadow: '#C0C0C4' },
+  red:        { face: '#E3000B', shadow: '#B8000A', studFace: '#FF2A33', studShadow: '#C50009' },
+  yellow:     { face: '#F5CD2D', shadow: '#C4A000', studFace: '#FFD93D', studShadow: '#D4AD00' },
+  blue:       { face: '#0055BF', shadow: '#003F8F', studFace: '#3388DD', studShadow: '#004AAA' },
+  green:      { face: '#00A850', shadow: '#008040', studFace: '#2BC866', studShadow: '#009048' },
+};
+
+const PLATE = {
+  grey:    { face: '#B5B5B9', shadow: '#9A9A9E' },
+  green:   { face: '#00A850', shadow: '#008040' },
+};
+
+// ── Brick layout per stop ──
+// Each stop defines which bricks exist at each level.
+// level1 = full-width, level2/3 = half-width pairs.
+// 'left'/'right'/'both' for half-width levels.
+const LAYOUTS = [
+  { level1: true, level2: null,   level3: null },    // Stop 0: 1 brick
+  { level1: true, level2: 'left', level3: null },    // Stop 1: 2 bricks
+  { level1: true, level2: 'both', level3: null },    // Stop 2: 3 bricks
+  { level1: true, level2: 'both', level3: 'left' },  // Stop 3: 4 bricks
+  { level1: true, level2: 'both', level3: 'both' },  // Stop 4: 5 bricks
+];
+
+// ── Color assignment for active state ──
+// Brick order: 1=full(L1), 2=halfL(L2), 3=halfR(L2), 4=halfL(L3), 5=halfR(L3)
+// Level 3 uses yellow + light green for variety on stops 4-5.
+const ACTIVE_COLORS = {
+  level1:     'red',
+  level2Left: 'yellow',
+  level2Right:'blue',
+  level3Left: 'red',          // red on blue (stop 4)
+  level3Right:'green',       // green on yellow (stop 5)
+};
+
+// ── SVG dimensions ──
+const VB_W = 48;
+const VB_H = 66;
+
+// Positions (from bottom of viewBox, y increases downward)
+const POS = {
+  plate:  { x: 2, y: 57, w: 44, h: 7, sy: 59 },
+  level1: { x: 4, y: 42, w: 40, h: 14, sy: 43 },  // full brick
+  level2: { y: 29, h: 13, sy: 30 },                 // half bricks
+  level3: { y: 16, h: 13, sy: 17 },                 // half bricks
+  halfL:  { x: 4, w: 20 },
+  halfR:  { x: 24, w: 20 },
+};
+
+// Stud dimensions — no border-radius, 80% of previous height (5→4, 6→5)
+const STUD = {
+  full: { w: 10, h: 4, rx: 0, shH: 5, shRx: 0 },   // on full brick (2 studs)
+  half: { w: 10, h: 4, rx: 0, shH: 5, shRx: 0 },    // on half brick (1 stud) — same size
+};
+
+// Stud positions — full-brick studs match half-brick stud spacing
+// Half bricks: left=x4 w20, right=x24 w20. Stud centered on each = x9, x29.
+// Full brick studs placed at same x positions for visual consistency.
+function studPos(brickX, brickW, brickY, isHalf) {
+  const s = isHalf ? STUD.half : STUD.full;
+  if (isHalf) {
+    // Single stud centered on half brick
+    const cx = brickX + (brickW - s.w) / 2;
+    return [{ x: cx, y: brickY - s.h, sy: brickY - s.shH + 1 }];
+  } else {
+    // Two studs — positioned to match where half-brick studs would sit
+    // Left half center: 4 + (20 - 10) / 2 = 9
+    // Right half center: 24 + (20 - 10) / 2 = 29
+    return [
+      { x: 9, y: brickY - s.h, sy: brickY - s.shH + 1 },
+      { x: 29, y: brickY - s.h, sy: brickY - s.shH + 1 },
+    ];
+  }
+}
+
+// ── SVG generation ──
+function createMarkerSVG(stopIndex, state) {
+  const layout = LAYOUTS[stopIndex];
+  const parts = [];
+
+  // Determine top level for stud placement
+  const topLevel = layout.level3 ? 3 : layout.level2 ? 2 : 1;
+
+  function getColor(level, side) {
+    if (state === 'active') {
+      if (level === 1) return C[ACTIVE_COLORS.level1];
+      if (level === 2 && side === 'left') return C[ACTIVE_COLORS.level2Left];
+      if (level === 2 && side === 'right') return C[ACTIVE_COLORS.level2Right];
+      if (level === 3 && side === 'left') return C[ACTIVE_COLORS.level3Left];
+      if (level === 3 && side === 'right') return C[ACTIVE_COLORS.level3Right];
+    }
+    if (state === 'visited') return C.green;
+    return C.grey; // default, hover, focus
+  }
+
+  function getPlateColor() {
+    if (state === 'active' || state === 'visited') return PLATE.green;
+    return PLATE.grey;
+  }
+
+  // Baseplate
+  const pc = getPlateColor();
+  parts.push(`<rect x="${POS.plate.x}" y="${POS.plate.sy}" width="${POS.plate.w}" height="${POS.plate.h}" rx="2.5" fill="${pc.shadow}"/>`);
+  parts.push(`<rect x="${POS.plate.x}" y="${POS.plate.y}" width="${POS.plate.w}" height="${POS.plate.h}" rx="2.5" fill="${pc.face}"/>`);
+
+  // Level 1 (full brick)
+  if (layout.level1) {
+    const c = getColor(1);
+    parts.push(`<rect x="${POS.level1.x}" y="${POS.level1.sy}" width="${POS.level1.w}" height="${POS.level1.h + 1}" rx="2" fill="${c.shadow}"/>`);
+    parts.push(`<rect x="${POS.level1.x}" y="${POS.level1.y}" width="${POS.level1.w}" height="${POS.level1.h}" rx="2" fill="${c.face}"/>`);
+    // Studs if this is the top level
+    if (topLevel === 1) {
+      const s = STUD.full;
+      const positions = studPos(POS.level1.x, POS.level1.w, POS.level1.y, false);
+      positions.forEach(p => {
+        parts.push(`<rect x="${p.x}" y="${p.sy}" width="${s.w}" height="${s.shH}" rx="${s.shRx}" fill="${c.studShadow}"/>`);
+        parts.push(`<rect x="${p.x}" y="${p.y}" width="${s.w}" height="${s.h}" rx="${s.rx}" fill="${c.studFace}"/>`);
+      });
+    }
+  }
+
+  // Level 2 (half bricks)
+  function drawHalf(level, side) {
+    const lp = level === 2 ? POS.level2 : POS.level3;
+    const sp = side === 'left' ? POS.halfL : POS.halfR;
+    const c = getColor(level, side);
+    parts.push(`<rect x="${sp.x}" y="${lp.sy}" width="${sp.w}" height="${lp.h + 1}" rx="2" fill="${c.shadow}"/>`);
+    parts.push(`<rect x="${sp.x}" y="${lp.y}" width="${sp.w}" height="${lp.h}" rx="2" fill="${c.face}"/>`);
+    // Studs if this is the top level
+    if (topLevel === level) {
+      const s = STUD.half;
+      const positions = studPos(sp.x, sp.w, lp.y, true);
+      positions.forEach(p => {
+        parts.push(`<rect x="${p.x}" y="${p.sy}" width="${s.w}" height="${s.shH}" rx="${s.shRx}" fill="${c.studShadow}"/>`);
+        parts.push(`<rect x="${p.x}" y="${p.y}" width="${s.w}" height="${s.h}" rx="${s.rx}" fill="${c.studFace}"/>`);
+      });
+    }
+  }
+
+  if (layout.level2 === 'left' || layout.level2 === 'both') drawHalf(2, 'left');
+  if (layout.level2 === 'both') drawHalf(2, 'right');
+  if (layout.level3 === 'left' || layout.level3 === 'both') drawHalf(3, 'left');
+  if (layout.level3 === 'both') drawHalf(3, 'right');
+
+  return `<svg width="${VB_W}" height="${VB_H}" viewBox="0 0 ${VB_W} ${VB_H}" fill="none">${parts.join('')}</svg>`;
+}
+
+// ── Section builders ──
+function markerColumn(stopIndex, state, showStopTag = true) {
+  const label = STOP_LABELS[stopIndex];
+  const wrapClass = `marker-wrap ${state}`;
+  const labelClass = `marker-label ${state}`;
+  const svg = createMarkerSVG(stopIndex, state);
+  return `
+    <div class="marker-column">
+      <span class="${labelClass}">${label}</span>
+      <div class="${wrapClass}">${svg}</div>
+      ${showStopTag ? `<span class="state-tag">Stop ${stopIndex + 1}</span>` : ''}
+    </div>`;
+}
+
+function stateSection(title, subtitle, state, tag = 'Decided') {
+  const tagClass = tag === 'Decided' ? 'section-tag' : 'section-tag discuss';
+  const markers = [0,1,2,3,4].map(i => markerColumn(i, state)).join('');
+  return `
+    <div class="section">
+      <div class="${tagClass}">${tag}</div>
+      <h2>${title}</h2>
+      <p class="subtitle">${subtitle}</p>
+      <div class="marker-strip">${markers}</div>
+    </div>`;
+}
+
+// ── Build the page ──
+const app = document.getElementById('app');
+let html = '';
+
+// 1. Default
+html += stateSection(
+  'Default State — All 5 Stops',
+  'Full-opacity grey bricks with grey baseplate. Studs on topmost bricks. No transforms or shadows. The neutral "not yet visited" state.',
+  'default'
+);
+
+// 2. Hover
+html += stateSection(
+  'Hover State — All 5 Stops',
+  'scale(1.1) + drop-shadow on mouse enter. Same grey colors — no color change. Physical "lift off the map" feel.',
+  'hover'
+);
+
+// 3. Focus
+html += stateSection(
+  'Focus State — All 5 Stops',
+  '3px solid blue outline with 4px offset + scale(1.08). WCAG-compliant keyboard focus indicator. Blue label.',
+  'focus'
+);
+
+// 4. Active
+html += stateSection(
+  'Active State — All 5 Stops',
+  'Favicon palette: red, yellow, blue bricks + green baseplate. Lifted (translateY -3px) with drop-shadow. Yellow label with bold text.',
+  'active'
+);
+
+// 5. Visited
+html += stateSection(
+  'Visited State — All 5 Stops',
+  'Uniform deep green bricks with green baseplate. Settled (no lift/shadow). "Been there, built that."',
+  'visited'
+);
+
+// 6. Full journey
+html += `
+  <div class="section">
+    <div class="section-tag">Reference</div>
+    <h2>Full Journey — Mid-Presentation Snapshot</h2>
+    <p class="subtitle">Presenter is at Stop 3. Stops 1–2 visited (green), Stop 3 active (colorful + lifted), Stops 4–5 default (grey).</p>
+    <div class="journey-strip">
+      ${markerColumn(0, 'visited', false)}
+      ${markerColumn(1, 'visited', false)}
+      ${markerColumn(2, 'active', false)}
+      ${markerColumn(3, 'default', false)}
+      ${markerColumn(4, 'default', false)}
+    </div>
+    <div style="max-width:1100px; padding: 0 50px;">
+      <div style="display:flex; justify-content:space-between; margin-top:4px; padding: 0 16px;">
+        <span class="state-tag">Visited</span>
+        <span class="state-tag">Visited</span>
+        <span class="state-tag" style="color:var(--lego-yellow-dark);">Active</span>
+        <span class="state-tag">Default</span>
+        <span class="state-tag">Default</span>
+      </div>
+    </div>
+  </div>`;
+
+// 7. Label positioning
+html += `
+  <div class="section">
+    <div class="section-tag discuss">To Discuss</div>
+    <h2>Label Positioning — Above vs Below</h2>
+    <p class="subtitle">Labels flip above or below the marker based on road slope at each stop. Prevents overlap with road or car element.</p>
+    <div class="positioning-grid">
+      <div class="positioning-card">
+        <h3>Label Above (road descends →)</h3>
+        <p class="desc">Road goes down past the stop, so label sits above to stay clear.</p>
+        <div style="display:flex; justify-content:center;">
+          <div class="marker-column label-above">
+            <span class="marker-label active">Architecture</span>
+            <div class="marker-wrap active">${createMarkerSVG(2, 'active')}</div>
+          </div>
+        </div>
+        <p class="desc" style="margin-top:12px; font-style:italic; color:var(--lego-grey-light);">↘ Road descends after this stop</p>
+      </div>
+      <div class="positioning-card">
+        <h3>Label Below (road ascends →)</h3>
+        <p class="desc">Road goes up past the stop, so label sits below to stay clear.</p>
+        <div style="display:flex; justify-content:center;">
+          <div class="marker-column label-below">
+            <span class="marker-label active" style="margin-top:8px;">Architecture</span>
+            <div class="marker-wrap active">${createMarkerSVG(2, 'active')}</div>
+          </div>
+        </div>
+        <p class="desc" style="margin-top:12px; font-style:italic; color:var(--lego-grey-light);">↗ Road ascends after this stop</p>
+      </div>
+    </div>
+  </div>`;
+
+// 8. Spec table
+html += `
+  <div class="section">
+    <div class="section-tag">Reference</div>
+    <h2>State Summary — Quick Reference</h2>
+    <p class="subtitle">Implementation spec for all 5 states.</p>
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Brick Colors</th>
+          <th>Baseplate</th>
+          <th>Transform</th>
+          <th>Label Style</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Default</strong></td>
+          <td>Grey <code>#D4D4D8</code></td>
+          <td>Grey <code>#B5B5B9</code></td>
+          <td>None</td>
+          <td>Grey bg, grey text</td>
+        </tr>
+        <tr>
+          <td><strong>Hover</strong></td>
+          <td>Grey (same)</td>
+          <td>Grey (same)</td>
+          <td><code>scale(1.1)</code> + drop-shadow</td>
+          <td>Grey bg (darker), bold</td>
+        </tr>
+        <tr>
+          <td><strong>Focus</strong></td>
+          <td>Grey (same)</td>
+          <td>Grey (same)</td>
+          <td><code>scale(1.08)</code> + 3px blue outline</td>
+          <td>Blue bg tint, blue text, bold</td>
+        </tr>
+        <tr>
+          <td><strong>Active</strong></td>
+          <td>Red / Yellow / Blue</td>
+          <td>Green <code>#58CC3A</code></td>
+          <td><code>translateY(-3px)</code> + drop-shadow</td>
+          <td>Yellow bg, dark text, bold</td>
+        </tr>
+        <tr>
+          <td><strong>Visited</strong></td>
+          <td>Green <code>#00A850</code></td>
+          <td>Green <code>#58CC3A</code></td>
+          <td>None</td>
+          <td>Green bg tint, green text</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
+
+app.innerHTML = html;
+</script>
+
+</body>
+</html>
