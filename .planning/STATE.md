@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 03.1 context gathered
-last_updated: "2026-03-14T08:10:48.243Z"
-last_activity: "2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold"
+stopped_at: "Phase 3 UAT complete (10/10 passed). Phase 03.1 next."
+last_updated: "2026-03-14T08:20:00Z"
+last_activity: "2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted"
 progress:
   total_phases: 8
-  completed_phases: 2
-  total_plans: 15
-  completed_plans: 14
-  percent: 40
+  completed_phases: 3
+  total_plans: 25
+  completed_plans: 15
+  percent: 37
 ---
 
 # Project State
@@ -21,46 +21,31 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** A compelling, accessible, story-driven presentation that makes the migration case so clearly — for both engineers and business stakeholders — that the path forward feels obvious.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Phase 03.1 — Design System Integration
 
 ## Current Position
 
-Phase: 1 of 4 (Foundation)
-Plan: 2 of 5 in current phase
-Status: In Progress
-Last activity: 2026-03-11 — Plan 01-02 complete: TypeScript type contracts (Stop, Slide, PresentationState, Action) + RED test scaffold
+Phase: 03.1 of 8 (Design System Integration)
+Plan: Not yet planned
+Status: Awaiting planning
+Last activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 
-Progress: [████░░░░░░] 40%
+Progress: [████░░░░░░] 37%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 3 min
-- Total execution time: 0.10 hours
+- Total plans completed: 15
+- Average duration: ~5 min
+- Total execution time: ~1.25 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 2 | 6 min | 3 min |
-
-**Recent Trend:**
-- Last 5 plans: 4 min (01-01), 2 min (01-02)
-- Trend: -
-
-*Updated after each plan completion*
-| Phase 01-foundation P03 | 2 | 2 tasks | 6 files |
-| Phase 01-foundation P04 | 5 | 2 tasks | 6 files |
-| Phase 01-foundation P05 | 8 | 2 tasks | 5 files |
-| Phase 02-navigation-and-slides P01 | 5 | 2 tasks | 2 files |
-| Phase 02-navigation-and-slides P03 | 3 | 2 tasks | 5 files |
-| Phase 02-navigation-and-slides P02 | 5 | 2 tasks | 3 files |
-| Phase 02-navigation-and-slides P04 | 4 | 2 tasks | 7 files |
-| Phase 02-navigation-and-slides P05 | 20 | 2 tasks | 7 files |
-| Phase 03-map-and-car-animation P01 | 4 | 2 tasks | 4 files |
-| Phase 03-map-and-car-animation P03 | 3 | 2 tasks | 3 files |
-| Phase 03-map-and-car-animation P04 | 4 | 2 tasks | 5 files |
+| 01-foundation | 5 | 22 min | 4 min |
+| 02-navigation-and-slides | 5 | 37 min | 7 min |
+| 03-map-and-car-animation | 5 | 15 min | 3 min |
 
 ## Accumulated Context
 
@@ -69,59 +54,42 @@ Progress: [████░░░░░░] 40%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- Scaffold (01-01): Used manual npm install instead of create-next-app because existing .planning/ and CLAUDE.md files in repo root caused create-next-app to abort
 - Scaffold (01-01): Tailwind v4 CSS-first — @import 'tailwindcss' in globals.css, no tailwind.config.js required
 - Scaffold (01-01): Motion 12 is the 'motion' npm package (not 'framer-motion' which is the v10 legacy package)
 - Scaffold (01-01): Static export via output: 'export' in next.config.ts — no server runtime required for presentation app
-- Architecture: State-driven navigation (never route-driven) to avoid AnimatePresence exit animation failure in App Router — URL stays at `/` throughout
-- Architecture: `SlideOverlay` mounted in root layout, rendered conditionally via `mode === 'slide'` state — not a route transition
-- Phase 2 constraint: Accessibility (focus trap, ARIA live regions, `prefers-reduced-motion`) must be built in Phase 2 alongside slides — not retrofitted in Phase 4
-- Phase 3 spike: Validate one city-to-city car animation before building all 14 nodes — changing animation approach across 14 nodes is expensive
-- [Phase 01-foundation]: Types (01-02): Stop/Slide/PresentationState/Action types locked in Phase 1 — frozen contracts for all downstream plans
-- [Phase 01-foundation]: Types (01-02): Test scaffold created in RED state — Plan 03 makes it GREEN by creating src/data/topics/index.ts
-- [Phase 01-foundation]: Data (01-03): All content sourced from proposal-content.md — no invented content; barrel stops[] is the sole import point
-- [Phase 01-foundation]: Stub reducer pattern: Phase 1 proves the wiring; Phase 2 replaces stubs with real transitions
-- [Phase 01-foundation]: MotionConfig inside PresentationProvider so entire app tree inherits reducedMotion=user automatically
-- [Phase 01-foundation]: KeyboardController is a null-rendering component mounted once in root layout — not a hook
-- [Phase 01-foundation]: Root layout stays a Server Component — PresentationProvider and KeyboardController form isolated client subtrees when imported
-- [Phase 01-foundation]: Dev indicator (stop/slide/mode overlay) retained in Phase 1 to verify reducer wiring; removed in Phase 4
-- [Phase 02-navigation-and-slides]: Wave 0 test scaffolds import from modules that do not exist yet — deliberate RED state for Nyquist compliance
-- [Phase 02-navigation-and-slides]: SlideOverlay tests use local mock PresentationContext to avoid circular deps and keep tests isolated
-- [Phase 02-navigation-and-slides]: StopNode (02-03): triggerRef capture pattern — store e.currentTarget before JUMP_TO_STOP dispatch for A11Y-04 focus return on overlay close
-- [Phase 02-navigation-and-slides]: Reducer (02-02): presentationReducer exported as named function for direct unit testing without React component mounting
-- [Phase 02-navigation-and-slides]: Reducer (02-02): No-op transitions return same state reference (not spread) to preserve referential equality for React.memo
-- [Phase 02-navigation-and-slides]: Reducer (02-02): triggerRef stored in PresentationContext value (not separate context) for minimal API surface
-- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Tests mock focus-trap-react and motion/react, wrap in real PresentationProvider — jsdom can't run real FocusTrap
-- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): Always renders when mounted; AnimatePresence conditional rendering handled by parent in 02-05
-- [Phase 02-navigation-and-slides]: SlideOverlay (02-04): LEGO placeholder is red rounded badge in SlideHeader; replaced with real asset in Phase 4
-- [Phase 02-navigation-and-slides]: OverlayPresence is a dedicated 'use client' wrapper so AnimatePresence can run while layout.tsx stays a Server Component
-- [Phase 02-navigation-and-slides]: Bug fix (02-05): Space key in KeyboardController returns early when target is button/link to prevent double-dispatch conflict with JUMP_TO_STOP
-- [Phase 02-navigation-and-slides]: Bug fix (02-05): map-mode ADVANCE opens current stop (state.currentStopIndex), not next — reducer was off-by-one
-- [Footer refactor — 2026-03-12]: PresentationFooter extracted from SlideOverlay and moved to root layout — footer is always visible on both map and slide views; SlideOverlay changed from `fixed inset-0` to `absolute inset-0` so it fills only the content area above the footer; MapCanvas changed from h-screen to h-full
-- [Phase 03-map-and-car-animation]: awaitingSlideOpen boolean in PresentationState distinguishes just-arrived from returned-from-overlay; ARRIVE action dispatched by CarElement; visitedStops starts as [0]
-- [Phase 03-map-and-car-animation]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth — prevents car animation drifting from visual road
-- [Phase 03-map-and-car-animation]: StopNode (03-04): MarkerPin SVG sub-component with variant prop for 3-state LEGO pin — circle head + pointed base
-- [Phase 03-map-and-car-animation]: CarElement (03-04): Single motion.div with offsetPath/offsetDistance — no nested motion.div to avoid test mock data-testid collision
+- Architecture: State-driven navigation (never route-driven) — URL stays at `/` throughout
+- Architecture: `SlideOverlay` mounted in root layout, rendered conditionally via `mode === 'slide'` state
+- [Phase 01]: Types locked in Phase 1 — frozen contracts for all downstream plans
+- [Phase 01]: Data sourced from proposal-content.md — no invented content; barrel stops[] is sole import point
+- [Phase 01]: MotionConfig inside PresentationProvider so entire app tree inherits reducedMotion=user
+- [Phase 01]: Root layout stays a Server Component — PresentationProvider and KeyboardController form isolated client subtrees
+- [Phase 02]: triggerRef capture pattern for A11Y-04 focus return on overlay close
+- [Phase 02]: OverlayPresence is a dedicated 'use client' wrapper so AnimatePresence can run while layout.tsx stays a Server Component
+- [Footer refactor — 2026-03-12]: PresentationFooter extracted to root layout — always visible on both map and slide views
+- [Phase 03]: awaitingSlideOpen boolean distinguishes just-arrived from returned-from-overlay; ARRIVE action dispatched by CarElement; visitedStops starts as [0]
+- [Phase 03]: RoadPath.tsx: ROAD_PATH_D and STOP_OFFSETS co-located as single source of truth
+- [Phase 03]: CarElement: Single motion.div with offsetPath/offsetDistance
+- [Styleguide — 2026-03-14]: Design system v2 finalized — Baloo 2 + DM Sans fonts, LEGO Red accent, depth via hard box-shadow on content blocks, depth via border-bottom on buttons, variant system (default/red/yellow), 14px badge size, tint-md opacity reduced for contrast
 
 ### Roadmap Evolution
 
-- Phase 03.1 inserted after Phase 3: Design system integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
-- Phase 03.2 inserted after Phase 3.1: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
-- Phase 03.3 inserted after Phase 3: Progress track redesign — visual states for default, hover, current, visited (URGENT)
-- Phase 03.4 inserted after Phase 3: Map visual redesign — Legoesque aesthetic proposal mockups and implementation (URGENT)
+- Phase 03.1 inserted after Phase 3: Design system integration — Tailwind tokens, UI components, CLAUDE.md docs (INSERTED)
+- Phase 03.2 inserted after Phase 3.1: Stop marker redesign — chosen proposal in StopNode.tsx with label positioning (INSERTED)
+- Phase 03.3 inserted after Phase 3: Progress track redesign — visual states for default, hover, current, visited (INSERTED)
+- Phase 03.4 inserted after Phase 3: Map visual redesign — Legoesque aesthetic proposal mockups and implementation (INSERTED)
 
 ### Pending Todos
 
-None yet.
+- [ ] Add favicon to project (2026-03-12) — area: ui
+- [ ] Add subtle animations to map elements (2026-03-12) — sun pulse, cloud drift, windmill rotation
+- [ ] Clean up shadows for map elements (2026-03-12) — road shadow removal, consistent depth treatment
 
 ### Blockers/Concerns
 
-- LEGO design tokens (colors, typeface) are not yet resolved — Figma Make design in progress; Phase 4 must use placeholders until tokens arrive
-- SVG path `d` attribute strings for car travel routes are not defined — must be designed as part of map SVG creation in Phase 3
-- AnimatePresence overlay-in-layout pattern needs early validation (MEDIUM confidence) — recommend proof-of-concept spike in Phase 2 before wiring all 14 slides
+- Phase 3.2 blocked on user choosing stop marker proposal (1–5 from stop-marker-proposals.html)
 
 ## Session Continuity
 
-Last session: 2026-03-14T08:10:48.239Z
-Stopped at: Phase 03.1 context gathered
+Last session: 2026-03-14T08:20:00Z
+Stopped at: Phase 3 complete. Phase 03.1 awaiting planning.
 Resume file: .planning/phases/03.1-design-system-integration-tailwind-tokens-ui-components-buttons-content-blocks-slide-chrome-claude-md-docs/03.1-CONTEXT.md

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Four phases deliver the presentation app. Phase 1 establishes the architectural skeleton — static export validation, typed data structure, and dev conventions — so every subsequent phase builds on correct foundations. Phase 2 wires the interactive core: keyboard navigation, slide overlays, and accessibility all in one coherent delivery (not retrofitted). Phase 3 adds the animated map and car travel that complete the LEGO world metaphor. Phase 4 authors all 14 topic slides to completion and applies LEGO visual design, producing a presentation that is polished enough to give at LEGO.
+Eight phases deliver the presentation app. Phases 1–3 established the architectural skeleton, interactive navigation, and animated map with car travel. Phases 3.1–3.4 (inserted) integrate the LEGO design system, redesign stop markers, progress track, and map visuals to match the styleguide. Phase 4 authors all 5 stop slides with final content using the pre-built component library.
 
 ## Phases
 
@@ -12,10 +12,14 @@ Four phases deliver the presentation app. Phase 1 establishes the architectural 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [x] **Phase 1: Foundation** - Next.js static export scaffold, typed topic data structure, and project conventions established (completed 2026-03-12)
-- [x] **Phase 2: Navigation and Slides** - Full keyboard navigation, slide overlay with AnimatePresence, and accessibility built in from day one (completed 2026-03-12)
-- [ ] **Phase 3: Map and Car Animation** - Inline SVG world map with 14 city nodes and animated car traveling between them
-- [ ] **Phase 4: Content and Polish** - All 14 topics fully authored, LEGO design tokens applied, production build verified
+- [x] **Phase 1: Foundation** - Next.js static export scaffold, typed data structure, project conventions (completed 2026-03-12)
+- [x] **Phase 2: Navigation and Slides** - Keyboard navigation, slide overlay with AnimatePresence, accessibility (completed 2026-03-12)
+- [x] **Phase 3: Map and Car Animation** - SVG world map with 5 stop nodes and animated LEGO car (completed 2026-03-14)
+- [ ] **Phase 3.1: Design System Integration** - Tailwind tokens, UI components, CLAUDE.md docs (INSERTED)
+- [ ] **Phase 3.2: Stop Marker Redesign** - Chosen proposal in StopNode.tsx with label positioning (INSERTED)
+- [ ] **Phase 3.3: Progress Track Redesign** - Visual states for default, hover, current, visited (INSERTED)
+- [ ] **Phase 3.4: Map Visual Redesign** - Legoesque aesthetic proposal mockups and implementation (INSERTED)
+- [ ] **Phase 4: Content and Polish** - All 5 stops fully authored, production build verified
 
 ## Phase Details
 
@@ -33,10 +37,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Project scaffold: Next.js static export, Tailwind v4, Motion, Zustand, Vitest
-- [ ] 01-02-PLAN.md — TypeScript types and data layer test scaffold
-- [ ] 01-03-PLAN.md — Author all 5 stop data files from proposal-content.md
-- [ ] 01-04-PLAN.md — PresentationProvider, KeyboardController, and provider unit tests
-- [ ] 01-05-PLAN.md — Root layout wiring, MapCanvas, human verification
+- [x] 01-02-PLAN.md — TypeScript types and data layer test scaffold
+- [x] 01-03-PLAN.md — Author all 5 stop data files from proposal-content.md
+- [x] 01-04-PLAN.md — PresentationProvider, KeyboardController, and provider unit tests
+- [x] 01-05-PLAN.md — Root layout wiring, MapCanvas, human verification
 
 ### Phase 2: Navigation and Slides
 **Goal**: A presenter can navigate through all 5 stops using only the keyboard, see each stop's slides in a full-screen overlay, step through sub-slides, and return to the map — with accessibility correct from the start.
@@ -51,11 +55,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Wave 0: Reducer and SlideOverlay test scaffolds (RED state)
-- [ ] 02-02-PLAN.md — Real reducer implementation + JUMP_TO_STOP action + triggerRef in context
-- [ ] 02-03-PLAN.md — StopNode wiring: JUMP_TO_STOP dispatch + triggerRef capture
-- [ ] 02-04-PLAN.md — SlideOverlay component tree with focus trap and ARIA live region
-- [ ] 02-05-PLAN.md — OverlayPresence layout wiring + human verification
+- [x] 02-01-PLAN.md — Wave 0: Reducer and SlideOverlay test scaffolds (RED state)
+- [x] 02-02-PLAN.md — Real reducer implementation + JUMP_TO_STOP action + triggerRef in context
+- [x] 02-03-PLAN.md — StopNode wiring: JUMP_TO_STOP dispatch + triggerRef capture
+- [x] 02-04-PLAN.md — SlideOverlay component tree with focus trap and ARIA live region
+- [x] 02-05-PLAN.md — OverlayPresence layout wiring + human verification
 
 ### Phase 3: Map and Car Animation
 **Goal**: The LEGO world map is visible as the root view with all 5 named stop nodes, and the red LEGO car travels smoothly between stops on the GPU compositor thread without dropped frames.
@@ -67,20 +71,21 @@ Plans:
   3. Stops the presenter has already visited display a visually distinct state from unvisited stops, and a progress indicator shows the current position in the 5-stop journey
   4. Car travel animation runs at 60fps on a standard laptop — no visible jank during stop-to-stop transitions — verified by watching Chrome DevTools Performance panel during travel
 **Plans**: 5 plans
+**UAT**: 10/10 passed, 0 issues
 
 Plans:
-- [ ] 03-01-PLAN.md — State machine extension: isCarTraveling + awaitingSlideOpen + ARRIVE action + reducer tests
-- [ ] 03-02-PLAN.md — Wave 0 test scaffolds: StopNode.test.tsx + CarElement.test.tsx (RED state)
-- [ ] 03-03-PLAN.md — Illustrated SVG world map: MapSvg + RoadPath constants
-- [ ] 03-04-PLAN.md — LEGO StopNode redesign (3 states) + CarElement motion path implementation
-- [ ] 03-05-PLAN.md — MapCanvas wiring + MapProgressIndicator + stop coordinate update + human verification
+- [x] 03-01-PLAN.md — State machine extension: isCarTraveling + awaitingSlideOpen + ARRIVE action + reducer tests
+- [x] 03-02-PLAN.md — Wave 0 test scaffolds: StopNode.test.tsx + CarElement.test.tsx (RED state)
+- [x] 03-03-PLAN.md — Illustrated SVG world map: MapSvg + RoadPath constants
+- [x] 03-04-PLAN.md — LEGO StopNode redesign (3 states) + CarElement motion path implementation
+- [x] 03-05-PLAN.md — MapCanvas wiring + MapProgressIndicator + stop coordinate update + human verification
 
 ### Phase 03.1: Design system integration — Tailwind tokens, UI components (buttons, content blocks, slide chrome), CLAUDE.md docs (INSERTED)
 
 **Goal:** [Urgent work - to be planned]
 **Requirements**: TBD
 **Depends on:** Phase 3
-**Plans:** 4/5 plans complete
+**Plans:** 0 plans
 
 Plans:
 - [ ] TBD (run /gsd:plan-phase 03.1 to break down)
@@ -134,9 +139,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-03-12 |
 | 2. Navigation and Slides | 5/5 | Complete | 2026-03-12 |
-| 3. Map and Car Animation | 4/5 | In Progress | |
-| 03.1 Design system integration | 0/TBD | Not started | - |
-| 03.2 Stop marker redesign | 0/TBD | Not started | - |
-| 03.3 Progress track redesign | 0/TBD | Not started | - |
-| 03.4 Map visual redesign (Legoesque) | 0/TBD | Not started | - |
+| 3. Map and Car Animation | 5/5 | Complete | 2026-03-14 |
+| 3.1 Design system integration | 0/TBD | Not started | - |
+| 3.2 Stop marker redesign | 0/TBD | Not started | - |
+| 3.3 Progress track redesign | 0/TBD | Not started | - |
+| 3.4 Map visual redesign | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |
