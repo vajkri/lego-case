@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Next.js static export scaffold, typed data structure, project conventions (completed 2026-03-12)
 - [x] **Phase 2: Navigation and Slides** - Keyboard navigation, slide overlay with AnimatePresence, accessibility (completed 2026-03-12)
 - [x] **Phase 3: Map and Car Animation** - SVG world map with 5 stop nodes and animated LEGO car (completed 2026-03-14)
-- [ ] **Phase 3.1: Design System Integration** - Tailwind tokens, UI components, CLAUDE.md docs (INSERTED)
+- [x] **Phase 3.1: Design System Integration** - Tailwind tokens, UI components, CLAUDE.md docs (INSERTED) (completed 2026-03-14)
 - [ ] **Phase 3.2: Stop Marker Redesign** - Chosen proposal in StopNode.tsx with label positioning (INSERTED)
 - [ ] **Phase 3.3: Progress Track Redesign** - Visual states for default, hover, current, visited (INSERTED)
 - [ ] **Phase 3.4: Map Visual Redesign** - Legoesque aesthetic proposal mockups and implementation (INSERTED)
@@ -88,10 +88,10 @@ Plans:
 **Plans:** 4/4 plans complete
 
 Plans:
-- [ ] 03.1-01-PLAN.md — Design tokens + next/font + Button component
-- [ ] 03.1-02-PLAN.md — SlideFrame chrome wrapper + SlideOverlay/PresentationFooter refactors
-- [ ] 03.1-03-PLAN.md — 6 content block components + CLAUDE.md documentation
-- [ ] 03.1-04-PLAN.md — Gap closure: SlideOverlay nav arrows use Button component (DS-REFACTOR)
+- [x] 03.1-01-PLAN.md — Design tokens + next/font + Button component
+- [x] 03.1-02-PLAN.md — SlideFrame chrome wrapper + SlideOverlay/PresentationFooter refactors
+- [x] 03.1-03-PLAN.md — 6 content block components + CLAUDE.md documentation
+- [x] 03.1-04-PLAN.md — Gap closure: SlideOverlay nav arrows use Button component (DS-REFACTOR)
 
 ### Phase 03.2: Stop marker redesign — implement chosen proposal in StopNode.tsx with label-above/below positioning (INSERTED)
 
@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 1. Foundation | 5/5 | Complete | 2026-03-12 |
 | 2. Navigation and Slides | 5/5 | Complete | 2026-03-12 |
 | 3. Map and Car Animation | 5/5 | Complete | 2026-03-14 |
-| 3.1 Design system integration | 0/4 | Not started | - |
+| 3.1 Design system integration | 4/4 | Complete | 2026-03-14 |
 | 3.2 Stop marker redesign | 0/TBD | Not started | - |
 | 3.3 Progress track redesign | 0/TBD | Not started | - |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
