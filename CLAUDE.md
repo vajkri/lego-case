@@ -64,6 +64,7 @@ All tokens are defined in `src/app/globals.css`.
 - **Radius utilities:** `rounded-sm` (6px), `rounded-md` (10px), `rounded-lg` (12px), `rounded-xl` (16px), `rounded-pill` (999px).
 - **Shadow utilities:** `shadow-sm`, `shadow-md`, `shadow-lg`.
 - **rgba-based values** (tints, depth shadows) are plain CSS custom properties in `:root`, NOT in `@theme`. Tailwind v4 silently drops rgba values from `@theme`. Reference via `style={{ background: 'var(--lego-red-tint)' }}` or the arbitrary-value syntax `[background:var(--lego-red-tint)]`.
+- **Container tokens** in `:root`: `--container-width`, `--container-max-width`, `--container-padding`. Used by `.section-container` utility in `@layer components`.
 
 Available `:root` variables:
 - `--lego-red-tint` / `--lego-red-tint-md` — rgba red background tints
@@ -74,7 +75,7 @@ Available `:root` variables:
 
 All components importable from `@/components/ui`.
 
-- **`Button`** — 3 variants (`yellow` / `red` / `grey`), 2 sizes (`icon` 48x48 / `label` h-48). Has brick-depth press effect via `border-b-4 active:border-b-2 active:translate-y-0.5`. Accepts `className` prop for composition.
+- **`Button`** — 4 variants (`yellow` / `red` / `grey` / `ghost`), 2 sizes (`icon` 48x48 / `label` h-48). Brick-depth press on yellow/red/grey; ghost is transparent with `hover:bg-white/20`. Accepts `className`, `id` props for composition.
 - **`SlideFrame`** — Chrome wrapper for slides. Props: `onClose`, `leftArrow`, `rightArrow`, `children`, `stopIndex`, `stopLabel`, `subSlideTotal`, `subSlideCurrent`. Renders stud-pattern header bar + grey-wash outer + white inner card.
 - **`StopBadge`** — Red pill showing "STOP N . LABEL". Props: `stopIndex` (0-based), `stopLabel`.
 - **`SubSlideProgress`** — Dot row for sub-slide navigation. Props: `total`, `current` (0-based). Decorative — `aria-hidden="true"`.
