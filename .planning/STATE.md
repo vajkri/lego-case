@@ -75,7 +75,7 @@ Recent decisions affecting current work:
 - [Phase 03]: CarElement: Single motion.div with offsetPath/offsetDistance
 - [Styleguide — 2026-03-14]: Design system v2 finalized — Baloo 2 + DM Sans fonts, LEGO Red accent, depth via hard box-shadow on content blocks, depth via border-bottom on buttons, variant system (default/red/yellow), 14px badge size, tint-md opacity reduced for contrast
 - [Phase 03.1-01]: rgba() values in :root not @theme — Tailwind v4 @theme silently drops rgba color values; tints and depth shadows live in :root
-- [Phase 03.1-01]: Button exports className prop for composition by downstream components (SlideNavArrows, PresentationFooter)
+- [Phase 03.1-01]: Button exports className prop for composition by downstream components (PresentationFooter, etc.)
 - [Phase 03.1-01]: border-b-4 active:border-b-2 + active:translate-y-0.5 for Button brick press effect via pure CSS active: pseudo-class
 - [Phase 03.1-03]: variantStyleMap uses inline style prop (not Tailwind classes) for rgba-based variant colors — Tailwind v4 cannot represent rgba values as tokens
 - [Phase 03.1-03]: EntityCards defaults to yellow variant (yellow = primary action color per color hierarchy)
