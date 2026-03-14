@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favicon Proposals — LEGO Migration Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lego-yellow: #F5CD2D;
+    --lego-yellow-dark: #D4A800;
+    --lego-red: #E3000B;
+    --lego-red-dark: #B8000A;
+    --lego-blue: #0055BF;
+    --lego-green: #00A850;
+    --lego-green-bright: #58CC3A;
+    --lego-grey: #6D6E70;
+    --lego-grey-light: #A0A1A3;
+    --lego-grey-pale: #D4D4D8;
+    --lego-cream: #FAF8F2;
+    --lego-dark: #2C2C2C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--lego-cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--lego-dark);
+    padding: 0 0 80px;
+    overflow-x: hidden;
+  }
+
+  .page-header {
+    background: var(--lego-red);
+    padding: 48px 40px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(255,255,255,0.06) 6px, transparent 6px);
+    background-size: 32px 32px;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 40px;
+    color: white;
+    position: relative;
+  }
+  .page-header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.82);
+    margin-top: 8px;
+    position: relative;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  .proposal {
+    padding: 48px 40px 56px;
+    border-bottom: 3px solid #E8E6E0;
+    position: relative;
+  }
+  .proposal:nth-child(odd) { background: white; }
+  .proposal-number {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 14px;
+    color: white;
+    background: var(--lego-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .proposal h2 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--lego-dark);
+    margin-bottom: 4px;
+  }
+  .proposal .subtitle {
+    font-size: 14px;
+    color: var(--lego-grey);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    max-width: 700px;
+  }
+  .proposal .narrative {
+    font-size: 13px;
+    color: var(--lego-blue);
+    font-style: italic;
+    margin-bottom: 32px;
+    padding: 10px 16px;
+    background: rgba(0,85,191,0.05);
+    border-left: 3px solid var(--lego-blue);
+    border-radius: 0 6px 6px 0;
+    max-width: 700px;
+  }
+
+  /* ─── Size grid ─── */
+  .row-label {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--lego-grey-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    margin-top: 28px;
+  }
+  .row-label:first-of-type { margin-top: 0; }
+
+  .size-row {
+    display: flex;
+    align-items: end;
+    gap: 36px;
+    padding: 20px 28px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .size-row.on-light {
+    background: white;
+    border: 1.5px solid #E8E6E0;
+  }
+  .size-row.on-dark {
+    background: #1E1E22;
+    border: 1.5px solid #333;
+  }
+  .size-row.on-mid {
+    background: #6D6E70;
+    border: 1.5px solid #888;
+  }
+
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .size-item .dim {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--lego-grey-light);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .on-dark .size-item .dim { color: #666; }
+  .on-mid .size-item .dim { color: rgba(255,255,255,0.45); }
+
+  .size-item svg { display: block; }
+
+  /* ─── Browser tab mockup ─── */
+  .browser-mock {
+    margin-top: 28px;
+    max-width: 520px;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    border: 1.5px solid #ccc;
+    border-bottom: none;
+  }
+  .browser-titlebar {
+    background: #DEE1E6;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .browser-dots {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .browser-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .browser-dots span:nth-child(1) { background: #FF6058; }
+  .browser-dots span:nth-child(2) { background: #FFC02F; }
+  .browser-dots span:nth-child(3) { background: #27CA40; }
+
+  .browser-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 5px 14px 5px 10px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lego-dark);
+    white-space: nowrap;
+  }
+  .browser-tab svg { flex-shrink: 0; }
+  .browser-tab-inactive {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.04);
+    padding: 5px 14px 5px 10px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+  }
+  .browser-body {
+    background: white;
+    height: 48px;
+    border: 1.5px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    max-width: 520px;
+  }
+
+  /* ─── Reference box ─── */
+  .ref-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+    margin-top: 28px;
+    padding: 28px 32px;
+    background: white;
+    border: 1.5px solid #E8E6E0;
+    border-radius: 10px;
+    max-width: 700px;
+  }
+  .ref-box svg { flex-shrink: 0; }
+  .ref-notes {
+    font-size: 13px;
+    color: var(--lego-grey);
+    line-height: 1.7;
+  }
+  .ref-notes strong { color: var(--lego-dark); }
+  .ref-notes ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+
+  /* ─── Side-by-side comparison ─── */
+  .comparison {
+    padding: 48px 40px;
+    background: white;
+    border-bottom: 3px solid #E8E6E0;
+  }
+  .comparison h2 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 600px;
+  }
+  .compare-card {
+    border: 2px solid #E8E6E0;
+    border-radius: 12px;
+    padding: 28px 20px 20px;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .compare-card:hover {
+    border-color: var(--lego-yellow);
+    box-shadow: 0 4px 16px rgba(245,205,45,0.2);
+  }
+  .compare-card h3 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-bottom: 2px;
+  }
+  .compare-card p {
+    font-size: 12px;
+    color: var(--lego-grey);
+    line-height: 1.5;
+  }
+
+  /* ─── Notes ─── */
+  .notes {
+    padding: 40px;
+    max-width: 640px;
+  }
+  .notes h3 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .notes ul {
+    padding-left: 20px;
+    color: var(--lego-grey);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ Hidden SVG definitions ═══ -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- PROPOSAL 1: Mini-bricks -->
+  <symbol id="favicon-brick" viewBox="0 0 64 64">
+    <!-- Green baseplate -->
+    <rect x="4" y="54" width="56" height="9" rx="2.5" fill="#3EA832"/>
+    <rect x="4" y="52" width="56" height="8" rx="2.5" fill="#58CC3A"/>
+    <!-- Red brick (bottom) -->
+    <rect x="8" y="35" width="48" height="19" rx="2" fill="#B8000A"/>
+    <rect x="8" y="34" width="48" height="18" rx="2" fill="#E3000B"/>
+    <!-- Yellow brick (top) -->
+    <rect x="8" y="15" width="48" height="21" rx="2" fill="#C4A000"/>
+    <rect x="8" y="14" width="48" height="20" rx="2" fill="#F5CD2D"/>
+    <!-- Studs on yellow brick -->
+    <rect x="14" y="7" width="14" height="9" rx="5.5" fill="#C4A000"/>
+    <rect x="14" y="6" width="14" height="8" rx="5" fill="#FFD93D"/>
+    <rect x="36" y="7" width="14" height="9" rx="5.5" fill="#C4A000"/>
+    <rect x="36" y="6" width="14" height="8" rx="5" fill="#FFD93D"/>
+  </symbol>
+
+  <!-- PROPOSAL 2: Engineer head -->
+  <symbol id="favicon-head" viewBox="0 0 64 64">
+    <!-- Head body -->
+    <rect x="8" y="24" width="48" height="38" rx="12" fill="#F5CD2D"/>
+    <!-- Hard hat dome -->
+    <rect x="10" y="2" width="44" height="24" rx="10" fill="#E3000B"/>
+    <!-- Hard hat brim -->
+    <rect x="2" y="19" width="60" height="9" rx="3.5" fill="#E3000B"/>
+    <!-- Brim shadow -->
+    <rect x="6" y="26" width="52" height="2" rx="1" fill="rgba(0,0,0,0.08)"/>
+    <!-- Hat highlight -->
+    <rect x="20" y="7" width="24" height="3" rx="1.5" fill="rgba(255,255,255,0.18)"/>
+    <!-- Eyes -->
+    <circle cx="24" cy="40" r="3.5" fill="#2C2C2C"/>
+    <circle cx="40" cy="40" r="3.5" fill="#2C2C2C"/>
+    <!-- Eye highlights -->
+    <circle cx="25.2" cy="39" r="1" fill="rgba(255,255,255,0.6)"/>
+    <circle cx="41.2" cy="39" r="1" fill="rgba(255,255,255,0.6)"/>
+    <!-- Confident smile -->
+    <path d="M 22,52 Q 32,58 42,52" stroke="#2C2C2C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </symbol>
+
+</svg>
+
+<!-- ═══ Page header ═══ -->
+<div class="page-header">
+  <h1>Favicon Proposals</h1>
+  <p>Two favicon designs for the LEGO Migration Proposal deck. Both draw from existing stop marker designs — Build Progress Bricks and Minifig Journey Heads — simplified for 16&times;16 to 64&times;64 pixel rendering.</p>
+</div>
+
+<!-- ═══ PROPOSAL 1: Mini-bricks ═══ -->
+<div class="proposal">
+  <div class="proposal-number">1</div>
+  <h2>Mini-bricks</h2>
+  <p class="subtitle">Two stacked LEGO bricks with studs on a green baseplate — the act of building, frozen in icon form. Yellow on red mirrors the active stop marker palette. Instantly reads as "LEGO" at any size.</p>
+  <div class="narrative">Inspired by: Build Progress Bricks stop marker (#2) — "Each stop adds to the build. Brick by brick."</div>
+
+  <div class="row-label">On light</div>
+  <div class="size-row on-light">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-brick"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-brick"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-brick"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-brick"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <div class="row-label">On dark</div>
+  <div class="size-row on-dark">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-brick"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-brick"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-brick"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-brick"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <div class="row-label">On grey</div>
+  <div class="size-row on-mid">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-brick"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-brick"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-brick"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-brick"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <!-- Browser tab mockup -->
+  <div class="row-label">In browser tab</div>
+  <div class="browser-mock">
+    <div class="browser-titlebar">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="browser-tab">
+        <svg width="16" height="16"><use href="#favicon-brick"/></svg>
+        LEGO Migration Proposal
+      </div>
+      <div class="browser-tab-inactive">New Tab</div>
+    </div>
+  </div>
+  <div class="browser-body"></div>
+
+  <!-- Large reference -->
+  <div class="ref-box">
+    <svg width="128" height="128" class="ref-svg"><use href="#favicon-brick"/></svg>
+    <div class="ref-notes">
+      <strong>Design notes</strong>
+      <ul>
+        <li>Two-brick stack: yellow top (#F5CD2D) + red bottom (#E3000B) — same palette as active stop markers</li>
+        <li>Green baseplate (#58CC3A) grounds the composition and adds a third recognizable LEGO element</li>
+        <li>Studs on the top brick are the key recognition cue — they survive even at 16px as small bumps</li>
+        <li>Each element has a 1–2px darker offset underneath for subtle depth, matching the brick aesthetic of the stop markers</li>
+        <li>No outline needed — the multicolor silhouette is distinctive on any background</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROPOSAL 2: Engineer head ═══ -->
+<div class="proposal">
+  <div class="proposal-number">2</div>
+  <h2>Engineer Head</h2>
+  <p class="subtitle">A LEGO minifig head wearing a red hard hat — the builder presenting the migration plan. Friendly and confident expression. The yellow-and-red combination is immediately recognizable as LEGO even at tiny sizes.</p>
+  <div class="narrative">Inspired by: Minifig Journey Heads stop marker (#4) — "You're the minifig on this journey." Here, it's the engineer guiding the way.</div>
+
+  <div class="row-label">On light</div>
+  <div class="size-row on-light">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-head"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-head"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-head"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-head"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <div class="row-label">On dark</div>
+  <div class="size-row on-dark">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-head"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-head"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-head"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-head"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <div class="row-label">On grey</div>
+  <div class="size-row on-mid">
+    <div class="size-item"><svg width="16" height="16"><use href="#favicon-head"/></svg><span class="dim">16</span></div>
+    <div class="size-item"><svg width="32" height="32"><use href="#favicon-head"/></svg><span class="dim">32</span></div>
+    <div class="size-item"><svg width="48" height="48"><use href="#favicon-head"/></svg><span class="dim">48</span></div>
+    <div class="size-item"><svg width="64" height="64"><use href="#favicon-head"/></svg><span class="dim">64</span></div>
+  </div>
+
+  <!-- Browser tab mockup -->
+  <div class="row-label">In browser tab</div>
+  <div class="browser-mock">
+    <div class="browser-titlebar">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="browser-tab">
+        <svg width="16" height="16"><use href="#favicon-head"/></svg>
+        LEGO Migration Proposal
+      </div>
+      <div class="browser-tab-inactive">New Tab</div>
+    </div>
+  </div>
+  <div class="browser-body"></div>
+
+  <!-- Large reference -->
+  <div class="ref-box">
+    <svg width="128" height="128" class="ref-svg"><use href="#favicon-head"/></svg>
+    <div class="ref-notes">
+      <strong>Design notes</strong>
+      <ul>
+        <li>Classic minifig head (#F5CD2D) with red hard hat (#E3000B) — signals "engineer" / "builder" without complex detail</li>
+        <li>Hard hat = dome + brim, only two shapes — stays readable at 16px as a red blob on a yellow blob</li>
+        <li>Dot eyes with tiny white highlights add life without clutter — highlights vanish gracefully at small sizes</li>
+        <li>Confident smile suits the "presenting a plan" context — approachable and professional</li>
+        <li>No neck/body — just the head fills the square better as an icon and matches classic LEGO minifig head product imagery</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Side-by-side comparison ═══ -->
+<div class="comparison">
+  <h2>Side by side — 32px (most common favicon size)</h2>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <svg width="48" height="48"><use href="#favicon-brick"/></svg>
+      <h3>Mini-bricks</h3>
+      <p>Abstract &amp; universal. Says "LEGO" through shape alone. No face = more professional/neutral.</p>
+    </div>
+    <div class="compare-card">
+      <svg width="48" height="48"><use href="#favicon-head"/></svg>
+      <h3>Engineer Head</h3>
+      <p>Personal &amp; story-driven. Says "builder" with character. More memorable and emotionally engaging.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Implementation notes ═══ -->
+<div class="notes">
+  <h3>Implementation</h3>
+  <ul>
+    <li>Chosen design goes into <code>src/app/icon.svg</code> — Next.js App Router serves it automatically via the file-based metadata API</li>
+    <li>Optionally add <code>apple-icon.png</code> (180&times;180) for iOS home screen — can be exported from the same SVG</li>
+    <li>SVG favicon is supported in all modern browsers and scales perfectly — no need for multiple .ico sizes</li>
+    <li>Both designs use only project design tokens (LEGO red, yellow, green) — visually consistent with the rest of the deck</li>
+  </ul>
+</div>
+
+</body>
+</html>

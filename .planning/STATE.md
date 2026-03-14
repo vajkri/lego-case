@@ -92,7 +92,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- [ ] Add favicon to project (2026-03-12) — area: ui
+- [x] ~~Add favicon to project (2026-03-12) — area: ui~~ — done
 - [ ] Add subtle animations to map elements (2026-03-12) — sun pulse, cloud drift, windmill rotation
 - [ ] Clean up shadows for map elements (2026-03-12) — road shadow removal, consistent depth treatment
 
