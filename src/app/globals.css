@@ -82,6 +82,16 @@
   }
 }
 
+/* Connector sweep — green fill reveals left-to-right when a stop becomes visited (Phase 03.3) */
+@keyframes connector-sweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.connector-sweep {
+  animation: connector-sweep 500ms ease-out forwards;
+}
+
 /* Brick-drop animation — plays when stop becomes active (Phase 03.2) */
 @keyframes brick-drop {
   from {
@@ -101,5 +111,9 @@
 @media (prefers-reduced-motion: reduce) {
   .brick-drop-in {
     animation: none;
+  }
+  .connector-sweep {
+    animation: none;
+    clip-path: inset(0 0 0 0);
   }
 }

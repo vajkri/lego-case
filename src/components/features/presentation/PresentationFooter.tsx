@@ -29,38 +29,13 @@ export function PresentationFooter() {
     return 'default'
   }
 
-  const getConnectorStyle = (i: number): React.CSSProperties => {
+  const getConnectorOverlay = (i: number): string | null => {
     // Connector at index i connects stop i-1 to stop i
     const leftVisited = state.visitedStops.includes(i - 1) && i - 1 < state.currentStop
     const rightVisited = state.visitedStops.includes(i) && i < state.currentStop
-
-    if (leftVisited && rightVisited) {
-      // Both sides visited — green sweep
-      return {
-        height: '3px',
-        borderRadius: '999px',
-        background: `linear-gradient(to right, var(--color-lego-green) 50%, var(--color-lego-grey-pale) 50%)`,
-        backgroundSize: '200% 100%',
-        backgroundPosition: 'left',
-        transition: 'background-position 200ms ease-out',
-      }
-    } else if (i === state.currentStop) {
-      // Connector leading into current stop — red
-      return {
-        height: '3px',
-        borderRadius: '999px',
-        background: 'var(--color-lego-red)',
-        transition: 'background 200ms ease',
-      }
-    } else {
-      // Upcoming — grey
-      return {
-        height: '3px',
-        borderRadius: '999px',
-        background: 'var(--color-lego-grey-pale)',
-        transition: 'background 200ms ease',
-      }
-    }
+    if (leftVisited && rightVisited) return 'var(--color-lego-green)'
+    if (i === state.currentStop) return 'var(--color-lego-red)'
+    return null
   }
 
   const getButtonStyle = (i: number): React.CSSProperties => {
@@ -108,9 +83,26 @@ export function PresentationFooter() {
             <React.Fragment key={stop.slug}>
               {i > 0 && (
                 <div
-                  className="flex-1 max-w-10 self-center"
-                  style={getConnectorStyle(i)}
-                />
+                  className="flex-1 max-w-10 self-center relative overflow-hidden"
+                  style={{
+                    height: '3px',
+                    borderRadius: '999px',
+                    background: 'var(--color-lego-grey-pale)',
+                  }}
+                >
+                  {getConnectorOverlay(i) && (
+                    <div
+                      className={getConnectorOverlay(i) === 'var(--color-lego-red)' ? 'connector-sweep' : undefined}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        borderRadius: '999px',
+                        background: getConnectorOverlay(i)!,
+                        transition: 'background 300ms ease',
+                      }}
+                    />
+                  )}
+                </div>
               )}
               <div className="flex flex-col items-center">
                 <button
