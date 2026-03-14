@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03.2-01-PLAN.md
-last_updated: "2026-03-14T12:29:58.607Z"
+stopped_at: "Checkpoint: 03.2-02 Task 2 visual verification"
+last_updated: "2026-03-14T12:35:18.429Z"
 last_activity: 2026-03-14 — Phase 3 UAT passed 10/10, styleguide v2 committed, phases 3.1–3.4 inserted
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 21
-  completed_plans: 19
+  completed_plans: 20
   percent: 37
 ---
 
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 03.1-design-system-integration]: SlideOverlay nav arrows consume Button primitive — no raw button elements with duplicated Tailwind class strings
 - [Phase 03.2]: labelPosition is required (not optional) on Stop type — enforces compile-time completeness, prevents accidental omissions
 - [Phase 03.2]: 5-state data-state test uses 'default' (not 'unvisited') per new spec — 1 test intentionally RED as forcing function for Plan 02
+- [Phase 03.2]: MarkerPin removed entirely; BrickMarker is the complete replacement using brick-stack SVG as the new visual language for stop markers
+- [Phase 03.2]: CSS fill transition (300ms ease) on SVG rect style prop (not SVG fill attribute) enables active-to-visited color sweep without JS animation library
+- [Phase 03.2]: brick-drop animation applied only to topmost brick group element, not whole SVG, for per-brick entrance effect
 
 ### Roadmap Evolution
 
@@ -107,6 +110,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-14T12:29:58.601Z
-Stopped at: Completed 03.2-01-PLAN.md
+Last session: 2026-03-14T12:35:10.243Z
+Stopped at: Checkpoint: 03.2-02 Task 2 visual verification
 Resume file: None
