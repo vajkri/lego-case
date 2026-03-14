@@ -10,6 +10,9 @@ import { RoadPath } from './RoadPath'
 // Shared viewBox dimensions — used by MapCanvas for overlay coordinate mapping
 export const MAP_VIEWBOX = { width: 1400, height: 800 } as const
 
+// Grass horizon y-position within the viewBox — used by MapCanvas for full-bleed background alignment
+export const HORIZON_Y = 355
+
 interface MapSvgProps {
   className?: string
 }
@@ -52,44 +55,25 @@ export function MapSvg({ className }: MapSvgProps) {
       className={className}
     >
       <defs>
-        {/* Sky — bright LEGO cerulean */}
-        <linearGradient id="ms-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#3AAEE0" />
-          <stop offset="45%" stopColor="#62C8EE" />
-          <stop offset="100%" stopColor="#A8DFF5" />
-        </linearGradient>
-        {/* Grass — vivid LEGO green */}
-        <linearGradient id="ms-grass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#58CC3A" />
-          <stop offset="60%" stopColor="#44B028" />
-          <stop offset="100%" stopColor="#349A18" />
-        </linearGradient>
         {/* Pond */}
         <radialGradient id="ms-pond" cx="38%" cy="32%" r="68%">
           <stop offset="0%" stopColor="#7AD8F4" />
           <stop offset="100%" stopColor="#28A8CC" />
         </radialGradient>
-        {/* Baseplate stud pattern for grass */}
-        <pattern id="ms-studs" width="18" height="18" patternUnits="userSpaceOnUse">
-          <circle cx="9" cy="9" r="2.8" fill="rgba(0,80,0,0.1)" />
-        </pattern>
       </defs>
 
-      {/* ── 1. SKY ── */}
-      <rect width="1400" height="800" fill="url(#ms-sky)" />
-
-      {/* ── 2. SUN — upper left, warm glow + studs ── */}
-      <circle cx={148} cy={118} r={76} fill="#FFD830" opacity={0.12} />
-      <circle cx={148} cy={118} r={62} fill="#FFD830" opacity={0.15} />
-      <circle cx={148} cy={118} r={56} fill="#FFD830" />
+      {/* ── SUN — upper left, warm glow + studs ── */}
+      <circle cx={128} cy={118} r={76} fill="#FFD830" opacity={0.12} />
+      <circle cx={128} cy={118} r={62} fill="#FFD830" opacity={0.15} />
+      <circle cx={128} cy={118} r={56} fill="#FFD830" />
       {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
         const rad = (deg * Math.PI) / 180
         return (
           <line
             key={`sun-${deg}`}
-            x1={148 + Math.cos(rad) * 68}
+            x1={128 + Math.cos(rad) * 68}
             y1={118 + Math.sin(rad) * 68}
-            x2={148 + Math.cos(rad) * 88}
+            x2={128 + Math.cos(rad) * 88}
             y2={118 + Math.sin(rad) * 88}
             stroke="#FFD830"
             strokeWidth={5.5}
@@ -98,10 +82,10 @@ export function MapSvg({ className }: MapSvgProps) {
         )
       })}
       {/* Sun studs */}
+      <circle cx={118} cy={108} r={5} fill="rgba(255,255,255,0.22)" />
       <circle cx={138} cy={108} r={5} fill="rgba(255,255,255,0.22)" />
-      <circle cx={158} cy={108} r={5} fill="rgba(255,255,255,0.22)" />
+      <circle cx={118} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
       <circle cx={138} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
-      <circle cx={158} cy={128} r={5} fill="rgba(255,255,255,0.22)" />
 
       {/* ── 3. CLOUDS — staggered heights for organic feel ── */}
       <Cloud x={235} y={35} s={0.8} />
@@ -167,11 +151,7 @@ export function MapSvg({ className }: MapSvgProps) {
         ))
       )}
 
-      {/* ── 5. GRASS — straight horizon at y=355 ── */}
-      <rect x={0} y={355} width={1400} height={445} fill="url(#ms-grass)" />
-      {/* Baseplate stud pattern overlay */}
-      <rect x={0} y={355} width={1400} height={445} fill="url(#ms-studs)" />
-      {/* Grass texture — LEGO-stud dot scatter */}
+      {/* Grass texture — LEGO-stud dot scatter (background provided by MapCanvas) */}
       {[
         [148,400],[268,426],[388,408],[510,420],[632,462],[752,412],[872,434],[992,404],[1112,420],[1232,410],
         [208,470],[328,490],[448,466],[568,494],[688,458],[808,482],[928,464],[1048,454],[1168,468],
@@ -190,26 +170,26 @@ export function MapSvg({ className }: MapSvgProps) {
 
       {/* ── 6. MOUNTAINS — left side, stepped bricks, on top of grass ── */}
       {/* Far background hill — subtle stepped */}
-      <rect x={10} y={335} width={150} height={20} fill="#A0A4AA" opacity={0.25} rx={1} />
-      <rect x={30} y={318} width={110} height={17} fill="#A0A4AA" opacity={0.2} rx={1} />
-      <rect x={50} y={303} width={70} height={15} fill="#A0A4AA" opacity={0.15} rx={1} />
+      <rect x={40} y={335} width={150} height={20} fill="#A0A4AA" opacity={0.25} rx={1} />
+      <rect x={60} y={318} width={110} height={17} fill="#A0A4AA" opacity={0.2} rx={1} />
+      <rect x={80} y={303} width={70} height={15} fill="#A0A4AA" opacity={0.15} rx={1} />
       {/* Big stepped mountain */}
-      <rect x={82} y={330} width={280} height={25} fill="#6E7278" rx={1} />
-      <rect x={117} y={305} width={210} height={25} fill="#7E8288" rx={1} />
-      <rect x={152} y={280} width={140} height={25} fill="#8A8E94" rx={1} />
-      <rect x={182} y={255} width={80} height={25} fill="#9A9EA4" rx={1} />
-      <rect x={197} y={233} width={50} height={22} fill="#AAAFB4" rx={1} />
-      <rect x={207} y={215} width={30} height={18} fill="white" rx={1} />
+      <rect x={112} y={330} width={280} height={25} fill="#6E7278" rx={1} />
+      <rect x={147} y={305} width={210} height={25} fill="#7E8288" rx={1} />
+      <rect x={182} y={280} width={140} height={25} fill="#8A8E94" rx={1} />
+      <rect x={212} y={255} width={80} height={25} fill="#9A9EA4" rx={1} />
+      <rect x={227} y={233} width={50} height={22} fill="#AAAFB4" rx={1} />
+      <rect x={237} y={215} width={30} height={18} fill="white" rx={1} />
       {/* Snow cap studs */}
-      <circle cx={216} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
-      <circle cx={228} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
+      <circle cx={246} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
+      <circle cx={258} cy={222} r={3.5} fill="rgba(180,180,180,0.3)" />
       {/* Smaller stepped mountain */}
-      <rect x={322} y={330} width={180} height={25} fill="#7E8288" rx={1} />
-      <rect x={347} y={305} width={130} height={25} fill="#8E9298" rx={1} />
-      <rect x={372} y={280} width={80} height={25} fill="#9EA2A8" rx={1} />
-      <rect x={392} y={262} width={40} height={18} fill="white" rx={1} />
-      <circle cx={407} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
-      <circle cx={418} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
+      <rect x={352} y={330} width={180} height={25} fill="#7E8288" rx={1} />
+      <rect x={377} y={305} width={130} height={25} fill="#8E9298" rx={1} />
+      <rect x={402} y={280} width={80} height={25} fill="#9EA2A8" rx={1} />
+      <rect x={422} y={262} width={40} height={18} fill="white" rx={1} />
+      <circle cx={437} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
+      <circle cx={448} cy={269} r={3} fill="rgba(180,180,180,0.3)" />
 
       {/* ── 7. TREES — lollipop clusters, organic y-stagger ── */}
       {/* Left rural cluster */}

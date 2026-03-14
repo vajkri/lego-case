@@ -11,7 +11,7 @@
 import { useRef, useLayoutEffect, useState } from 'react'
 import { stops } from '@/data/topics'
 import { usePresentation } from '@/components/features/presentation'
-import { MapSvg, MAP_VIEWBOX } from './MapSvg'
+import { MapSvg, MAP_VIEWBOX, HORIZON_Y } from './MapSvg'
 import { StopNode } from './StopNode'
 import { CarElement } from './CarElement'
 import { STOP_OFFSETS, CAR_START_OFFSET } from './RoadPath'
@@ -60,15 +60,43 @@ export function MapCanvas() {
   const scaleX = size.w / VB_W
   const scaleY = size.h / VB_H
 
+  // Horizon position as % of inner container — drives full-bleed sky/grass split
+  const horizonPct = `${(HORIZON_Y / VB_H) * 100}%`
+  const belowHorizonPct = `${((VB_H - HORIZON_Y) / VB_H) * 100}%`
+
   return (
     <div
       ref={outerRef}
       className="w-full h-full flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#3AAEE0' }}
     >
-      {/* Inner container — fixed 7:4 aspect ratio, centered */}
-      <div className="relative" style={{ width: size.w, height: size.h }}>
-        {/* Illustrated SVG world map backdrop */}
+      {/* Inner container — fixed 7:4 aspect ratio, centered.
+          Hidden until measured to prevent background flicker on first frame. */}
+      <div className="relative" style={{ width: size.w, height: size.h, visibility: size.w ? 'visible' : 'hidden' }}>
+        {/* Full-bleed sky — anchored to inner container, extends to fill viewport */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: '-50vh',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100vw',
+            height: `calc(${horizonPct} + 50vh)`,
+            background: 'linear-gradient(to bottom, #3AAEE0 0%, #62C8EE 45%, #A8DFF5 100%)',
+          }}
+        />
+        {/* Full-bleed grass — anchored to inner container, extends to fill viewport */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: horizonPct,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100vw',
+            height: `calc(${belowHorizonPct} + 50vh)`,
+            background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='3.7' fill='rgba(0,80,0,0.1)'/%3E%3C/svg%3E") repeat, linear-gradient(to bottom, #58CC3A 0%, #44B028 60%, #349A18 100%)`,
+          }}
+        />
+        {/* Illustrated SVG world map content (transparent bg — sky/grass behind) */}
         <MapSvg className="absolute inset-0 w-full h-full" />
 
         {/* Coordinate-matched overlay: 1400×800 CSS px, scaled to match SVG render.
