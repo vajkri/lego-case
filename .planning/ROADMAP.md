@@ -106,13 +106,14 @@ Plans:
 
 ### Phase 03.3: Progress track redesign - visual states for default, hover, current, visited (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal:** The footer progress wizard is redesigned with LEGO minifig head step indicators (3 facial expressions: default smile, current grin, visited wink), thicker semantic-colored connectors (grey/red/green), sub-slide dots under the current stop, and the redundant MapProgressIndicator corner widget is removed.
+**Requirements**: MAP-04, MAP-03, CAR-04
 **Depends on:** Phase 03.1
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 03.3 to break down)
+- [ ] 03.3-01-PLAN.md — Design token + SubSlideProgress promotion + MinifigHead SVG component
+- [ ] 03.3-02-PLAN.md — PresentationFooter progress track rewrite + MapProgressIndicator removal + visual verification
 
 ### Phase 03.4: Map visual redesign - Legoesque aesthetic proposal mockups and implementation (INSERTED)
 
@@ -146,6 +147,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 03.1 → 03.2 → 03.3 → 03
 | 3. Map and Car Animation | 5/5 | Complete | 2026-03-14 |
 | 3.1 Design system integration | 4/4 | Complete | 2026-03-14 |
 | 3.2 Stop marker redesign | 2/2 | Complete   | 2026-03-14 |
-| 3.3 Progress track redesign | 0/TBD | Not started | - |
+| 3.3 Progress track redesign | 0/2 | Not started | - |
 | 3.4 Map visual redesign | 0/TBD | Not started | - |
 | 4. Content and Polish | 0/TBD | Not started | - |
