@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 import FocusTrap from 'focus-trap-react'
 import { usePresentation } from '@/components/features/presentation'
 import { stops } from '@/data/topics'
-import { SlideFrame, StopBadge, SubSlideProgress } from '@/components/ui'
+import { Button, SlideFrame, StopBadge, SubSlideProgress } from '@/components/ui'
 import { SlideContent } from './SlideContent'
 
 export function SlideOverlay() {
@@ -76,24 +76,26 @@ export function SlideOverlay() {
         <SlideFrame
           onClose={handleClose}
           leftArrow={
-            <button
-              type="button"
+            <Button
+              variant="grey"
+              size="icon"
               onClick={() => dispatch({ type: 'BACK' })}
               aria-label="Previous slide"
-              className="w-12 h-12 flex items-center justify-center rounded-lg bg-lego-grey-wash text-lego-grey border-b-4 border-lego-grey-pale hover:brightness-95 active:translate-y-0.5 active:border-b-2 transition-all font-display font-extrabold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lego-grey"
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lego-grey"
             >
               {leftChevron}
-            </button>
+            </Button>
           }
           rightArrow={
-            <button
-              type="button"
+            <Button
+              variant="red"
+              size="icon"
               onClick={() => dispatch({ type: 'ADVANCE' })}
               aria-label="Next slide"
-              className="w-12 h-12 flex items-center justify-center rounded-lg bg-lego-red text-white border-b-4 border-lego-red-dark hover:brightness-110 active:translate-y-0.5 active:border-b-2 transition-all font-display font-extrabold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lego-red"
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lego-red"
             >
               {rightChevron}
-            </button>
+            </Button>
           }
         >
           <StopBadge stopIndex={state.currentStop} stopLabel={stop.label} />
