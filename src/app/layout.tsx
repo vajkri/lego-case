@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Baloo_2, DM_Sans } from 'next/font/google'
-import { PresentationProvider, KeyboardController, PresentationFooter } from '@/components/features/presentation'
+import { PresentationProvider, KeyboardController, PresentationFooter, OnboardingOverlay } from '@/components/features/presentation'
 import { OverlayPresence } from '@/components/features/slide'
 import './globals.css'
 
@@ -43,6 +43,7 @@ export default function RootLayout({
               </div>
               <PresentationFooter />
               <OverlayPresence />
+              <OnboardingOverlay />
             </div>
           </div>
         </PresentationProvider>

@@ -2,3 +2,4 @@
 export * from './PresentationProvider'
 export * from './KeyboardController'
 export * from './PresentationFooter'
+export * from './OnboardingOverlay'
