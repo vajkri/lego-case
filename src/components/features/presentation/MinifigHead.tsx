@@ -66,7 +66,7 @@ const FACE_COMPONENTS: Record<HeadState, React.FC> = {
 
 import React from 'react'
 
-export function MinifigHead({ state, width = 28, height = 34 }: MinifigHeadProps) {
+export function MinifigHead({ state, width = 31, height = 37 }: MinifigHeadProps) {
   const colors = HEAD_COLORS[state]
   const Face = FACE_COMPONENTS[state]
   const fillStyle = (color: string) => ({ fill: color, transition: 'fill 200ms ease' })

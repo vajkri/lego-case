@@ -66,20 +66,22 @@ export function PresentationFooter() {
   return (
     <footer className="bg-white border-t border-gray-100 shadow-md">
       <div className="section-container flex items-center gap-3 py-3">
-        {/* Prev — grey brick button */}
-        <Button variant="grey" size="icon" onClick={handleBack} aria-label="Previous">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </Button>
+        {/* Left group — prev button */}
+        <div className="flex items-center gap-3 lg:flex-1">
+          <Button variant="grey" size="icon" onClick={handleBack} aria-label="Previous">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </Button>
+        </div>
 
         {/* Progress track — minifig heads with semantic connectors and sub-slide dots */}
-        <div className="flex items-center flex-1 justify-center">
+        <div className="flex items-center flex-1 justify-center lg:flex-none">
           {stops.map((stop, i) => (
             <React.Fragment key={stop.slug}>
               {i > 0 && (
                 <div
-                  className="flex-1 max-w-10 self-center relative overflow-hidden"
+                  className="flex-1 max-w-10 lg:min-w-8 self-center relative overflow-hidden"
                   style={{
                     height: '3px',
                     borderRadius: '999px',
@@ -127,23 +129,23 @@ export function PresentationFooter() {
           ))}
         </div>
 
-        {/* Zoom in — opens current stop's slides */}
-        <Button variant="yellow" size="label" onClick={handleZoomIn}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            <line x1="11" y1="8" x2="11" y2="14" />
-            <line x1="8" y1="11" x2="14" y2="11" />
-          </svg>
-          Zoom in
-        </Button>
-
-        {/* Next — red brick button */}
-        <Button variant="red" size="icon" onClick={handleAdvance} aria-label="Next">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </Button>
+        {/* Right group — zoom in + next buttons */}
+        <div className="flex items-center gap-3 lg:flex-1 lg:justify-end">
+          <Button variant="yellow" size="label" onClick={handleZoomIn}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <line x1="11" y1="8" x2="11" y2="14" />
+              <line x1="8" y1="11" x2="14" y2="11" />
+            </svg>
+            Zoom in
+          </Button>
+          <Button variant="red" size="icon" onClick={handleAdvance} aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Button>
+        </div>
       </div>
     </footer>
   )
