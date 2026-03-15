@@ -10,47 +10,59 @@ export const stopTheCase: Stop = {
   labelPosition: 'above',
   slides: [
     {
-      heading: 'Why We Are Here',
+      heading: 'Where We Are Today',
       blocks: [
         {
-          type: 'callout',
+          type: 'bullet-list',
           variant: 'default',
-          text: 'kids.lego.com is many users\u2019 first meeting with LEGO \u2014 especially in emerging markets. New business strategy: evolve from content host to kid-first digital experience.',
+          items: [
+            'Several million monthly active users across global markets',
+            'AngularJS frontend, Node.js/Express.js backend, headless WordPress CMS',
+            'Hosted from Billund co-location datacenter',
+            'One feature team: PM, designer, UX, frontend + backend engineers',
+            'Built as a content host to guide kids away from LEGO.com',
+          ],
         },
         {
           type: 'bullet-list',
+          heading: 'What holds us back',
           variant: 'red',
           items: [
-            'Millions of monthly active users, but the site was built to redirect kids away from LEGO.com',
-            'New vision: storytelling, micro-interactions, safe social mechanics, progression \u2014 for ages 6\u201312',
-            'Measure retention and session depth, not page views',
-            'AngularJS frontend must evolve for experience-first delivery at multi-team scale',
+            'Architecture wasn\u2019t designed for rich interactivity: games, social mechanics, progression',
+            'Single team owns everything \u2014 can\u2019t parallelize as ambitions grow',
+            'No ISR, streaming, or per-route rendering strategies \u2014 harder to optimize per device and network',
+            'AngularJS has a shrinking ecosystem \u2014 harder to hire, fewer community resources',
           ],
         },
       ],
     },
     {
-      heading: 'Business Requirements',
+      heading: 'Goals',
       blocks: [
+        {
+          type: 'callout',
+          variant: 'default',
+          text: 'Data shows kids.lego.com is often the first brand touchpoint \u2014 especially in emerging markets. We want to reshape it into a dedicated experience for 6\u201312-year-olds.',
+        },
         {
           type: 'two-column-cards',
           variant: 'yellow',
           cards: [
             {
               title: 'Fast, Engaging Experiences',
-              description: 'Deliver playful, interactive experiences for children aged 6–12 that load instantly on any device, anywhere in the world.',
+              description: 'Playful, interactive experiences for 6\u201312-year-olds that load instantly on any device, anywhere.',
             },
             {
               title: 'Multi-Team Parallel Work',
-              description: 'Platform and Content/Campaign teams ship independently without stepping on each other — clear ownership, shared standards.',
+              description: 'Multiple teams ship independently with clear ownership and shared standards.',
             },
             {
-              title: 'Global Performance + Carbon-Aware',
-              description: 'Sub-second loads in emerging markets with low-bandwidth modes, resilient media delivery, and localization built in from day one.',
+              title: 'Global Performance',
+              description: 'Optimized for emerging markets: low-bandwidth modes, resilient media, localization, carbon-aware delivery.',
             },
             {
               title: 'Privacy-First by Design',
-              description: 'COPPA and GDPR-K compliance from the ground up — no PII, no persistent identifiers, anonymous-only engagement signals.',
+              description: 'COPPA and GDPR-K compliant from the ground up \u2014 no PII, no persistent identifiers.',
             },
           ],
         },

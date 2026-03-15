@@ -27,7 +27,7 @@ export function BulletList({ heading, items, variant = 'default' }: BulletListPr
         {items.map((item, index) => (
           <li key={index} className="flex items-start gap-3 font-body text-lg">
             <span
-              className={`mt-[7px] flex-shrink-0 w-2 h-2 rounded-full ${dotColorClasses[variant]}`}
+              className={`mt-2.5 flex-shrink-0 w-2 h-2 rounded-full ${dotColorClasses[variant]}`}
             />
             <span>{item}</span>
           </li>
