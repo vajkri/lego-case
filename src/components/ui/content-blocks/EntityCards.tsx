@@ -11,6 +11,12 @@ interface EntityCardsProps {
   variant?: BlockVariant
 }
 
+const initialsCircleClasses: Record<BlockVariant, string> = {
+  default: 'bg-lego-grey-light text-white',
+  red: 'bg-lego-red text-white',
+  yellow: 'bg-lego-yellow text-lego-dark',
+}
+
 export function EntityCards({ entities, variant = 'yellow' }: EntityCardsProps) {
   return (
     <div className="space-y-3">
@@ -21,7 +27,7 @@ export function EntityCards({ entities, variant = 'yellow' }: EntityCardsProps) 
           className="flex items-start gap-4 rounded-md p-5"
           style={variantStyleMap[variant]}
         >
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-lego-yellow flex items-center justify-center font-display font-extrabold text-lego-dark text-sm">
+          <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-display font-extrabold text-sm ${initialsCircleClasses[variant]}`}>
             {entity.initials}
           </div>
           <div className="flex-1 min-w-0">
