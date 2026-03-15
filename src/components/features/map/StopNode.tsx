@@ -381,7 +381,7 @@ export function StopNode({ stop, isActive, isVisited, isCarTraveling, index }: S
       >
         {/* Always-visible label — MAP-02 requires labels never hidden */}
         <span style={getLabelStyle(labelState)}>
-          {stop.label}
+          {index + 1}. {stop.label}
         </span>
 
         {/* Marker wrapper — receives transform, shadow, and focus outline */}
