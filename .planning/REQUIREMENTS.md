@@ -60,7 +60,7 @@ Requirements for initial release. Each maps to a roadmap phase.
 ### Performance & Quality
 
 - [x] **PERF-01**: `next build` completes without errors or warnings related to static export, server components, or image optimization
-- [ ] **PERF-02**: The app loads and is interactive in < 3 seconds on a standard laptop over Wi-Fi
+- [x] **PERF-02**: The app loads and is interactive in < 3 seconds on a standard laptop over Wi-Fi
 - [x] **PERF-03**: No console errors or warnings in production build
 - [x] **QUAL-01**: Component structure matches the conventions in `CLAUDE.md` (ui/, layout/, features/ folders; barrel exports; PascalCase naming)
 - [x] **QUAL-02**: All content is rendered from data files — zero hardcoded presentation content in component JSX
@@ -134,7 +134,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAR-03 | Phase 3 | Complete |
 | CAR-04 | Phase 3 | Complete |
 | PERF-01 | Phase 4 | Complete |
-| PERF-02 | Phase 4 | Pending |
+| PERF-02 | Phase 4 | Complete |
 | PERF-03 | Phase 4 | Complete |
 
 **Coverage:**
