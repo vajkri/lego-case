@@ -108,10 +108,10 @@ Variant styles are defined in `src/components/ui/content-blocks/variants.ts` as 
 | Slide Heading  | Baloo 2  | 30px  | 700    |
 | Section Heading| Baloo 2  | 22px  | 700    |
 | Card Title     | Baloo 2  | 18px  | 700    |
-| Body           | DM Sans  | 16px  | 400    |
+| Body           | DM Sans  | 18px  | 400    |
 | Badge / Label  | Baloo 2  | 14px  | 700    |
 
-Minimum content font size: 16px. Badge/label exception: 14px.
+Minimum content font size: 18px. Badge/label exception: 14px.
 
 ### Depth System
 

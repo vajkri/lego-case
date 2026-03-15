@@ -31,7 +31,7 @@ export function DataTable({ headers, rows, variant = 'default' }: DataTableProps
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className={`font-body text-base text-lego-dark px-4 py-3 ${cellIndex === 0 ? 'font-semibold' : ''}`}
+                  className={`font-body text-lg text-lego-dark px-4 py-3 ${cellIndex === 0 ? 'font-semibold' : ''}`}
                 >
                   {cell}
                 </td>

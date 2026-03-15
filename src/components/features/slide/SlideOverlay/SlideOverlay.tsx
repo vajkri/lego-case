@@ -1,4 +1,5 @@
 'use client'
+import { useRef } from 'react'
 import { motion } from 'motion/react'
 import FocusTrap from 'focus-trap-react'
 import { usePresentation } from '@/components/features/presentation'
@@ -8,8 +9,15 @@ import { SlideContent } from './SlideContent'
 
 export function SlideOverlay() {
   const { state, dispatch, triggerRef } = usePresentation()
-  const stop = stops[state.currentStop]
-  const slide = stop.slides[state.currentSlide]
+
+  // Freeze displayed content during exit animation — prevents flash of next stop's slide
+  const frozenRef = useRef({ stopIndex: state.currentStop, slideIndex: state.currentSlide })
+  if (state.mode === 'slide') {
+    frozenRef.current = { stopIndex: state.currentStop, slideIndex: state.currentSlide }
+  }
+
+  const stop = stops[frozenRef.current.stopIndex]
+  const slide = stop.slides[frozenRef.current.slideIndex]
 
   const handleClose = () => {
     // Focus return (A11Y-04): return focus to the element that triggered the overlay

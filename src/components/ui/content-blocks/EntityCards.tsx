@@ -28,7 +28,7 @@ export function EntityCards({ entities, variant = 'yellow' }: EntityCardsProps) 
             <h4 className="font-display font-bold text-[18px] text-lego-dark mb-1">
               {entity.title}
             </h4>
-            <p className="font-body text-base text-lego-dark">
+            <p className="font-body text-lg text-lego-dark">
               {entity.description}
             </p>
           </div>

@@ -11,7 +11,7 @@ export function CalloutBox({ children }: CalloutBoxProps) {
       className="rounded-md p-6 border-l-4 border-lego-yellow"
       style={variantStyleMap['yellow']}
     >
-      <div className="font-body text-base text-lego-dark">
+      <div className="font-body text-lg text-lego-dark">
         {children}
       </div>
     </div>
