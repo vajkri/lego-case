@@ -14,16 +14,16 @@ export const stopTheCase: Stop = {
       blocks: [
         {
           type: 'callout',
-          text: 'kids.lego.com runs on AngularJS — a framework that reached end-of-life in 2022. This is a business continuity issue, not just a technology upgrade.',
+          text: 'kids.lego.com is many users\u2019 first meeting with LEGO \u2014 especially in emerging markets. New business strategy: evolve from content host to kid-first digital experience.',
         },
         {
           type: 'bullet-list',
           variant: 'red',
           items: [
-            'No server-side rendering — every page load starts from a blank HTML shell',
-            'No TypeScript — runtime errors surface in production, not at build time',
-            'No modern tooling — slow builds, no tree-shaking, no code splitting',
-            'Fighting the framework — workarounds outnumber conventions',
+            'Millions of monthly active users, but the site was built to redirect kids away from LEGO.com',
+            'New vision: storytelling, micro-interactions, safe social mechanics, progression \u2014 for ages 6\u201312',
+            'Measure retention and session depth, not page views',
+            'AngularJS frontend must evolve for experience-first delivery at multi-team scale',
           ],
         },
       ],
