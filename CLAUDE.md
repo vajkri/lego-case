@@ -129,6 +129,10 @@ Two depth techniques are used — choose based on context:
 | Green  | "Where you've been" (visited) | Visited stop indicators   |
 | Grey   | "Not yet / go back" (secondary) | Inactive stops, secondary buttons |
 
+## Git
+
+Never append `Co-Authored-By` lines to commit messages.
+
 ## Documentation & Memory
 
 Where persistent knowledge lives — see `.claude/rules/memory-placement.md` for the full placement guide.
