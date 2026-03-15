@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: Interactive Presentation
-status: Milestone v1.0 complete
-stopped_at: Milestone v1.0 shipped
-last_updated: "2026-03-15T16:00:00.000Z"
-last_activity: "2026-03-15 — Milestone v1.0 complete: all 8 phases, 25 plans, 36 requirements shipped"
+milestone: v1.1
+milestone_name: Polished Content
+status: Defining requirements
+stopped_at: null
+last_updated: "2026-03-15T16:30:00.000Z"
+last_activity: "2026-03-15 — Milestone v1.1 started: content and visual refinement"
 progress:
-  total_phases: 8
-  completed_phases: 8
-  total_plans: 25
-  completed_plans: 25
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -21,15 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** A compelling, accessible, story-driven presentation that makes the migration case so clearly, for both engineers and business stakeholders, that the path forward feels obvious.
-**Current focus:** Milestone v1.0 shipped. Planning next milestone.
+**Current focus:** v1.1 Polished Content — slide copy and visual refinement
 
 ## Current Position
 
-Milestone: v1.0 Interactive Presentation — SHIPPED 2026-03-15
-Status: Complete
-Last activity: 2026-03-15 — All 8 phases, 25 plans, 36 requirements shipped
-
-Progress: [██████████] 100% (8 of 8 phases complete)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-15 — Milestone v1.1 started
 
 ## Performance Metrics
 

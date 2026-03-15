@@ -27,7 +27,11 @@ A compelling, accessible, story-driven presentation that makes the migration cas
 
 ### Active
 
-(None currently. Next milestone TBD.)
+- [ ] Each slide's copy is reviewed and refined for clarity, structure, and persuasive impact
+- [ ] Content blocks are chosen optimally per slide (right block type for the message)
+- [ ] Visual hierarchy within each slide guides the reader's eye effectively
+- [ ] Consistent tone and pacing across all 5 stops
+- [ ] No filler, redundancy, or vague language remains in any slide
 
 ### Out of Scope
 
@@ -70,5 +74,15 @@ A compelling, accessible, story-driven presentation that makes the migration cas
 | SVG SMIL for ambient animations | Native SVG units avoid viewBox scaling mismatch; no JS overhead | ✓ Good |
 | 5 stops (consolidated from 14 topics) | Tighter narrative arc; each stop has 2-5 rich slides instead of 1 thin slide | ✓ Good |
 
+## Current Milestone: v1.1 Polished Content
+
+**Goal:** Review and refine every slide's copy and visual presentation for clarity, structure, and persuasive communication.
+
+**Target:**
+- Thorough copy edit of all 18 slides across 5 stops
+- Optimal content block selection per slide
+- Visual hierarchy and layout improvements
+- Consistent tone and pacing throughout
+
 ---
-*Last updated: 2026-03-15 after v1.0 milestone*
+*Last updated: 2026-03-15 after v1.1 milestone start*
