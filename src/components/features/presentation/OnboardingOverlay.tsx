@@ -127,12 +127,29 @@ export function OnboardingOverlay() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
               >
-                Navigate with your keyboard
+                Welcome!
               </motion.h2>
             </div>
 
+            {/* ── Description ── */}
+            <div className="px-6 pt-5 pb-3 space-y-2">
+              <p className="font-body text-base text-lego-dark font-bold">
+                An interactive web presentation built as an alternative to
+                traditional slide decks.
+              </p>
+              <p className="font-body text-base text-lego-grey leading-relaxed">
+                Follow a journey across an illustrated map. Each stop reveals
+                content through animated overlays.
+              </p>
+            </div>
+
+            <hr className="mx-6 border-lego-grey-pale" />
+
             {/* ── Key guide ── */}
-            <div className="px-6 pt-6 pb-2 space-y-4">
+            <div className="px-6 pt-4 pb-2 space-y-4">
+              <p className="font-display font-bold text-base text-lego-dark uppercase tracking-wide">
+                Navigate with your keyboard
+              </p>
               <KeyRow
                 keys={[{ label: '←' }, { label: '→' }]}
                 label="Move between stops"
@@ -166,7 +183,7 @@ export function OnboardingOverlay() {
                 onClick={handleClose}
                 className="w-full justify-center"
               >
-                Got it!
+                Let&apos;s go!
               </Button>
             </div>
           </motion.div>
