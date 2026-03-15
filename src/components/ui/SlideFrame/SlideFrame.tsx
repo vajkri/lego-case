@@ -21,10 +21,32 @@ export function SlideFrame({ onClose, leftArrow, rightArrow, children }: SlideFr
       {/* Red stud-pattern header bar — outer: full-bleed background */}
       <header className="bg-lego-red stud-pattern">
         <div className="section-container flex items-center justify-between py-3">
-          {/* LEGO logo placeholder — left side */}
-          <span className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-white/20 text-white font-display font-extrabold text-sm tracking-tight">
-            LEGO
-          </span>
+          {/* Deck branding — brick icon + title */}
+          <div className="inline-flex items-center gap-2.5 text-white">
+            {/* Mini 2×1 LEGO brick — two studs on a plate */}
+            <svg
+              width="28"
+              height="22"
+              viewBox="0 0 28 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              className="shrink-0 drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]"
+            >
+              {/* Brick body */}
+              <rect x="1" y="7" width="26" height="14" rx="2" fill="white" fillOpacity="0.25" />
+              <rect x="1" y="7" width="26" height="14" rx="2" stroke="white" strokeOpacity="0.5" strokeWidth="1" />
+              {/* Left stud */}
+              <rect x="4" y="1" width="8" height="8" rx="2" fill="white" fillOpacity="0.35" />
+              <rect x="4" y="1" width="8" height="8" rx="2" stroke="white" strokeOpacity="0.6" strokeWidth="1" />
+              {/* Right stud */}
+              <rect x="16" y="1" width="8" height="8" rx="2" fill="white" fillOpacity="0.35" />
+              <rect x="16" y="1" width="8" height="8" rx="2" stroke="white" strokeOpacity="0.6" strokeWidth="1" />
+            </svg>
+            <span className="font-display font-bold text-[15px] tracking-wide uppercase opacity-90">
+              Migration Case
+            </span>
+          </div>
 
           {/* Close button — right side. id="slide-close-btn" MUST remain for FocusTrap. */}
           <Button

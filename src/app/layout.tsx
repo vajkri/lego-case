@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'LEGO Migration Proposal',
+  title: 'LEGO Migration Case',
   description: 'Frontend architecture proposal for kids.lego.com',
 }
 
