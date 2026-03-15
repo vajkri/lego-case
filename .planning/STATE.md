@@ -126,6 +126,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
+- [ ] Redesign onboarding with welcome message and keyboard shortcuts (2026-03-15) — area: ui
 - [ ] Enlarge stop nodes (125%) and preserve brick colors when visited (2026-03-15) — area: ui
 - [x] ~~Add favicon to project (2026-03-12) — area: ui~~ — done
 - [x] ~~Add subtle animations to map elements (2026-03-12) — sun pulse, cloud drift, windmill rotation~~ — done
