@@ -15,7 +15,7 @@ export type ContentBlock =
   | { type: 'two-column-cards'; cards: { title: string; description: string }[]; variant?: BlockVariant }
   | { type: 'entity-cards'; entities: { initials: string; title: string; description: string }[]; variant?: BlockVariant }
   | { type: 'numbered-steps'; steps: { title: string; description: string }[]; variant?: BlockVariant }
-  | { type: 'callout'; text: string }
+  | { type: 'callout'; text: string; variant?: BlockVariant }
   | { type: 'data-table'; headers: string[]; rows: string[][]; variant?: BlockVariant }
 
 export interface Slide {

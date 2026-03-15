@@ -14,6 +14,7 @@ export const stopTheCase: Stop = {
       blocks: [
         {
           type: 'callout',
+          variant: 'default',
           text: 'kids.lego.com is many users\u2019 first meeting with LEGO \u2014 especially in emerging markets. New business strategy: evolve from content host to kid-first digital experience.',
         },
         {

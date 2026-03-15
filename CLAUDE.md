@@ -84,7 +84,7 @@ All components importable from `@/components/ui`.
   - `TwoColumnCards` — Side-by-side cards with border + depth shadow
   - `EntityCards` — Full-width stacked cards with badge (initials) + title + description
   - `NumberedSteps` — Large step numbers + title + description with tinted rows
-  - `CalloutBox` — Yellow-bordered emphasis box (always yellow, no variant prop)
+  - `CalloutBox` — Bordered emphasis box with left accent stripe (default: yellow)
   - `DataTable` — Table with tinted header + depth shadow, first column bold
 
 ### Variant System
@@ -98,7 +98,7 @@ The variant controls three visual properties simultaneously:
 
 Variant styles are defined in `src/components/ui/content-blocks/variants.ts` as `variantStyleMap`. All content blocks apply them via `style={variantStyleMap[variant]}` on the outer wrapper — NOT via Tailwind classes (because rgba values cannot be Tailwind tokens in v4).
 
-`CalloutBox` is always yellow (no `variant` prop).
+`CalloutBox` defaults to yellow but accepts `variant` like all other content blocks.
 
 ### Typography Scale
 

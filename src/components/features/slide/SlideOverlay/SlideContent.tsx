@@ -26,7 +26,7 @@ function renderBlock(block: ContentBlock, index: number) {
     case 'numbered-steps':
       return <NumberedSteps key={index} steps={block.steps} variant={block.variant} />
     case 'callout':
-      return <CalloutBox key={index}>{block.text}</CalloutBox>
+      return <CalloutBox key={index} variant={block.variant}>{block.text}</CalloutBox>
     case 'data-table':
       return <DataTable key={index} headers={block.headers} rows={block.rows} variant={block.variant} />
   }
