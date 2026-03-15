@@ -42,7 +42,7 @@ describe('StopNode — MAP-02: focusable button with accessible label', () => {
 
   it('stop name label is always visible (not hidden on hover)', () => {
     render(<StopNode stop={mockStop} index={0} isActive={false} isVisited={false} />)
-    expect(screen.getByText('Test Stop')).toBeDefined()
+    expect(screen.getByText(/Test Stop/i)).toBeDefined()
   })
 
   it('dispatches JUMP_TO_STOP with correct index when clicked', async () => {

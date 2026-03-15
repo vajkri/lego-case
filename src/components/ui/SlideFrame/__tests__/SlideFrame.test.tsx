@@ -85,14 +85,14 @@ describe('SlideFrame', () => {
 // StopBadge
 // ---------------------------------------------------------------------------
 describe('StopBadge', () => {
-  it('renders "STOP 1" for stopIndex=0', () => {
+  it('renders stop number 1 for stopIndex=0', () => {
     render(<StopBadge stopIndex={0} stopLabel="Introduction" />)
-    expect(screen.getByText(/STOP 1/i)).toBeTruthy()
+    expect(screen.getByText(/1\.\s*Introduction/i)).toBeTruthy()
   })
 
-  it('renders "STOP 3" for stopIndex=2', () => {
+  it('renders stop number 3 for stopIndex=2', () => {
     render(<StopBadge stopIndex={2} stopLabel="Some Stop" />)
-    expect(screen.getByText(/STOP 3/i)).toBeTruthy()
+    expect(screen.getByText(/3\.\s*Some Stop/i)).toBeTruthy()
   })
 
   it('renders the stop label text', () => {
