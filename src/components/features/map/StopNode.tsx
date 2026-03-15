@@ -3,7 +3,7 @@
 // LEGO-themed stop marker — Build Progress Bricks with 5 visual states.
 // Each stop renders a brick stack whose brick count matches its position (1–5).
 // States: default (grey), hover (scale+shadow), focus (blue outline+scale),
-//         active (colorful multi-brick palette + entrance animation), visited (all-green + color sweep)
+//         active (colorful multi-brick palette + entrance animation), visited (keeps active colors + green label)
 // Labels are positioned above or below per stop.labelPosition (MAP-02 always visible).
 
 import { useState, useEffect } from 'react'
@@ -77,8 +77,7 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
 
   // Determine color key for a given brick position
   function getColorKey(position: 'level1' | 'level2Left' | 'level2Right' | 'level3Left' | 'level3Right'): ColorKey {
-    if (state === 'active') return ACTIVE_COLORS[position]
-    if (state === 'visited') return 'green'
+    if (state === 'active' || state === 'visited') return ACTIVE_COLORS[position]
     return 'grey'
   }
 
@@ -155,7 +154,7 @@ function BrickMarker({ stopIndex, state }: BrickMarkerProps) {
   const contentTop = hasLevel3 ? 10 : hasLevel2 ? 23 : 36
   const contentBottom = 68
   const contentHeight = contentBottom - contentTop
-  const scale = 0.8
+  const scale = 1.0
 
   return (
     <svg
