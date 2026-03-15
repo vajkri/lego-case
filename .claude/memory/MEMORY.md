@@ -8,7 +8,6 @@
 - [feedback_no_raw_buttons.md](./feedback_no_raw_buttons.md) — Never use raw `<button>` elements — always use the ui Button component, adding variants as needed
 - [feedback_focus_visible_only.md](./feedback_focus_visible_only.md) — Always use focus-visible, never bare focus
 - [feedback_section_container.md](./feedback_section_container.md) — Use .section-container for consistent horizontal padding
-- [feedback_no_em_dashes.md](./feedback_no_em_dashes.md) — Never use em dashes in user-facing content, use colons/commas/periods instead
 
 ## References
 
