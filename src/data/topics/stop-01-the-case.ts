@@ -69,22 +69,6 @@ export const stopTheCase: Stop = {
       ],
     },
     {
-      heading: 'Assumptions',
-      blocks: [
-        {
-          type: 'bullet-list',
-          variant: 'default',
-          items: [
-            'Two engineering teams to start: Platform Team and Content/Campaign Team',
-            'Existing Node.js/Express.js backend and headless CMS (WordPress) remain in place',
-            'Hosting from Billund co-location datacenter, no cloud migration in scope',
-            'Design team will deliver LEGO-specific visual guidelines before component work begins',
-            'Safety & Privacy team defines COPPA/GDPR-K compliance requirements upfront',
-          ],
-        },
-      ],
-    },
-    {
       heading: 'What Success Looks Like',
       blocks: [
         {
@@ -103,6 +87,22 @@ export const stopTheCase: Stop = {
         {
           type: 'callout',
           text: 'We stop measuring pages viewed and start measuring play experiences completed.',
+        },
+      ],
+    },
+    {
+      heading: 'Assumptions',
+      blocks: [
+        {
+          type: 'bullet-list',
+          variant: 'default',
+          items: [
+            'Two engineering teams to start: Platform Team and Content/Campaign Team',
+            'Existing Node.js/Express.js backend and headless CMS (WordPress) remain in place',
+            'Hosting from Billund co-location datacenter, no cloud migration in scope',
+            'Design team will deliver LEGO-specific visual guidelines before component work begins',
+            'Safety & Privacy team defines COPPA/GDPR-K compliance requirements upfront',
+          ],
         },
       ],
     },
