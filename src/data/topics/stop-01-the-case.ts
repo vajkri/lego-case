@@ -29,9 +29,9 @@ export const stopTheCase: Stop = {
           variant: 'red',
           items: [
             'Architecture wasn\u2019t designed for rich interactivity: games, social mechanics, progression',
-            'Single team owns everything \u2014 can\u2019t parallelize as ambitions grow',
-            'No ISR, streaming, or per-route rendering strategies \u2014 harder to optimize per device and network',
-            'AngularJS has a shrinking ecosystem \u2014 harder to hire, fewer community resources',
+            'Single team owns everything, can\u2019t parallelize as ambitions grow',
+            'No ISR, streaming, or per-route rendering strategies: harder to optimize per device and network',
+            'AngularJS has a shrinking ecosystem: harder to hire, fewer community resources',
           ],
         },
       ],
@@ -42,7 +42,7 @@ export const stopTheCase: Stop = {
         {
           type: 'callout',
           variant: 'default',
-          text: 'Data shows kids.lego.com is often the first brand touchpoint \u2014 especially in emerging markets. We want to reshape it into a dedicated experience for 6\u201312-year-olds.',
+          text: 'Data shows kids.lego.com is often the first brand touchpoint, especially in emerging markets. We want to reshape it into a dedicated experience for 6\u201312-year-olds.',
         },
         {
           type: 'two-column-cards',
@@ -62,7 +62,7 @@ export const stopTheCase: Stop = {
             },
             {
               title: 'Privacy-First by Design',
-              description: 'COPPA and GDPR-K compliant from the ground up \u2014 no PII, no persistent identifiers.',
+              description: 'COPPA and GDPR-K compliant from the ground up: no PII, no persistent identifiers.',
             },
           ],
         },
@@ -77,7 +77,7 @@ export const stopTheCase: Stop = {
           items: [
             'Two engineering teams to start: Platform Team and Content/Campaign Team',
             'Existing Node.js/Express.js backend and headless CMS (WordPress) remain in place',
-            'Hosting from Billund co-location datacenter — no cloud migration in scope',
+            'Hosting from Billund co-location datacenter, no cloud migration in scope',
             'Design team will deliver LEGO-specific visual guidelines before component work begins',
             'Safety & Privacy team defines COPPA/GDPR-K compliance requirements upfront',
           ],

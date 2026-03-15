@@ -18,7 +18,7 @@ export const stopVision: Stop = {
           cards: [
             {
               title: 'SSR, SSG, and ISR Built In',
-              description: 'Next.js ships server-side rendering, static generation, and incremental regeneration out of the box — exactly what a globally distributed kids platform needs for fast first loads.',
+              description: 'Next.js ships server-side rendering, static generation, and incremental regeneration out of the box. Exactly what a globally distributed kids platform needs for fast first loads.',
             },
             {
               title: 'App Router for Nested Layouts',
@@ -26,7 +26,7 @@ export const stopVision: Stop = {
             },
             {
               title: 'React Ecosystem + TypeScript',
-              description: 'The largest frontend ecosystem on the planet — battle-tested libraries, rich tooling, first-class TypeScript support. Our teams hire for this stack.',
+              description: 'The largest frontend ecosystem on the planet: battle-tested libraries, rich tooling, first-class TypeScript support. Our teams hire for this stack.',
             },
             {
               title: 'i18n + Image Optimization',
@@ -43,8 +43,8 @@ export const stopVision: Stop = {
           type: 'bullet-list',
           variant: 'yellow',
           items: [
-            'Server Components render static content on the server — zero JavaScript sent to the browser for content that never changes',
-            'Client Components add interactivity only where the experience demands it — animations, games, drag interactions',
+            'Server Components render static content on the server: zero JavaScript sent to the browser for content that never changes',
+            'Client Components add interactivity only where needed: animations, games, drag interactions',
             'The split is explicit at the code level: `use client` marks the boundary, not a config file',
             'Low-end devices on slow networks get full content instantly; rich interactions layer on top progressively',
           ],
@@ -64,7 +64,7 @@ export const stopVision: Stop = {
           steps: [
             {
               title: 'Build Locally First',
-              description: 'Teams own components within their feature area. No approval gates, no shared-component bottlenecks — move fast and ship.',
+              description: 'Teams own components within their feature area. No approval gates, no shared-component bottlenecks. Move fast and ship.',
             },
             {
               title: 'Document in Storybook',
@@ -97,7 +97,7 @@ export const stopVision: Stop = {
         },
         {
           type: 'callout',
-          text: 'Lightweight, not restrictive — teams move fast, the system grows organically.',
+          text: 'Lightweight, not restrictive. Teams move fast, the system grows organically.',
         },
       ],
     },

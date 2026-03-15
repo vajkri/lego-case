@@ -35,7 +35,7 @@ export const stopHowWeWork: Stop = {
         },
         {
           type: 'callout',
-          text: 'Additional teams (Localization, Accessibility, Game) join the monorepo as the platform scales — same tools, same standards.',
+          text: 'Additional teams (Localization, Accessibility, Game) join the monorepo as the platform scales. Same tools, same standards.',
         },
       ],
     },
@@ -47,9 +47,9 @@ export const stopHowWeWork: Stop = {
           variant: 'default',
           items: [
             'A single global Storybook instance is the component catalogue, documentation hub, and discovery tool for every team',
-            'Teams search before building — prevents duplication before it starts',
+            'Teams search before building, preventing duplication before it starts',
             'Visual testing catches regressions without writing pixel-diff tests by hand',
-            'Designers review components directly in Storybook — no staging environment needed for visual sign-off',
+            'Designers review components directly in Storybook, no staging environment needed for visual sign-off',
           ],
         },
         {
@@ -79,7 +79,7 @@ export const stopHowWeWork: Stop = {
             },
             {
               title: 'Monitor Build Times',
-              description: 'Track pipeline duration as the codebase grows. Set a threshold — if median build time exceeds 10 minutes, it is time to act.',
+              description: 'Track pipeline duration as the codebase grows. Set a threshold: if median build time exceeds 10 minutes, it is time to act.',
             },
             {
               title: 'Introduce Turborepo If Needed',
@@ -87,7 +87,7 @@ export const stopHowWeWork: Stop = {
             },
             {
               title: 'Run Tests for Affected Modules Only',
-              description: 'With Turborepo, a change to the Campaign Team components triggers only Campaign and Shared tests — not the full suite.',
+              description: 'With Turborepo, a change to the Campaign Team components triggers only Campaign and Shared tests, not the full suite.',
             },
           ],
         },
@@ -108,7 +108,7 @@ export const stopHowWeWork: Stop = {
         },
         {
           type: 'callout',
-          text: 'Fast pipelines, high confidence — test what matters, skip what does not.',
+          text: 'Fast pipelines, high confidence. Test what matters, skip what does not.',
         },
       ],
     },
@@ -120,9 +120,9 @@ export const stopHowWeWork: Stop = {
           variant: 'red',
           items: [
             'Core events tracked: session start, activity start, badge unlock, progress milestones, return visits',
-            'Page view tracking limited to top-level screens only — not every internal navigation',
+            'Page view tracking limited to top-level screens only, not every internal navigation',
             'No personally identifiable information collected at any point',
-            'No persistent identifiers without explicit consent — anonymous session IDs only',
+            'No persistent identifiers without explicit consent. Anonymous session IDs only',
           ],
         },
         {
@@ -135,7 +135,7 @@ export const stopHowWeWork: Stop = {
             },
             {
               title: 'Compliance',
-              description: 'IP anonymization on every request. No PII in any event payload. All reporting is aggregated — no individual user trails.',
+              description: 'IP anonymization on every request. No PII in any event payload. All reporting is aggregated, no individual user trails.',
             },
           ],
         },

@@ -14,16 +14,16 @@ export const stopMigration: Stop = {
       blocks: [
         {
           type: 'callout',
-          text: 'We migrate one route at a time. Each migration validates the architecture, tests the pipeline, and ships a win — without touching what is already working.',
+          text: 'We migrate one route at a time. Each migration validates the architecture, tests the pipeline, and ships a win, without touching what is already working.',
         },
         {
           type: 'bullet-list',
           variant: 'default',
           items: [
-            'Risk is isolated to one route at a time — a failure in one migration cannot break the rest of the site',
+            'Risk is isolated to one route at a time: a failure in one migration cannot break the rest of the site',
             'Teams validate SSR, deployment, and CMS integration early on a low-stakes route',
             'Each completed migration reduces the AngularJS footprint and builds team confidence',
-            'No big-bang cutover — the business runs uninterrupted throughout the entire migration',
+            'No big-bang cutover. The business runs uninterrupted throughout the entire migration',
           ],
         },
       ],
@@ -37,7 +37,7 @@ export const stopMigration: Stop = {
           steps: [
             {
               title: 'Establish the Next.js Foundation',
-              description: 'Set up the new application shell: routing, SSR config, navigation, layout components, and CI/CD. Navigation is recreated first — relatively simple and high visibility.',
+              description: 'Set up the new application shell: routing, SSR config, navigation, layout components, and CI/CD. Navigation is recreated first: relatively simple and high visibility.',
             },
             {
               title: 'Migrate the First Simple Route',
@@ -45,7 +45,7 @@ export const stopMigration: Stop = {
             },
             {
               title: 'Iterate Route by Route',
-              description: 'Group routes by type — campaign pages, game pages, content pages, profile areas. Each group follows the same pattern. Teams build confidence with each iteration.',
+              description: 'Group routes by type: campaign pages, game pages, content pages, profile areas. Each group follows the same pattern. Teams build confidence with each iteration.',
             },
             {
               title: 'Replace Remaining AngularJS Sections',
