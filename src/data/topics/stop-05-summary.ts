@@ -10,17 +10,17 @@ export const stopSummary: Stop = {
   labelPosition: 'above',
   slides: [
     {
-      heading: 'What We Are Proposing',
+      heading: 'What This Enables',
       blocks: [
         {
           type: 'bullet-list',
-          variant: 'yellow',
+          variant: 'default',
           items: [
-            'Scalable multi-team development: Platform and Campaign teams ship independently inside a shared monorepo',
-            'Rapid campaign iteration: feature components owned locally, promoted to shared when needed, zero governance bottlenecks',
-            'Privacy-first analytics: anonymous-only event data, no PII, COPPA and GDPR-K compliant from day one',
-            'Modern performance architecture: SSR, Server Components, and image optimization for a global audience of children',
-            'Safe incremental migration: one route at a time, zero business disruption, AngularJS retires gracefully',
+            'Multiple teams shipping independently from day one',
+            'Playful, animated experiences that perform on low-end devices',
+            'Privacy-safe analytics aligned to engagement and retention metrics',
+            'Safe migration with no business disruption',
+            'A reliable platform that scales as the organization grows',
           ],
         },
       ],
@@ -30,7 +30,8 @@ export const stopSummary: Stop = {
       blocks: [
         {
           type: 'callout',
-          text: 'We are ready to walk through any part of the proposal in detail.',
+          variant: 'default',
+          text: 'Ready to walk through any part of the proposal in detail.',
         },
       ],
     },
