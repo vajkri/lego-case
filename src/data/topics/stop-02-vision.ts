@@ -63,67 +63,57 @@ export const stopVision: Stop = {
       ],
     },
     {
-      heading: 'Experience-First Architecture',
+      heading: 'Frontend Architecture',
       blocks: [
         {
           type: 'bullet-list',
-          variant: 'yellow',
+          variant: 'default',
           items: [
-            'Server Components render static content on the server: zero JavaScript sent to the browser for content that never changes',
-            'Client Components add interactivity only where needed: animations, games, drag interactions',
-            'The split is explicit at the code level: `use client` marks the boundary, not a config file',
-            'Low-end devices on slow networks get full content instantly; rich interactions layer on top progressively',
+            'A governed monorepo over micro-frontends: shared components, tokens, and tooling in one dependency tree',
+            'Teams own feature directories',
+            'Shared code maintained by Platform, contributed to by all via PR with team-owner approval',
           ],
         },
         {
-          type: 'callout',
-          text: 'We ship less JavaScript to the browser while keeping every interaction as playful as kids expect.',
+          type: 'diagram',
+          variant: 'default',
+          content:
+            'src/\n' +
+            '\u251C\u2500\u2500 components/\n' +
+            '\u2502   \u2514\u2500\u2500 shared/         Design system, shared UI\n' +
+            '\u251C\u2500\u2500 features/\n' +
+            '\u2502   \u251C\u2500\u2500 campaigns/      Content, promotions, experiences\n' +
+            '\u2502   \u251C\u2500\u2500 games/          Quests, challenges, play\n' +
+            '\u2502   \u2514\u2500\u2500 shell/          App shell, routing, layouts\n' +
+            '\u2514\u2500\u2500 styles/\n' +
+            '    \u2514\u2500\u2500 tokens/         Design tokens (Figma sync)',
         },
       ],
     },
     {
-      heading: 'Component Architecture',
+      heading: 'Component Workflow',
       blocks: [
         {
           type: 'numbered-steps',
-          variant: 'yellow',
+          variant: 'default',
           steps: [
             {
-              title: 'Build Locally First',
-              description: 'Teams own components within their feature area. No approval gates, no shared-component bottlenecks. Move fast and ship.',
+              title: 'Tokens mirror Figma',
+              description: 'Design tokens are the single source of truth, documented in Storybook and kept in sync with Figma.',
             },
             {
-              title: 'Document in Storybook',
-              description: 'Every component gets a story. Storybook is the single source of visual truth, searchable by any team, reviewable by design.',
+              title: 'Stories live with components',
+              description: 'Every shared component has a co-located story. Storybook is set up from day one.',
             },
             {
-              title: 'Promote When Reused',
-              description: 'If a second team wants the same component, it moves to the shared layer. The design system grows organically from real usage.',
+              title: 'Build locally, promote when reused',
+              description: 'Teams build in their feature directory. When a second team needs it, it moves to shared via PR with Platform review.',
+            },
+            {
+              title: 'Visual regression catches drift',
+              description: 'Storybook snapshots detect unintended changes to shared components before they reach production.',
             },
           ],
-        },
-      ],
-    },
-    {
-      heading: 'Design System Strategy',
-      blocks: [
-        {
-          type: 'two-column-cards',
-          variant: 'default',
-          cards: [
-            {
-              title: 'Shared Layer',
-              description: 'Design tokens (colors, spacing, typography), core UI primitives (buttons, form elements, layout). Owned by Platform Team. Stable and versioned.',
-            },
-            {
-              title: 'Feature Layer',
-              description: 'Team-specific components: avatar cards, quest progress UI, campaign widgets, story panels. Owned by the team that builds them.',
-            },
-          ],
-        },
-        {
-          type: 'callout',
-          text: 'Lightweight, not restrictive. Teams move fast, the system grows organically.',
         },
       ],
     },

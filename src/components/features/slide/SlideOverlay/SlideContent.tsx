@@ -7,6 +7,7 @@ import {
   NumberedSteps,
   CalloutBox,
   DataTable,
+  Diagram,
 } from '@/components/ui'
 import type { ContentBlock } from '@/types/presentation'
 
@@ -29,6 +30,8 @@ function renderBlock(block: ContentBlock, index: number) {
       return <CalloutBox key={index} variant={block.variant}>{block.text}</CalloutBox>
     case 'data-table':
       return <DataTable key={index} headers={block.headers} rows={block.rows} variant={block.variant} />
+    case 'diagram':
+      return <Diagram key={index} content={block.content} caption={block.caption} variant={block.variant} />
   }
 }
 

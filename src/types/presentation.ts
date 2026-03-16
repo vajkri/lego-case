@@ -17,6 +17,7 @@ export type ContentBlock =
   | { type: 'numbered-steps'; steps: { title: string; description: string }[]; variant?: BlockVariant }
   | { type: 'callout'; text: string; variant?: BlockVariant }
   | { type: 'data-table'; headers: string[]; rows: string[][]; variant?: BlockVariant }
+  | { type: 'diagram'; content: string; caption?: string; variant?: BlockVariant }
 
 export interface Slide {
   heading: string
