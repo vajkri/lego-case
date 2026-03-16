@@ -10,6 +10,24 @@ export const stopVision: Stop = {
   labelPosition: 'above',
   slides: [
     {
+      heading: 'System Overview',
+      blocks: [
+        {
+          type: 'data-table',
+          variant: 'default',
+          headers: ['Layer', 'Technology', 'Role'],
+          rows: [
+            ['Frontend', 'Next.js (React)', 'App shell, routing, rendering strategies, UI'],
+            ['Design system', 'Shared tokens + Storybook', 'Consistency across teams'],
+            ['CDN', 'Edge caching', 'Static assets, ISR pages, images for global reach'],
+            ['Backend (existing)', 'Node.js/Express.js', 'API layer, CMS integration, microservices'],
+            ['CMS (existing)', 'Headless WordPress', 'Content management'],
+            ['Hosting (existing)', 'Billund co-location', 'Infrastructure'],
+          ],
+        },
+      ],
+    },
+    {
       heading: 'Why React + Next.js',
       blocks: [
         {
@@ -17,20 +35,28 @@ export const stopVision: Stop = {
           variant: 'default',
           cards: [
             {
-              title: 'SSR, SSG, and ISR Built In',
-              description: 'Next.js ships server-side rendering, static generation, and incremental regeneration out of the box. Exactly what a globally distributed kids platform needs for fast first loads.',
+              title: 'Largest Ecosystem',
+              description: 'Powers 45% of professional web development. The largest talent pool, which matters when scaling to multiple teams.',
             },
             {
-              title: 'App Router for Nested Layouts',
-              description: 'The App Router lets Platform and Campaign teams own their layouts independently. Shared chrome wraps feature routes without code coupling.',
+              title: 'Less JavaScript Shipped',
+              description: 'React Server Components keep JS off the client. Critical for cheap devices in emerging markets.',
             },
             {
-              title: 'React Ecosystem + TypeScript',
-              description: 'The largest frontend ecosystem on the planet: battle-tested libraries, rich tooling, first-class TypeScript support. Our teams hire for this stack.',
+              title: 'Progressive Loading',
+              description: 'Streaming and Suspense load content progressively; users see meaningful UI before all data has arrived.',
             },
             {
-              title: 'i18n + Image Optimization',
-              description: 'Built-in internationalization and automatic image optimization mean emerging market support is configuration, not custom engineering.',
+              title: 'Great fit for CMS Content',
+              description: 'ISR regenerates pages on demand. No full rebuild when content editors publish.',
+            },
+            {
+              title: 'Global by Default',
+              description: 'Built-in i18n, image optimization, and font optimization for a worldwide kids audience.',
+            },
+            {
+              title: 'AI-Ready Development',
+              description: 'Dominant in LLM training data. AI tools write, debug, and refactor React measurably better than less-represented stacks.',
             },
           ],
         },
