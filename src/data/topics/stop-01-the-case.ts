@@ -86,7 +86,7 @@ export const stopTheCase: Stop = {
           type: 'bullet-list',
           variant: 'default',
           items: [
-            'Existing headless CMS and microservices (auth, progress, profiles) remain',
+            'Existing headless CMS and microservices (auth, progress, profiles) expose JSON APIs that cover all data frontend needs',
             'Next.js replaces the Express.js layer, no new backend services or databases are introduced',
             'Two engineering teams to start: Platform Team and Content & Storytelling Team',
             'Safety & Privacy team defines COPPA/GDPR-K compliance requirements upfront',
