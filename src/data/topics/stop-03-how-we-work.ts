@@ -77,7 +77,7 @@ export const stopHowWeWork: Stop = {
       blocks: [
         {
           type: 'callout',
-          variant: 'default',
+          variant: 'yellow',
           text: 'Goal: maintain fast pipelines while ensuring reliability.',
         },
         {
@@ -108,7 +108,7 @@ export const stopHowWeWork: Stop = {
       blocks: [
         {
           type: 'callout',
-          variant: 'default',
+          variant: 'yellow',
           text: 'Measure engagement and retention, not page views. Anonymous by default; per-user tracking only with parental consent.',
         },
         {
