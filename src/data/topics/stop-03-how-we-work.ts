@@ -14,82 +14,61 @@ export const stopHowWeWork: Stop = {
       blocks: [
         {
           type: 'entity-cards',
-          variant: 'yellow',
+          variant: 'default',
           entities: [
             {
               initials: 'PT',
               title: 'Platform Team',
-              description: 'Owns the core application shell, routing, performance budgets, shared libraries, CI/CD pipeline, developer tooling, and infrastructure.',
+              description: 'App shell, routing, performance budgets, shared libraries, CI/CD pipeline, developer tooling.',
             },
             {
-              initials: 'CC',
-              title: 'Content / Campaign Team',
-              description: 'Owns campaigns, content pages, interactive experiences, and seasonal features. Ships fast within the platform boundaries.',
+              initials: 'CT',
+              title: 'Content & Storytelling Team',
+              description: 'Campaigns, content pages, interactive experiences, seasonal features. Ships fast within platform boundaries.',
             },
             {
-              initials: 'SP',
-              title: 'Safety & Privacy',
-              description: 'Reviews all features involving user data, interaction mechanics, and community or social elements. Defines COPPA/GDPR-K requirements.',
+              initials: 'FT',
+              title: 'Future Teams',
+              description: 'Additional teams (e.g. Games & Interactives) join the monorepo as the platform scales. Same tools, same standards.',
             },
           ],
         },
         {
           type: 'callout',
-          text: 'Additional teams (Localization, Accessibility, Game) join the monorepo as the platform scales. Same tools, same standards.',
+          variant: 'default',
+          text: 'Safety & Community is a cross-cutting governance function. Reviews features involving user data and community elements; defines COPPA/GDPR-K requirements.',
         },
       ],
     },
     {
-      heading: 'Storybook as Component Registry',
-      blocks: [
-        {
-          type: 'bullet-list',
-          variant: 'default',
-          items: [
-            'A single global Storybook instance is the component catalogue, documentation hub, and discovery tool for every team',
-            'Teams search before building, preventing duplication before it starts',
-            'Visual testing catches regressions without writing pixel-diff tests by hand',
-            'Designers review components directly in Storybook, no staging environment needed for visual sign-off',
-          ],
-        },
-        {
-          type: 'data-table',
-          variant: 'default',
-          headers: ['Category', 'Contents'],
-          rows: [
-            ['Foundations', 'Tokens, typography, color palette, spacing scale'],
-            ['Shared', 'Buttons, inputs, cards, layout primitives'],
-            ['Platform', 'App shell, navigation, route wrappers'],
-            ['Campaign', 'Seasonal banners, promo cards, feature flags'],
-            ['Feature', 'Team-specific components not yet promoted to shared'],
-          ],
-        },
-      ],
-    },
-    {
-      heading: 'CI/CD & Release Strategy',
+      heading: 'CI/CD and Release Strategy',
       blocks: [
         {
           type: 'numbered-steps',
-          variant: 'red',
+          variant: 'default',
           steps: [
             {
-              title: 'Start Centralized',
-              description: 'A single pipeline for two teams. Simpler governance, easier integration testing, one place to debug failures.',
+              title: 'Trunk-based development',
+              description: 'Short-lived feature branches, merge to main daily.',
             },
             {
-              title: 'Monitor Build Times',
-              description: 'Track pipeline duration as the codebase grows. Set a threshold: if median build time exceeds 10 minutes, it is time to act.',
+              title: 'Single centralized pipeline',
+              description: 'Lint, test, build on every merge to main.',
             },
             {
-              title: 'Introduce Turborepo If Needed',
-              description: 'Turborepo adds dependency-aware task scheduling to the monorepo. Unchanged packages are cached and skipped automatically.',
+              title: 'Automatic deploy to staging',
+              description: 'Every green build goes to staging immediately.',
             },
             {
-              title: 'Run Tests for Affected Modules Only',
-              description: 'With Turborepo, a change to the Campaign Team components triggers only Campaign and Shared tests, not the full suite.',
+              title: 'Manual promotion to production',
+              description: 'Safety & Community can gate sensitive features; feature flags for gradual rollout.',
             },
           ],
+        },
+        {
+          type: 'callout',
+          variant: 'default',
+          text: 'If build times grow, introduce Turborepo for dependency-aware builds. Split pipelines further as the team count and codebase scale.',
         },
       ],
     },
