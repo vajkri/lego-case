@@ -76,6 +76,11 @@ export const stopHowWeWork: Stop = {
       heading: 'Testing Strategy',
       blocks: [
         {
+          type: 'callout',
+          variant: 'default',
+          text: 'Goal: maintain fast pipelines while ensuring reliability.',
+        },
+        {
           type: 'data-table',
           variant: 'default',
           headers: ['Layer', 'Scope', 'Tools'],
@@ -86,36 +91,45 @@ export const stopHowWeWork: Stop = {
           ],
         },
         {
-          type: 'callout',
-          text: 'Fast pipelines, high confidence. Test what matters, skip what does not.',
+          type: 'bullet-list',
+          variant: 'default',
+          heading: 'Accessibility',
+          items: [
+            'Automated axe-core checks in CI on every build',
+            'Most critical manual accessibility flows scripted with E2E tests and axe-core',
+            'Storybook a11y addon for component-level review',
+            'ESLint a11y plugin catches issues at development time',
+          ],
         },
       ],
     },
     {
-      heading: 'Privacy-First Analytics',
+      heading: 'Instrumentation and Analytics',
       blocks: [
         {
-          type: 'bullet-list',
-          variant: 'red',
-          items: [
-            'Core events tracked: session start, activity start, badge unlock, progress milestones, return visits',
-            'Page view tracking limited to top-level screens only, not every internal navigation',
-            'No personally identifiable information collected at any point',
-            'No persistent identifiers without explicit consent. Anonymous session IDs only',
+          type: 'callout',
+          variant: 'default',
+          text: 'Measure engagement and retention, not page views. Anonymous by default; per-user tracking only with parental consent.',
+        },
+        {
+          type: 'data-table',
+          variant: 'default',
+          headers: ['Event type', 'Examples', 'Measures'],
+          rows: [
+            ['Session', 'session_start, session_end', 'Retention (D1/D7/D30)'],
+            ['Engagement', 'activity_start, badge_unlock, progress_milestone', 'Session depth, interactions'],
+            ['Content', 'content_view, content_complete, series_progress', 'Time spent, completion rates'],
           ],
         },
         {
-          type: 'two-column-cards',
+          type: 'bullet-list',
           variant: 'default',
-          cards: [
-            {
-              title: 'Tooling',
-              description: 'Plausible Analytics or an internal event pipeline. Both support anonymous event collection with no third-party tracking scripts.',
-            },
-            {
-              title: 'Compliance',
-              description: 'IP anonymization on every request. No PII in any event payload. All reporting is aggregated, no individual user trails.',
-            },
+          heading: 'How it works',
+          items: [
+            'Anonymous session IDs by default; no persistent identifiers',
+            'Authenticated users with parental consent get per-user progress tracking',
+            'A/B Testing: Feature flags assign sessions (not users) to experiment groups; compare aggregate metrics across groups',
+            'Safety & Community reviews all new event types before they ship',
           ],
         },
       ],
