@@ -14,16 +14,18 @@ export const stopMigration: Stop = {
       blocks: [
         {
           type: 'callout',
-          text: 'We migrate one route at a time. Each migration validates the architecture, tests the pipeline, and ships a win, without touching what is already working.',
+          variant: 'yellow',
+          text: 'Strangler fig pattern: the new system grows around the old one, route by route, until AngularJS can be retired.',
         },
         {
           type: 'bullet-list',
           variant: 'default',
+          heading: 'Why this approach',
           items: [
-            'Risk is isolated to one route at a time: a failure in one migration cannot break the rest of the site',
+            'Risk is isolated to one route at a time; a failure cannot break the rest of the site',
             'Teams validate SSR, deployment, and CMS integration early on a low-stakes route',
             'Each completed migration reduces the AngularJS footprint and builds team confidence',
-            'No big-bang cutover. The business runs uninterrupted throughout the entire migration',
+            'No big-bang cutover; the business runs uninterrupted throughout',
           ],
         },
       ],
@@ -33,49 +35,27 @@ export const stopMigration: Stop = {
       blocks: [
         {
           type: 'numbered-steps',
-          variant: 'yellow',
+          variant: 'default',
           steps: [
             {
-              title: 'Establish the Next.js Foundation',
-              description: 'Set up the new application shell: routing, SSR config, navigation, layout components, and CI/CD. Navigation is recreated first: relatively simple and high visibility.',
+              title: 'Establish Next.js foundation',
+              description: 'App shell, routing, SSR, navigation, layout components. Navigation first: simple and high visibility.',
             },
             {
-              title: 'Migrate the First Simple Route',
-              description: 'Choose a route with minimal dependencies. Validate architecture end-to-end, prove the deployment pipeline, confirm SSR works correctly in production.',
+              title: 'Route traffic with a reverse proxy',
+              description: 'CDN routes migrated paths to Next.js, everything else to AngularJS. One domain, two apps, seamless to users.',
             },
             {
-              title: 'Iterate Route by Route',
-              description: 'Group routes by type: campaign pages, game pages, content pages, profile areas. Each group follows the same pattern. Teams build confidence with each iteration.',
+              title: 'Migrate first simple route',
+              description: 'Validate architecture, test deployment pipeline, confirm SSR in production. Roll back by flipping the proxy rule.',
             },
             {
-              title: 'Replace Remaining AngularJS Sections',
-              description: 'As routes migrate, the AngularJS surface shrinks. Once all routes are migrated, AngularJS can be removed entirely and the infrastructure simplified.',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      heading: 'Risk Mitigation',
-      blocks: [
-        {
-          type: 'entity-cards',
-          variant: 'red',
-          entities: [
-            {
-              initials: 'LC',
-              title: 'Legacy Integration Complexity',
-              description: 'Start with routes that have minimal AngularJS dependencies. Complex integrations (auth, shared state, deep CMS wiring) come later, once the pattern is proven.',
+              title: 'Iterate route by route',
+              description: 'Group by type: campaign pages, game pages, content pages. Each follows the same pattern.',
             },
             {
-              initials: 'PF',
-              title: 'Performance on Low-End Devices',
-              description: 'Enforce strict performance budgets from day one. Server Components minimize JavaScript shipped to the browser. Lighthouse CI gates every pull request.',
-            },
-            {
-              initials: 'TC',
-              title: 'Team Coordination',
-              description: 'Storybook provides shared component discovery. Clear ownership boundaries prevent both teams from migrating the same route simultaneously.',
+              title: 'Retire AngularJS',
+              description: 'As routes migrate, the AngularJS surface shrinks. Once empty, remove it entirely and simplify infrastructure.',
             },
           ],
         },
