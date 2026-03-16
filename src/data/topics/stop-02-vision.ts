@@ -18,7 +18,7 @@ export const stopVision: Stop = {
           headers: ['Layer', 'Technology', 'Role'],
           rows: [
             ['Frontend', 'Next.js (React)', 'App shell, routing, rendering strategies, UI'],
-            ['Design system', 'Shared tokens + Storybook', 'Consistency across teams'],
+            ['Design system', 'Figma tokens + Storybook', 'Consistency across teams'],
             ['CDN', 'Edge caching', 'Static assets, ISR pages, images for global reach'],
             ['Backend (existing)', 'Node.js/Express.js', 'API layer, CMS integration, microservices'],
             ['CMS (existing)', 'Headless WordPress', 'Content management'],
